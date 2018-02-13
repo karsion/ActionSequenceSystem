@@ -147,7 +147,11 @@ public class ActionSequence
     {
         cycles = 0;
         opSequences.Release(this);
-        nodes.ForEach(node => node.Release());
+        for (int i = 0; i < nodes.Count; i++)
+        {
+            nodes[i].Release();
+        }
+
         nodes.Clear();
     }
 
@@ -156,7 +160,10 @@ public class ActionSequence
     {
         cycles++;
         curNodeIndex = 0;
-        nodes.ForEach(node => node.Restart(cycles));
+        for (int i = 0; i < nodes.Count; i++)
+        {
+            nodes[i].Restart(cycles);
+        }
     }
 
     internal static ActionSequence GetInstance(Component component)
