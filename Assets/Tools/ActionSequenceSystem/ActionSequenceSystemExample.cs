@@ -31,7 +31,7 @@ public class ActionSequenceSystemExample : MonoBehaviour
             .Action(() => Debug.Log("Test3 end"))
             ;
 
-        //Check F key per 0.2 seconds
+        //Check Q key per 0.2 seconds
         this.Sequence()
             .Loop()
             .Interval(0.2f)

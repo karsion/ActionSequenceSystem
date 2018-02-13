@@ -116,7 +116,6 @@ public class ActionSequenceSystem : SingletonMono<ActionSequenceSystem>
         if (isNeedRemoveSequence)
         {
             listSequence.RemoveAll(seq => seq.isFinshed);
-            Debug.Log(1);
         }
     }
 
