@@ -1,3 +1,6 @@
+[![license](http://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/karsion/ActionSequenceSystem/master/LICENSE.TXT)
+[![release](https://img.shields.io/badge/release-v1.0.1-blue.svg)](https://github.com/karsion/ActionSequenceSystem/master/releases)
+
 # ActionSequenceSystem
 A multifunctional timer system for Unity.
 
@@ -23,12 +26,12 @@ this.Sequence()
     .Action(() => Debug.Log("Test3 end"))
     ;
 
-//Check F key per 0.2 seconds
+//Check Q key per 0.2 seconds
 this.Sequence()
     .Loop()
     .Interval(0.2f)
-    .Condition(() => Input.GetKeyDown(KeyCode.F))
-    .Action(n => Debug.Log("F键 按下次数" + n));
+    .Condition(() => Input.GetKeyDown(KeyCode.Q))
+    .Action(n => Debug.Log("Q键 按下次数" + n));
 
 //Stop all sequences start by this ID
 this.StopSequence();
