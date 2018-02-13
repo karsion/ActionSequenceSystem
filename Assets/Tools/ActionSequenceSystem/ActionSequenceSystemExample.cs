@@ -10,61 +10,62 @@ public class ActionSequenceSystemExample : MonoBehaviour
     // Use this for initialization
     private void Start()
     {
-        //测试一次延迟一秒调用函数
+        //Start a once timer
         this.Delayer(1, () => Debug.Log(1));
+        this.Sequence().Interval(1).Action(() => Debug.Log(1));//Same
 
-        //测试一次延迟一秒调用函数
-        this.Looper(2, -1, true, () => Debug.Log(-1));
+        //Allso use transform as a ID to start a sequence
+        transform.Delayer(1, () => Debug.Log(1));
 
-        //测试一次延迟一秒调用函数
-        this.Sequence().Interval(1).Action(() => Debug.Log(1));
-        //测试三次循环0.5秒调用函数
-        this.Sequence().Loop(3).Interval(0.5f).Action(() => Debug.Log(0.5f));
-        //测试长链
+        //Start a loop timer
+        this.Looper(0.5f, 3, false, () => Debug.Log(-1));
+        this.Sequence().Loop(3).Interval(0.5f).Action(() => Debug.Log(-1));//Same
+
+        //Start a long sequence
         this.Sequence()
             .Interval(2)
-            .Action(() => Debug.Log("测试长链"))
+            .Action(() => Debug.Log("Test1"))
             .Interval(3)
-            .Action(() => Debug.Log("测试长链3"))
+            .Action(() => Debug.Log("Test2"))
             .Interval(1)
-            .Action(() => Debug.Log("测试长链结束"))
+            .Action(() => Debug.Log("Test3 end"))
             ;
 
-        //测试每隔0.2秒，二次条件判断
+        //Check F key per 0.2 seconds
         this.Sequence()
-            .Loop(2)
+            .Loop()
             .Interval(0.2f)
-            .Condition(() => Input.GetKeyDown(KeyCode.F))
-            .Action(n => Debug.Log("F键 按下次数" + n));
-
-        //测试无限循环2秒调用函数
-        this.Sequence().Loop().Interval(2).Action(() => Debug.Log("Loop2S"));
-        //测试无限循环1秒调用函数，并输出循环次数
-        this.Sequence().Loop().Interval(1).Action(n => Debug.Log("Loop" + n));
+            .Condition(() => Input.GetKeyDown(KeyCode.Q))
+            .Action(n => Debug.Log("Q键 按下次数" + n));
     }
 
     // Update is called once per frame
     private void Update()
     {
-        //测试中途开序列，用transform做ID
+        //Start a loop in Update, using transform as ID
         if (Input.GetKeyDown(KeyCode.A))
         {
-            transform.Sequence().Loop(1).Interval(1).Action(() => Debug.Log(1));
+            transform.Looper(1, -1, true, count => Debug.Log("A" +count));
         }
 
-        //测试中途序列
+        //Start a loop in Update
         if (Input.GetKeyDown(KeyCode.S))
         {
-            this.Sequence().Loop().Interval(1).Action(() => Debug.Log("S"));
+            this.Looper(1, -1, true, count => Debug.Log("S" +count));
         }
 
-        //测试中途停止所有本脚本开启的Sequence
+        //Stop all sequences start by this ID
         if (Input.GetKeyDown(KeyCode.D))
         {
-            this.StopSequence();
-            //Debug.Break();
+            transform.StopSequence();
         }
 
-        //如果中途删除本脚本，关联的Sequence会自动停止并回收到池
+        //Stop all sequences start by transform
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            this.StopSequence();
+        }
+
+        //If this Component is destroyed, the associated Sequence will automatically stop and recycle to the pool.
     }
 }

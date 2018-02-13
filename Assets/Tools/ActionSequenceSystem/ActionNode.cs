@@ -10,15 +10,11 @@ public abstract class ActionNode
     {
     }
 
-    internal virtual void UpdateLoopTime(int loopTime)
-    {
-    }
-
     internal abstract bool Update(float deltaTime);
 
     internal abstract void Release();
 
-    internal virtual void Restart()
+    internal virtual void Restart(int cycles)
     {
     }
 }

@@ -36,13 +36,12 @@ public class ActionNodeInterval : ActionNode
         return (timeline -= deltaTime) < 0;
     }
 
-    //释放回池子
     internal override void Release()
     {
         opNodeInterval.Release(this);
     }
 
-    internal override void Restart()
+    internal override void Restart(int cycles)
     {
         timeline = interval;
     }

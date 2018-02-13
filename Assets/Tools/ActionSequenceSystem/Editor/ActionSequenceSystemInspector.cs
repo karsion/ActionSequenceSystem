@@ -14,8 +14,8 @@ public class ActionSequenceSystemInspector : Editor
     {
         base.OnInspectorGUI();
 
-        int countAll,countActive;
-        GUILayout.Label("ObjectPool State: Active/Inactive(All)", EditorStyles.boldLabel);
+        int countAll, countActive;
+        GUILayout.Label("ObjectPool State: Active/All", EditorStyles.boldLabel);
         ActionNodeAction.GetObjectPoolInfo(out countActive, out countAll);
         GUILayout.Label(string.Format("ActionNode: {0}/{1}", countActive, countAll));
         ActionNodeInterval.GetObjectPoolInfo(out countActive, out countAll);
@@ -33,7 +33,7 @@ public class ActionSequenceSystemInspector : Editor
             if (!actionSequenceSystem.ListSequence[i].isFinshed)
             {
                 GUILayout.Box(string.Format("{0} id: {1}\n Loop:{2}/{3}", i, actionSequenceSystem.ListSequence[i].id,
-                    actionSequenceSystem.ListSequence[i].nRunLoopTime, actionSequenceSystem.ListSequence[i].nLoopTime), "TextArea");
+                    actionSequenceSystem.ListSequence[i].cycles, actionSequenceSystem.ListSequence[i].loopTime), "TextArea");
             }
         }
 

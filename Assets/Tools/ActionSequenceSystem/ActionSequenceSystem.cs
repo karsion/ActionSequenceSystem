@@ -1,6 +1,6 @@
 ﻿// Copyright: ZhongShan KPP Technology Co
-// Date: 2018-02-09
-// Time: 15:16
+// Date: 2018-02-13
+// Time: 22:43
 // Author: Karsion
 
 using System;
@@ -47,13 +47,30 @@ public static class ActionSequenceSystemEx
         seq.Loop(loopTime);
         return id;
     }
+
+    //直接循环动作
+    public static Component Looper(this Component id, float interval, int loopTime, bool isActionAtStart, Action<int> action)
+    {
+        ActionSequence seq = ActionSequenceSystem.GetSequence(id);
+        if (isActionAtStart)
+        {
+            seq.Action(action).Interval(interval);
+        }
+        else
+        {
+            seq.Interval(interval).Action(action);
+        }
+
+        seq.Loop(loopTime);
+        return id;
+    }
 }
 
 public class ActionSequenceSystem : SingletonMono<ActionSequenceSystem>
 {
-    public List<ActionSequence> ListSequence { get { return listSequence; } }
-    private readonly List<ActionSequence> listSequence = new List<ActionSequence>(64);
     private readonly List<Component> listID = new List<Component>(64);
+    private readonly List<ActionSequence> listSequence = new List<ActionSequence>(64);
+    public List<ActionSequence> ListSequence { get { return listSequence; } }
 
     //开动作序列
     public static ActionSequence GetSequence(Component component)
@@ -69,36 +86,37 @@ public class ActionSequenceSystem : SingletonMono<ActionSequenceSystem>
         //StopSequence by ID
         if (listID.Count > 0)
         {
-            listID.ForEach(id =>
+            for (int i = 0; i < listID.Count; i++)
             {
-                listSequence.ForEach(seq =>
+                for (int j = 0; j < listSequence.Count; j++)
                 {
-                    if (seq.id == id)
+                    if (listID[i] == listSequence[j].id)
                     {
-                        seq.Stop();
+                        listSequence[j].Stop();
                     }
-                });
-            });
+                }
+            }
 
             listID.Clear();
         }
 
         //UpdateSequence
         bool isNeedRemoveSequence = false;
-        listSequence.ForEach(seq =>
+        for (int i = 0; i < listSequence.Count; i++)
         {
-            seq.Update(Time.deltaTime);
-            if (seq.isFinshed)
+            listSequence[i].Update(Time.deltaTime);
+            if (listSequence[i].isFinshed)
             {
-                seq.Release();
+                listSequence[i].Release();
                 isNeedRemoveSequence = true;
             }
-        });
+        }
 
         //RemoveFinshedSequence
         if (isNeedRemoveSequence)
         {
             listSequence.RemoveAll(seq => seq.isFinshed);
+            Debug.Log(1);
         }
     }
 

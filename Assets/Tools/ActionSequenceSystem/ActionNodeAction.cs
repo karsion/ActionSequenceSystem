@@ -20,12 +20,12 @@ public class ActionNodeAction : ActionNode
     private static readonly ObjectPool<ActionNodeAction> opNodeAction = new ObjectPool<ActionNodeAction>(64);
     private Action action; //事件
     private Action<int> actionLoop; //带循环次数的时间
-    private int loopTime;
+    private int cycles;
 
     //刷新当前循环次数
-    internal override void UpdateLoopTime(int loopTime)
+    internal override void Restart(int cycles)
     {
-        this.loopTime = loopTime;
+        this.cycles = cycles;
     }
 
     internal static ActionNodeAction Get(Action action)
@@ -46,7 +46,7 @@ public class ActionNodeAction : ActionNode
         }
         else if (null != actionLoop)
         {
-            actionLoop(loopTime);
+            actionLoop(cycles);
         }
 
         return true;
