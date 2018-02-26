@@ -1,6 +1,6 @@
 ﻿// Copyright: ZhongShan KPP Technology Co
-// Date: 2018-02-10
-// Time: 23:45
+// Date: 2018-02-26
+// Time: 11:38
 // Author: Karsion
 
 using System;
@@ -8,6 +8,9 @@ using System;
 //判定条件节点
 public class ActionNodeCondition : ActionNode
 {
+    internal static readonly ObjectPool<ActionNodeCondition> opNodeCondition = new ObjectPool<ActionNodeCondition>(64);
+
+    internal Func<bool> condition;
 #if UNITY_EDITOR
     public static void GetObjectPoolInfo(out int countActive, out int countAll)
     {
@@ -15,10 +18,6 @@ public class ActionNodeCondition : ActionNode
         countAll = opNodeCondition.countAll;
     }
 #endif
-
-    internal static readonly ObjectPool<ActionNodeCondition> opNodeCondition = new ObjectPool<ActionNodeCondition>(64);
-
-    internal Func<bool> condition;
 
     internal static ActionNodeCondition Get(Func<bool> condition)
     {
@@ -31,7 +30,7 @@ public class ActionNodeCondition : ActionNode
         return this;
     }
 
-    internal override bool Update(float deltaTime)
+    internal override bool Update(ActionSequence actionSequence)
     {
         return condition();
     }

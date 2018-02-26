@@ -1,6 +1,6 @@
 // Copyright: ZhongShan KPP Technology Co
-// Date: 2018-02-13
-// Time: 22:05
+// Date: 2018-02-26
+// Time: 11:38
 // Author: Karsion
 
 using System;
@@ -17,6 +17,7 @@ public class ActionSequence
 
     //当前执行的节点索引
     private int curNodeIndex = 0;
+    public float timeAxis;
 
     //目标组件，组件销毁的时候，本动作序列也相应销毁
     public Component id { get; private set; }
@@ -65,7 +66,8 @@ public class ActionSequence
     public ActionSequence Action(Action<int> action)
     {
         ActionNodeAction actionNodeAction = ActionNodeAction.Get(action);
-        actionNodeAction.Restart(cycles);
+
+        //actionNodeAction.Restart(cycles);
         nodes.Add(actionNodeAction);
         return this;
     }
@@ -97,6 +99,7 @@ public class ActionSequence
         curNodeIndex = 0;
         isFinshed = false;
         cycles = 0;
+        timeAxis = 0;
         return this;
     }
 
@@ -116,8 +119,10 @@ public class ActionSequence
             return;
         }
 
+        timeAxis += deltaTime;
+
         //用索引更新节点
-        if (nodes[curNodeIndex].Update(deltaTime))
+        if (nodes[curNodeIndex].Update(this))
         {
             curNodeIndex++;
             if (curNodeIndex >= nodes.Count)
@@ -155,15 +160,17 @@ public class ActionSequence
         nodes.Clear();
     }
 
+    internal void UpdateTimeAxis(float interval)
+    {
+        timeAxis -= interval;
+    }
+
     //重启序列
     private void Restart()
     {
         cycles++;
         curNodeIndex = 0;
-        for (int i = 0; i < nodes.Count; i++)
-        {
-            nodes[i].Restart(cycles);
-        }
+        timeAxis = 0;
     }
 
     internal static ActionSequence GetInstance(Component component)

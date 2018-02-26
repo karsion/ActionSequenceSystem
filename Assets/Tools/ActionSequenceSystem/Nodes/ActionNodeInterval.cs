@@ -1,10 +1,13 @@
 ﻿// Copyright: ZhongShan KPP Technology Co
-// Date: 2018-02-13
-// Time: 14:41
+// Date: 2018-02-26
+// Time: 11:38
 // Author: Karsion
 
 public class ActionNodeInterval : ActionNode
 {
+    private static readonly ObjectPool<ActionNodeInterval> opNodeInterval = new ObjectPool<ActionNodeInterval>(64);
+
+    private float interval;
 #if UNITY_EDITOR
     public static void GetObjectPoolInfo(out int countActive, out int countAll)
     {
@@ -13,10 +16,7 @@ public class ActionNodeInterval : ActionNode
     }
 #endif
 
-    private static readonly ObjectPool<ActionNodeInterval> opNodeInterval = new ObjectPool<ActionNodeInterval>(64);
-
-    private float interval;
-    private float timeline;
+    //private float timeline;
 
     //从池中获取实例并初始化运行时间
     internal static ActionNodeInterval Get(float interval)
@@ -27,22 +27,22 @@ public class ActionNodeInterval : ActionNode
     private ActionNodeInterval SetInterval(float interval)
     {
         this.interval = interval;
-        timeline = interval;
         return this;
     }
 
-    internal override bool Update(float deltaTime)
+    internal override bool Update(ActionSequence actionSequence)
     {
-        return (timeline -= deltaTime) < 0;
+        if (actionSequence.timeAxis > interval)
+        {
+            actionSequence.UpdateTimeAxis(interval);
+            return true;
+        }
+
+        return false;
     }
 
     internal override void Release()
     {
         opNodeInterval.Release(this);
-    }
-
-    internal override void Restart(int cycles)
-    {
-        timeline = interval;
     }
 }
