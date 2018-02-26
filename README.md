@@ -4,7 +4,7 @@
 # ActionSequenceSystem
 A multifunctional timer system for Unity.
 
-```
+``` csharp
 //Start a once timer
 this.Delayer(1, () => Debug.Log(1));
 this.Sequence().Interval(1).Action(() => Debug.Log(1));//Same
@@ -23,8 +23,7 @@ this.Sequence()
     .Interval(3)
     .Action(() => Debug.Log("Test2"))
     .Interval(1)
-    .Action(() => Debug.Log("Test3 end"))
-    ;
+    .Action(() => Debug.Log("Test3 end"));
 
 //Check Q key per 0.2 seconds
 this.Sequence()
