@@ -1,15 +1,18 @@
 ﻿// Copyright: ZhongShan KPP Technology Co
 // Date: 2018-02-26
-// Time: 11:38
+// Time: 16:21
 // Author: Karsion
 
-public abstract class ActionNode
+namespace UnrealM
 {
-    protected ActionNode()
+    public abstract class ActionNode
     {
+        protected ActionNode()
+        {
+        }
+
+        internal abstract bool Update(ActionSequence actionSequence);
+
+        internal abstract void Release();
     }
-
-    internal abstract bool Update(ActionSequence actionSequence);
-
-    internal abstract void Release();
 }
