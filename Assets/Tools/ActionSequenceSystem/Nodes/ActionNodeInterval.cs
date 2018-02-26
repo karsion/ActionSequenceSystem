@@ -16,8 +16,6 @@ public class ActionNodeInterval : ActionNode
     }
 #endif
 
-    //private float timeline;
-
     //从池中获取实例并初始化运行时间
     internal static ActionNodeInterval Get(float interval)
     {

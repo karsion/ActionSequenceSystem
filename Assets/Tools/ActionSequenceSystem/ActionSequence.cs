@@ -20,7 +20,7 @@ public class ActionSequence
     public float timeAxis;
 
     //目标组件，组件销毁的时候，本动作序列也相应销毁
-    public Component id { get; private set; }
+    public object id { get; private set; }
 
     //需要循环的次数
     public int loopTime { get; private set; }
@@ -66,8 +66,6 @@ public class ActionSequence
     public ActionSequence Action(Action<int> action)
     {
         ActionNodeAction actionNodeAction = ActionNodeAction.Get(action);
-
-        //actionNodeAction.Restart(cycles);
         nodes.Add(actionNodeAction);
         return this;
     }
@@ -93,7 +91,7 @@ public class ActionSequence
     }
 
     //开启序列
-    private ActionSequence Start(Component id)
+    private ActionSequence Start(object id)
     {
         this.id = id;
         curNodeIndex = 0;
@@ -113,7 +111,7 @@ public class ActionSequence
         }
 
         //这个情况就是id被销毁了
-        if (!id)
+        if (id == null)
         {
             isFinshed = true;
             return;
@@ -173,7 +171,7 @@ public class ActionSequence
         timeAxis = 0;
     }
 
-    internal static ActionSequence GetInstance(Component component)
+    internal static ActionSequence GetInstance(object component)
     {
         return opSequences.Get().Start(component);
     }

@@ -11,20 +11,20 @@ using UnityEngine;
 public static class ActionSequenceSystemEx
 {
     //用Component作为ID开序列
-    public static ActionSequence Sequence(this Component id)
+    public static ActionSequence Sequence(this object id)
     {
         ActionSequence seq = ActionSequenceSystem.GetSequence(id);
         return seq;
     }
 
     //用Component作为ID停止序列
-    public static void StopSequence(this Component id)
+    public static void StopSequence(this object id)
     {
         ActionSequenceSystem.SetStopSequenceID(id);
     }
 
     //直接延迟动作
-    public static ActionSequence Delayer(this Component id, float delay, Action action)
+    public static ActionSequence Delayer(this object id, float delay, Action action)
     {
         ActionSequence seq = ActionSequenceSystem.GetSequence(id);
         seq.Interval(delay).Action(action);
@@ -32,7 +32,7 @@ public static class ActionSequenceSystemEx
     }
 
     //直接循环动作
-    public static ActionSequence Looper(this Component id, float interval, int loopTime, bool isActionAtStart, Action action)
+    public static ActionSequence Looper(this object id, float interval, int loopTime, bool isActionAtStart, Action action)
     {
         ActionSequence seq = ActionSequenceSystem.GetSequence(id);
         if (isActionAtStart)
@@ -49,7 +49,7 @@ public static class ActionSequenceSystemEx
     }
 
     //直接循环动作
-    public static Component Looper(this Component id, float interval, int loopTime, bool isActionAtStart, Action<int> action)
+    public static ActionSequence Looper(this object id, float interval, int loopTime, bool isActionAtStart, Action<int> action)
     {
         ActionSequence seq = ActionSequenceSystem.GetSequence(id);
         if (isActionAtStart)
@@ -62,7 +62,7 @@ public static class ActionSequenceSystemEx
         }
 
         seq.Loop(loopTime);
-        return id;
+        return seq;
     }
 }
 
@@ -79,7 +79,7 @@ public class ActionSequenceSystem : SingletonMono<ActionSequenceSystem>
 #endif
 
     //开动作序列
-    public static ActionSequence GetSequence(Component component)
+    public static ActionSequence GetSequence(object component)
     {
         ActionSequence seq = ActionSequence.GetInstance(component);
         instance.listSequence.Add(seq);
@@ -108,7 +108,7 @@ public class ActionSequenceSystem : SingletonMono<ActionSequenceSystem>
         }
     }
 
-    private void StopSequenceByID(Component id)
+    private void StopSequenceByID(object id)
     {
         for (int i = 0; i < listSequence.Count; i++)
         {
@@ -119,7 +119,7 @@ public class ActionSequenceSystem : SingletonMono<ActionSequenceSystem>
         }
     }
 
-    public static void SetStopSequenceID(Component id)
+    public static void SetStopSequenceID(object id)
     {
         instance.StopSequenceByID(id);
     }

@@ -12,7 +12,6 @@ public class ActionNodeAction : ActionNode
     private static readonly ObjectPool<ActionNodeAction> opNodeAction = new ObjectPool<ActionNodeAction>(64);
     private Action action; //事件
     private Action<int> actionLoop; //带循环次数的时间
-    private int cycles;
 #if UNITY_EDITOR
     public static void GetObjectPoolInfo(out int countActive, out int countAll)
     {
@@ -20,12 +19,6 @@ public class ActionNodeAction : ActionNode
         countAll = opNodeAction.countAll;
     }
 #endif
-
-    //刷新当前循环次数
-    //internal override void Restart(int cycles)
-    //{
-    //    this.cycles = cycles;
-    //}
 
     internal static ActionNodeAction Get(Action action)
     {
