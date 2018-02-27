@@ -13,20 +13,20 @@ namespace UnrealM
     public static class ActionSequenceSystemEx
     {
         //用Component作为ID开序列
-        public static ActionSequence Sequence(this object id)
+        public static ActionSequence Sequence(this Component id)
         {
             ActionSequence seq = ActionSequenceSystem.GetSequence(id);
             return seq;
         }
 
         //用Component作为ID停止序列
-        public static void StopSequence(this object id)
+        public static void StopSequence(this Component id)
         {
             ActionSequenceSystem.SetStopSequenceID(id);
         }
 
         //直接延迟动作
-        public static ActionSequence Delayer(this object id, float delay, Action action)
+        public static ActionSequence Delayer(this Component id, float delay, Action action)
         {
             ActionSequence seq = ActionSequenceSystem.GetSequence(id);
             seq.Interval(delay).Action(action);
@@ -34,7 +34,7 @@ namespace UnrealM
         }
 
         //直接循环动作
-        public static ActionSequence Looper(this object id, float interval, int loopTime, bool isActionAtStart, Action action)
+        public static ActionSequence Looper(this Component id, float interval, int loopTime, bool isActionAtStart, Action action)
         {
             ActionSequence seq = ActionSequenceSystem.GetSequence(id);
             if (isActionAtStart)
@@ -51,7 +51,7 @@ namespace UnrealM
         }
 
         //直接循环动作
-        public static ActionSequence Looper(this object id, float interval, int loopTime, bool isActionAtStart, Action<int> action)
+        public static ActionSequence Looper(this Component id, float interval, int loopTime, bool isActionAtStart, Action<int> action)
         {
             ActionSequence seq = ActionSequenceSystem.GetSequence(id);
             if (isActionAtStart)
@@ -80,8 +80,8 @@ namespace UnrealM
         }
 #endif
 
-        //开动作序列
-        public static ActionSequence GetSequence(object component)
+        //Start a sequence
+        public static ActionSequence GetSequence(Component component)
         {
             ActionSequence seq = ActionSequence.GetInstance(component);
             instance.listSequence.Add(seq);
@@ -110,7 +110,7 @@ namespace UnrealM
             }
         }
 
-        private void StopSequenceByID(object id)
+        private void StopSequenceByID(Component id)
         {
             for (int i = 0; i < listSequence.Count; i++)
             {
@@ -121,9 +121,63 @@ namespace UnrealM
             }
         }
 
-        public static void SetStopSequenceID(object id)
+        public static void SetStopSequenceID(Component id)
         {
             instance.StopSequenceByID(id);
         }
+
+        internal static ActionSequence GetSequence()
+        {
+            ActionSequence seq = ActionSequence.GetInstance();
+            instance.listSequence.Add(seq);
+            return seq;
+        }
+
+        #region 无ID启动（注意要手动关闭循环的，不然机器就会爆炸……）
+        public static ActionSequence Sequence()
+        {
+            ActionSequence seq = GetSequence();
+            return seq;
+        }
+
+        public static ActionSequence Delayer(float delay, Action action)
+        {
+            ActionSequence seq = GetSequence();
+            seq.Interval(delay).Action(action);
+            return seq;
+        }
+
+        public static ActionSequence Looper(float interval, int loopTime, bool isActionAtStart, Action action)
+        {
+            ActionSequence seq = GetSequence();
+            if (isActionAtStart)
+            {
+                seq.Action(action).Interval(interval);
+            }
+            else
+            {
+                seq.Interval(interval).Action(action);
+            }
+
+            seq.Loop(loopTime);
+            return seq;
+        }
+
+        public static ActionSequence Looper(float interval, int loopTime, bool isActionAtStart, Action<int> action)
+        {
+            ActionSequence seq = GetSequence();
+            if (isActionAtStart)
+            {
+                seq.Action(action).Interval(interval);
+            }
+            else
+            {
+                seq.Interval(interval).Action(action);
+            }
+
+            seq.Loop(loopTime);
+            return seq;
+        }
+        #endregion
     }
 }

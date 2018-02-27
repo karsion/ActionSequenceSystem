@@ -1,10 +1,32 @@
-// Copyright: ZhongShan KPP Technology Co
-// Date: 2018-02-26
-// Time: 16:27
-// Author: Karsion
+// /****************************************************************************
+//  * Copyright (c) 2018 ZhongShan KPP Technology Co
+//  * Copyright (c) 2018 Karsion
+//  * 
+//  * https://github.com/karsion
+//  * Date: 2018-02-27 16:05
+//  *
+//  * Permission is hereby granted, free of charge, to any person obtaining a copy
+//  * of this software and associated documentation files (the "Software"), to deal
+//  * in the Software without restriction, including without limitation the rights
+//  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//  * copies of the Software, and to permit persons to whom the Software is
+//  * furnished to do so, subject to the following conditions:
+//  * 
+//  * The above copyright notice and this permission notice shall be included in
+//  * all copies or substantial portions of the Software.
+//  * 
+//  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+//  * THE SOFTWARE.
+//  ****************************************************************************/
 
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace UnrealM
 {
@@ -23,7 +45,8 @@ namespace UnrealM
         public float timeAxis;
 
         //目标组件，组件销毁的时候，本动作序列也相应销毁
-        public object id { get; private set; }
+        public Component id { get; private set; }
+        private bool isWithoutID = false;
 
         //需要循环的次数
         public int loopTime { get; private set; }
@@ -94,9 +117,20 @@ namespace UnrealM
         }
 
         //开启序列
-        private ActionSequence Start(object id)
+        private ActionSequence Start(Component id)
         {
             this.id = id;
+            curNodeIndex = 0;
+            isFinshed = false;
+            cycles = 0;
+            timeAxis = 0;
+            isWithoutID = false;
+            return this;
+        }
+
+        private ActionSequence Start()
+        {
+            isWithoutID = true;
             curNodeIndex = 0;
             isFinshed = false;
             cycles = 0;
@@ -114,7 +148,14 @@ namespace UnrealM
             }
 
             //这个情况就是id被销毁了
-            if (id == null)
+            if (!isWithoutID && id == null)
+            {
+                isFinshed = true;
+                return;
+            }
+
+            //开了序列没有加任何节点
+            if (nodes.Count == 0)
             {
                 isFinshed = true;
                 return;
@@ -174,9 +215,14 @@ namespace UnrealM
             timeAxis = 0;
         }
 
-        internal static ActionSequence GetInstance(object component)
+        internal static ActionSequence GetInstance(Component component)
         {
             return opSequences.Get().Start(component);
+        }
+
+        internal static ActionSequence GetInstance()
+        {
+            return opSequences.Get().Start();
         }
     }
 }

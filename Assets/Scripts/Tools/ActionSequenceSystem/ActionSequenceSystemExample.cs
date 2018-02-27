@@ -38,6 +38,9 @@ public class ActionSequenceSystemExample : MonoBehaviour
             .Interval(0.2f)
             .Condition(() => Input.GetKeyDown(KeyCode.Q))
             .Action(n => Debug.Log("Q键 按下次数" + n));
+
+        ActionSequenceSystem.Delayer(5, () => Debug.Log("No id delayer"));
+        ActionSequenceSystem.Looper(0.2f, 10, false, () => Debug.Log("No id looper"));
     }
 
     // Update is called once per frame
