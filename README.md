@@ -2,7 +2,7 @@
 [![release](https://img.shields.io/badge/release-v1.0.1-blue.svg)](https://github.com/karsion/ActionSequenceSystem/master/releases)
 
 # ActionSequenceSystem
-A multifunctional timer system for Unity.
+A multifunctional timer system for  Unity3D.
 
 ``` csharp
 //Start a once timer
