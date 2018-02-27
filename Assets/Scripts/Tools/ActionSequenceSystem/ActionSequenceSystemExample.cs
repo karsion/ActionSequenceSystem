@@ -39,8 +39,13 @@ public class ActionSequenceSystemExample : MonoBehaviour
             .Condition(() => Input.GetKeyDown(KeyCode.Q))
             .Action(n => Debug.Log("Q键 按下次数" + n));
 
+        //Start a sequence without id.
         ActionSequenceSystem.Delayer(5, () => Debug.Log("No id delayer"));
         ActionSequenceSystem.Looper(0.2f, 10, false, () => Debug.Log("No id looper"));
+
+        //Notes：An instance must be preserved to manually stop an infinite loop sequence.
+        ActionSequence looper = ActionSequenceSystem.Looper(0.2f, -1, false, () => Debug.Log("No id infinite looper"));
+        looper.Stop();
     }
 
     // Update is called once per frame
