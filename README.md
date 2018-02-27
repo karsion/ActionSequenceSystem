@@ -2,7 +2,7 @@
 [![release](https://img.shields.io/badge/release-v1.0.1-blue.svg)](https://github.com/karsion/ActionSequenceSystem/master/releases)
 
 # ActionSequenceSystem
-A multifunctional timer system for  Unity3D.
+A Unity3D C# multifunctional timer system.
 
 ``` csharp
 //Start a once timer
@@ -37,4 +37,12 @@ this.StopSequence();
 
 //Allso transform as ID
 transform.StopSequence();
+
+//Start a sequence without id.
+ActionSequenceSystem.Delayer(5, () => Debug.Log("No id delayer"));
+ActionSequenceSystem.Looper(0.2f, 10, false, () => Debug.Log("No id looper"));
+
+//Notes：An instance must be preserved to manually stop an infinite loop sequence.
+ActionSequence looper = ActionSequenceSystem.Looper(0.2f, -1, false, () => Debug.Log("No id infinite looper"));
+looper.Stop();
 ```
