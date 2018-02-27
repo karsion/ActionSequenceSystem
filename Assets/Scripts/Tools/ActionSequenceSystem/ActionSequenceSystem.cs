@@ -126,7 +126,7 @@ namespace UnrealM
             instance.StopSequenceByID(id);
         }
 
-        internal static ActionSequence GetSequence()
+        private static ActionSequence GetSequence()
         {
             ActionSequence seq = ActionSequence.GetInstance();
             instance.listSequence.Add(seq);
