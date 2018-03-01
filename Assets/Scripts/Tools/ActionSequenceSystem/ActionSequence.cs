@@ -46,7 +46,7 @@ namespace UnrealM
 
         //目标组件，组件销毁的时候，本动作序列也相应销毁
         public Component id { get; private set; }
-        private bool isWithoutID = false;
+        private bool hasID = false;
 
         //需要循环的次数
         public int loopTime { get; private set; }
@@ -65,14 +65,17 @@ namespace UnrealM
         }
 #endif
 
-        //序列停止
-        public void Stop()
+        internal static ActionSequence GetInstance(Component component)
         {
-            id = null;
-            isFinshed = true;
-            cycles = 0;
-            loopTime = 0;
+            return opSequences.Get().Start(component);
         }
+
+        internal static ActionSequence GetInstance()
+        {
+            return opSequences.Get().Start();
+        }
+
+        #region Chaining
 
         //增加一个运行节点
         public ActionSequence Interval(float interval)
@@ -115,50 +118,74 @@ namespace UnrealM
             this.loopTime = loopTime;
             return this;
         }
+        #endregion
 
         //开启序列
         private ActionSequence Start(Component id)
         {
             this.id = id;
+            hasID = true;
+
             curNodeIndex = 0;
             isFinshed = false;
             cycles = 0;
             timeAxis = 0;
-            isWithoutID = false;
+            loopTime = 0;
             return this;
         }
 
         private ActionSequence Start()
         {
-            isWithoutID = true;
+            hasID = false;
+            
             curNodeIndex = 0;
             isFinshed = false;
             cycles = 0;
             timeAxis = 0;
+            loopTime = 0;
             return this;
         }
 
-        //序列更新
-        public void Update(float deltaTime)
+        //序列停止
+        public void Stop()
         {
-            //不更新已经Stop的
             if (isFinshed)
             {
                 return;
             }
 
-            //这个情况就是id被销毁了
-            if (!isWithoutID && id == null)
+            id = null;
+            hasID = false;
+
+            curNodeIndex = 0;
+            isFinshed = true;
+            cycles = 0;
+            timeAxis = 0;
+            loopTime = 0;
+            Release();
+        }
+
+        //序列更新
+        internal bool Update(float deltaTime)
+        {
+            //不更新已经Stop的
+            if (isFinshed)
             {
-                isFinshed = true;
-                return;
+                return true;
+            }
+
+            //这个情况就是id被销毁了
+            if (hasID && id == null)
+            {
+                Stop();
+                return true;
             }
 
             //开了序列没有加任何节点
             if (nodes.Count == 0)
             {
-                isFinshed = true;
-                return;
+                Stop();
+                return true;
             }
 
             timeAxis += deltaTime;
@@ -172,27 +199,29 @@ namespace UnrealM
                     //无限循环的节点
                     if (loopTime < 0)
                     {
-                        Restart();
-                        return;
+                        NextLoop();
+                        return false;
                     }
 
                     //循环的节点需要重新启动，运行次数++
                     if (loopTime > cycles)
                     {
-                        Restart();
-                        return;
+                        NextLoop();
+                        return false;
                     }
 
                     //运行次数>=循环次数了，就停止
-                    isFinshed = true;
+                    Stop();
+                    return true;
                 }
             }
+
+            return false;
         }
 
         //回收序列，回收序列中的节点
-        internal void Release()
+        private void Release()
         {
-            cycles = 0;
             opSequences.Release(this);
             for (int i = 0; i < nodes.Count; i++)
             {
@@ -208,21 +237,11 @@ namespace UnrealM
         }
 
         //重启序列
-        private void Restart()
+        private void NextLoop()
         {
             cycles++;
             curNodeIndex = 0;
             timeAxis = 0;
-        }
-
-        internal static ActionSequence GetInstance(Component component)
-        {
-            return opSequences.Get().Start(component);
-        }
-
-        internal static ActionSequence GetInstance()
-        {
-            return opSequences.Get().Start();
         }
     }
 }

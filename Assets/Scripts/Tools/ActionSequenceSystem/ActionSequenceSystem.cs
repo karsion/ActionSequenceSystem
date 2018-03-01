@@ -93,12 +93,11 @@ namespace UnrealM
         {
             //UpdateSequence
             bool isNeedRemoveSequence = false;
+            float deltaTime = Time.deltaTime;
             for (int i = 0; i < listSequence.Count; i++)
             {
-                listSequence[i].Update(Time.deltaTime);
-                if (listSequence[i].isFinshed)
+                if (listSequence[i].Update(deltaTime))
                 {
-                    listSequence[i].Release();
                     isNeedRemoveSequence = true;
                 }
             }
