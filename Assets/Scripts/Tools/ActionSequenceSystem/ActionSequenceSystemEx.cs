@@ -15,7 +15,15 @@ namespace UnrealM
         //用Component作为ID停止序列
         public static void StopSequence(this Component id)
         {
-            ActionSequenceSystem.SetStopSequenceID(id);
+            ActionSequenceSystem.StopSequence(id);
+        }
+
+        public static void StopSequence(this ActionSequence id)
+        {
+            if (id != null)
+            {
+                id.Stop();
+            }
         }
 
         //直接延迟动作

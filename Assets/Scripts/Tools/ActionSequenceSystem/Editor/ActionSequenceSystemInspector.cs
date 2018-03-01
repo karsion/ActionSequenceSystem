@@ -31,10 +31,18 @@ namespace UnrealM
             GUILayout.Label(string.Format("Sequence Count: {0}", actionSequenceSystem.ListSequence.Count), EditorStyles.boldLabel);
             for (int i = 0; i < actionSequenceSystem.ListSequence.Count; i++)
             {
-                if (!actionSequenceSystem.ListSequence[i].isFinshed)
+                ActionSequence sequence = actionSequenceSystem.ListSequence[i];
+                if (!sequence.isFinshed)
                 {
-                    GUILayout.Box(string.Format("{0} id: {1}\n Loop:{2}/{3}", i, actionSequenceSystem.ListSequence[i].id,
-                                                actionSequenceSystem.ListSequence[i].cycles, actionSequenceSystem.ListSequence[i].loopTime), "TextArea");
+                    if (sequence.loopTime == 0)//It's a delayer
+                    {
+                        GUILayout.Box(string.Format("  ID: {0}\n  Time({1:F2})", sequence.id, sequence.timeAxis), "TextArea");
+                    }
+                    else//It's a looper
+                    {
+                        GUILayout.Box(string.Format("  ID: {0}\n  Time({1:F2})   Loop({2}/{3})   Node({4})", sequence.id, sequence.timeAxis,
+                                sequence.cycles, sequence.loopTime, sequence.nodes.Count), "TextArea");
+                    }
                 }
             }
 
