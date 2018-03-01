@@ -171,21 +171,21 @@ namespace UnrealM
             //不更新已经Stop的
             if (isFinshed)
             {
-                return true;
+                return false;
             }
 
             //这个情况就是id被销毁了
             if (hasID && id == null)
             {
                 Stop();
-                return true;
+                return false;
             }
 
             //开了序列没有加任何节点
             if (nodes.Count == 0)
             {
                 Stop();
-                return true;
+                return false;
             }
 
             timeAxis += deltaTime;
@@ -200,23 +200,23 @@ namespace UnrealM
                     if (loopTime < 0)
                     {
                         NextLoop();
-                        return false;
+                        return true;
                     }
 
                     //循环的节点需要重新启动，运行次数++
                     if (loopTime > cycles)
                     {
                         NextLoop();
-                        return false;
+                        return true;
                     }
 
                     //运行次数>=循环次数了，就停止
                     Stop();
-                    return true;
+                    return false;
                 }
             }
 
-            return false;
+            return true;
         }
 
         //回收序列，回收序列中的节点

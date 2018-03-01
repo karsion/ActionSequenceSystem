@@ -10,70 +10,13 @@ using UnityEngine;
 namespace UnrealM
 {
     //开动作序列扩展
-    public static class ActionSequenceSystemEx
-    {
-        //用Component作为ID开序列
-        public static ActionSequence Sequence(this Component id)
-        {
-            ActionSequence seq = ActionSequenceSystem.GetSequence(id);
-            return seq;
-        }
-
-        //用Component作为ID停止序列
-        public static void StopSequence(this Component id)
-        {
-            ActionSequenceSystem.SetStopSequenceID(id);
-        }
-
-        //直接延迟动作
-        public static ActionSequence Delayer(this Component id, float delay, Action action)
-        {
-            ActionSequence seq = ActionSequenceSystem.GetSequence(id);
-            seq.Interval(delay).Action(action);
-            return seq;
-        }
-
-        //直接循环动作
-        public static ActionSequence Looper(this Component id, float interval, int loopTime, bool isActionAtStart, Action action)
-        {
-            ActionSequence seq = ActionSequenceSystem.GetSequence(id);
-            if (isActionAtStart)
-            {
-                seq.Action(action).Interval(interval);
-            }
-            else
-            {
-                seq.Interval(interval).Action(action);
-            }
-
-            seq.Loop(loopTime);
-            return seq;
-        }
-
-        //直接循环动作
-        public static ActionSequence Looper(this Component id, float interval, int loopTime, bool isActionAtStart, Action<int> action)
-        {
-            ActionSequence seq = ActionSequenceSystem.GetSequence(id);
-            if (isActionAtStart)
-            {
-                seq.Action(action).Interval(interval);
-            }
-            else
-            {
-                seq.Interval(interval).Action(action);
-            }
-
-            seq.Loop(loopTime);
-            return seq;
-        }
-    }
 
     public class ActionSequenceSystem : SingletonMono<ActionSequenceSystem>
     {
         private readonly List<ActionSequence> listSequence = new List<ActionSequence>(64);
-        public List<ActionSequence> ListSequence { get { return listSequence; } }
 
 #if UNITY_EDITOR
+        public List<ActionSequence> ListSequence { get { return listSequence; } }
         private void Reset()
         {
             name = "ActionSequenceSystem";
@@ -81,7 +24,7 @@ namespace UnrealM
 #endif
 
         //Start a sequence
-        public static ActionSequence GetSequence(Component component)
+        internal static ActionSequence GetSequence(Component component)
         {
             ActionSequence seq = ActionSequence.GetInstance(component);
             instance.listSequence.Add(seq);
@@ -92,18 +35,16 @@ namespace UnrealM
         private void Update()
         {
             //UpdateSequence
-            bool isNeedRemoveSequence = false;
+            bool isSomeSequenceStoped = false;
             float deltaTime = Time.deltaTime;
             for (int i = 0; i < listSequence.Count; i++)
             {
-                if (listSequence[i].Update(deltaTime))
-                {
-                    isNeedRemoveSequence = true;
-                }
+                //It's stopped when Update return false 
+                isSomeSequenceStoped |= !listSequence[i].Update(deltaTime);
             }
 
             //RemoveFinshedSequence
-            if (isNeedRemoveSequence)
+            if (isSomeSequenceStoped)
             {
                 listSequence.RemoveAll(seq => seq.isFinshed);
             }
