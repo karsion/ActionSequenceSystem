@@ -42,7 +42,7 @@ namespace UnrealM
         private int curNodeIndex = 0;
 
         //时间轴
-        public float timeAxis;
+        public float timeAxis { get; private set; }
 
         //目标组件，组件销毁的时候，本动作序列也相应销毁
         public Component id { get; private set; }
@@ -147,7 +147,7 @@ namespace UnrealM
         }
 
         //序列停止
-        public void Stop()
+        internal void Stop()
         {
             if (isFinshed)
             {

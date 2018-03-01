@@ -48,6 +48,7 @@ public class ActionSequenceSystemExample : MonoBehaviour
         looper.Stop();
     }
 
+    private ActionSequence delayer;
     // Update is called once per frame
     private void Update()
     {
@@ -61,6 +62,40 @@ public class ActionSequenceSystemExample : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.S))
         {
             this.Looper(1, -1, true, count => Debug.Log("S" +count));
+        }
+
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            //delayer = this.Looper(1, -1, false, this.StopSequence);
+            delayer = this.Looper(1, -1, false, () => delayer.StopSequence());
+
+            //delayer = this.Looper(1, -1, false, () =>
+            //{
+            //    delayer.StopSequence();
+            //});
+        }
+
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            delayer.StopSequence();
+        }
+
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            delayer = transform.Looper(1, 5, false, i =>
+            {
+                if (i == 2)
+                {
+                    delayer.StopSequence();
+                }
+            } );
+        }
+
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            this.Sequence().Interval(1).Action(() => this.Sequence().Interval(1).Action(() => Debug.Log("C")))
+                .Interval(1)
+                .Action(i => Debug.Log(i));
         }
 
         //Stop all sequences start by this ID
