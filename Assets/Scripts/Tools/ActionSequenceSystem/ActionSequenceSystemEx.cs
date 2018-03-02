@@ -1,3 +1,11 @@
+// ***************************************************************************
+// Copyright (c) 2018 ZhongShan KPP Technology Co
+// Copyright (c) 2018 Karsion
+//   
+// https://github.com/karsion
+// Date: 2018-03-02 9:34
+// ***************************************************************************
+
 using System;
 using UnityEngine;
 
@@ -18,11 +26,11 @@ namespace UnrealM
             ActionSequenceSystem.StopSequence(id);
         }
 
-        public static void StopSequence(this ActionSequence id)
+        public static void StopSequence(this ActionSequence sequence)
         {
-            if (id != null)
+            if (sequence != null)
             {
-                id.Stop();
+                sequence.Stop();
             }
         }
 

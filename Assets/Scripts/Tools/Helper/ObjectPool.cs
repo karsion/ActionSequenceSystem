@@ -1,7 +1,10 @@
-﻿// Copyright: ZhongShan KPP Technology Co
-// Date: 2018-02-10
-// Time: 23:35
-// Author: Karsion
+﻿// ***************************************************************************
+// Copyright (c) 2018 ZhongShan KPP Technology Co
+// Copyright (c) 2018 Karsion
+//   
+// https://github.com/karsion
+// Date: 2018-03-02 9:34
+// ***************************************************************************
 
 using System;
 using System.Collections.Generic;

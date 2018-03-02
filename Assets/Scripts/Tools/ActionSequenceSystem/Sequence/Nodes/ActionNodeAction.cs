@@ -1,7 +1,10 @@
-﻿// Copyright: ZhongShan KPP Technology Co
-// Date: 2018-02-26
-// Time: 16:21
-// Author: Karsion
+﻿// ***************************************************************************
+// Copyright (c) 2018 ZhongShan KPP Technology Co
+// Copyright (c) 2018 Karsion
+//   
+// https://github.com/karsion
+// Date: 2018-03-02 9:34
+// ***************************************************************************
 
 using System;
 
@@ -32,8 +35,13 @@ namespace UnrealM
             return opNodeAction.Get().SetAction(action);
         }
 
-        internal override bool Update(ActionSequence actionSequence)
+        //internal override void Start(ActionSequence actionSequence)
+        //{
+        //}
+
+        internal override bool Update(ActionSequence actionSequence, float deltaTime)
         {
+            actionSequence.UpdateTimeAxis(deltaTime);
             if (null != action)
             {
                 action();

@@ -1,7 +1,10 @@
-﻿// Copyright: ZhongShan KPP Technology Co
-// Date: 2018-02-09
-// Time: 14:56
-// Author: Karsion
+﻿// ***************************************************************************
+// Copyright (c) 2018 ZhongShan KPP Technology Co
+// Copyright (c) 2018 Karsion
+//   
+// https://github.com/karsion
+// Date: 2018-03-02 10:09
+// ***************************************************************************
 
 using UnityEngine;
 using UnrealM;
@@ -13,14 +16,14 @@ public class ActionSequenceSystemExample : MonoBehaviour
     {
         //Start a once timer
         this.Delayer(1, () => Debug.Log(1));
-        this.Sequence().Interval(1).Action(() => Debug.Log(1));//Same
+        this.Sequence().Interval(1).Action(() => Debug.Log(1)); //Same
 
         //Allso use transform as a ID to start a sequence
         transform.Delayer(1, () => Debug.Log(1));
 
         //Start a loop timer
         this.Looper(0.5f, 3, false, () => Debug.Log(-1));
-        this.Sequence().Loop(3).Interval(0.5f).Action(() => Debug.Log(-1));//Same
+        this.Sequence().Loop(3).Interval(0.5f).Action(() => Debug.Log(-1)); //Same
 
         //Start a long sequence
         this.Sequence()
@@ -35,7 +38,7 @@ public class ActionSequenceSystemExample : MonoBehaviour
         //Check Q key per 0.2 seconds
         this.Sequence()
             .Loop()
-            .Interval(0.2f)
+            .Interval(1f)
             .Condition(() => Input.GetKeyDown(KeyCode.Q))
             .Action(n => Debug.Log("Q键 按下次数" + n));
 
@@ -49,30 +52,20 @@ public class ActionSequenceSystemExample : MonoBehaviour
     }
 
     private ActionSequence delayer;
+
     // Update is called once per frame
     private void Update()
     {
         //Start a loop in Update, using transform as ID
         if (Input.GetKeyDown(KeyCode.A))
         {
-            transform.Looper(1, -1, true, count => Debug.Log("A" +count));
+            transform.Looper(1, -1, true, count => Debug.Log("A" + count));
         }
 
         //Start a loop in Update
         if (Input.GetKeyDown(KeyCode.S))
         {
-            this.Looper(1, -1, true, count => Debug.Log("S" +count));
-        }
-
-        if (Input.GetKeyDown(KeyCode.Z))
-        {
-            //delayer = this.Looper(1, -1, false, this.StopSequence);
-            delayer = this.Looper(1, -1, false, () => delayer.StopSequence());
-
-            //delayer = this.Looper(1, -1, false, () =>
-            //{
-            //    delayer.StopSequence();
-            //});
+            this.Looper(1, -1, true, count => Debug.Log("S" + count));
         }
 
         if (Input.GetKeyDown(KeyCode.B))
@@ -88,13 +81,13 @@ public class ActionSequenceSystemExample : MonoBehaviour
                 {
                     delayer.StopSequence();
                 }
-            } );
+            });
         }
 
         if (Input.GetKeyDown(KeyCode.C))
         {
             this.Sequence().Interval(1).Action(() => this.Sequence().Interval(1).Action(() => Debug.Log("C")))
-                .Interval(1)
+                .Interval(2)
                 .Action(i => Debug.Log(i));
         }
 
@@ -108,6 +101,12 @@ public class ActionSequenceSystemExample : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.F))
         {
             this.StopSequence();
+        }
+
+        //Stop all sequences is ActionSequenceSystem
+        if (Input.GetKeyDown(KeyCode.End))
+        {
+            ActionSequenceSystem.StopAll();
         }
 
         //If this Component is destroyed, the associated Sequence will automatically stop and recycle to the pool.

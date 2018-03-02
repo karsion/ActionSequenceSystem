@@ -1,7 +1,10 @@
-﻿// Copyright: ZhongShan KPP Technology Co
-// Date: 2018-02-26
-// Time: 16:22
-// Author: Karsion
+﻿// ***************************************************************************
+// Copyright (c) 2018 ZhongShan KPP Technology Co
+// Copyright (c) 2018 Karsion
+//   
+// https://github.com/karsion
+// Date: 2018-03-02 9:34
+// ***************************************************************************
 
 namespace UnrealM
 {
@@ -30,11 +33,16 @@ namespace UnrealM
             return this;
         }
 
-        internal override bool Update(ActionSequence actionSequence)
+        //internal override void Start(ActionSequence actionSequence)
+        //{
+        //}
+
+        internal override bool Update(ActionSequence actionSequence, float deltaTime)
         {
+            actionSequence.UpdateTimeAxis(deltaTime);
             if (actionSequence.timeAxis > interval)
             {
-                actionSequence.UpdateTimeAxis(interval);
+                actionSequence.UpdateTimeAxis(-interval);
                 return true;
             }
 

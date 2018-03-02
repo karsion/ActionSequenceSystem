@@ -1,28 +1,10 @@
-// /****************************************************************************
-//  * Copyright (c) 2018 ZhongShan KPP Technology Co
-//  * Copyright (c) 2018 Karsion
-//  * 
-//  * https://github.com/karsion
-//  * Date: 2018-02-27 16:05
-//  *
-//  * Permission is hereby granted, free of charge, to any person obtaining a copy
-//  * of this software and associated documentation files (the "Software"), to deal
-//  * in the Software without restriction, including without limitation the rights
-//  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-//  * copies of the Software, and to permit persons to whom the Software is
-//  * furnished to do so, subject to the following conditions:
-//  * 
-//  * The above copyright notice and this permission notice shall be included in
-//  * all copies or substantial portions of the Software.
-//  * 
-//  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-//  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-//  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-//  * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-//  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-//  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-//  * THE SOFTWARE.
-//  ****************************************************************************/
+// ***************************************************************************
+// Copyright (c) 2018 ZhongShan KPP Technology Co
+// Copyright (c) 2018 Karsion
+//   
+// https://github.com/karsion
+// Date: 2018-03-02 9:34
+// ***************************************************************************
 
 using System;
 using System.Collections.Generic;
@@ -57,6 +39,8 @@ namespace UnrealM
         //是否已经运行完
         public bool isFinshed { get; private set; }
 
+        private bool bSetStop = false;
+
 #if UNITY_EDITOR
         public static void GetObjectPoolInfo(out int countActive, out int countAll)
         {
@@ -76,11 +60,21 @@ namespace UnrealM
         }
 
         #region Chaining
+        //private ActionSequence StratFirstNode()
+        //{
+        //    if (nodes.Count == 1)
+        //    {
+        //        nodes[0].Start(this);
+        //    }
+
+        //    return this;
+        //}
 
         //增加一个运行节点
         public ActionSequence Interval(float interval)
         {
             nodes.Add(ActionNodeInterval.Get(interval));
+            //return StratFirstNode();
             return this;
         }
 
@@ -88,6 +82,7 @@ namespace UnrealM
         public ActionSequence Action(Action action)
         {
             nodes.Add(ActionNodeAction.Get(action));
+            //return StratFirstNode();
             return this;
         }
 
@@ -96,6 +91,7 @@ namespace UnrealM
         {
             ActionNodeAction actionNodeAction = ActionNodeAction.Get(action);
             nodes.Add(actionNodeAction);
+            //return StratFirstNode();
             return this;
         }
 
@@ -103,6 +99,7 @@ namespace UnrealM
         public ActionSequence Condition(Func<bool> condition)
         {
             nodes.Add(ActionNodeCondition.Get(condition));
+            //return StratFirstNode();
             return this;
         }
 
@@ -131,23 +128,33 @@ namespace UnrealM
             cycles = 0;
             timeAxis = 0;
             loopTime = 0;
+            bSetStop = false;
+            //isStopTimeAxis = false;
             return this;
         }
 
         private ActionSequence Start()
         {
             hasID = false;
-            
+
             curNodeIndex = 0;
             isFinshed = false;
             cycles = 0;
             timeAxis = 0;
             loopTime = 0;
+            bSetStop = false;
+            //isStopTimeAxis = false;
             return this;
         }
 
-        //序列停止
+        //外部调用停止，内部执行的时候才会自杀，为了保持运行列表与缓存池同步
         internal void Stop()
+        {
+            bSetStop = true;
+        }
+
+        //序列自杀
+        private void Kill()
         {
             if (isFinshed)
             {
@@ -162,58 +169,44 @@ namespace UnrealM
             cycles = 0;
             timeAxis = 0;
             loopTime = 0;
+            bSetStop = false;
+            //isStopTimeAxis = false;
             Release();
         }
 
+        //internal bool isStopTimeAxis = false;
         //序列更新
         internal bool Update(float deltaTime)
         {
-            //不更新已经Stop的
-            if (isFinshed)
+            //SetStop to kill || 没有id，Auto kill || 开了序列没有加任何节点
+            if (bSetStop || (hasID && id == null) || (nodes.Count == 0))
             {
+                Kill();
                 return false;
             }
 
-            //这个情况就是id被销毁了
-            if (hasID && id == null)
-            {
-                Stop();
-                return false;
-            }
-
-            //开了序列没有加任何节点
-            if (nodes.Count == 0)
-            {
-                Stop();
-                return false;
-            }
-
-            timeAxis += deltaTime;
+            //if (!isStopTimeAxis)
+            //{
+            //}
 
             //用索引更新节点
-            if (nodes[curNodeIndex].Update(this))
+            if (nodes[curNodeIndex].Update(this, deltaTime))
             {
                 curNodeIndex++;
                 if (curNodeIndex >= nodes.Count)
                 {
-                    //无限循环的节点
-                    if (loopTime < 0)
-                    {
-                        NextLoop();
-                        return true;
-                    }
-
-                    //循环的节点需要重新启动，运行次数++
-                    if (loopTime > cycles)
-                    {
-                        NextLoop();
-                        return true;
-                    }
-
                     //运行次数>=循环次数了，就停止
-                    Stop();
-                    return false;
+                    if (loopTime > -1 && cycles >= loopTime)
+                    {
+                        Kill();
+                        return false;
+                    }
+
+                    //无限循环的节点 或 有限，运行次数++
+                    NextLoop();
                 }
+
+                //nodes[curNodeIndex].Start(this);
             }
 
             return true;
@@ -231,17 +224,17 @@ namespace UnrealM
             nodes.Clear();
         }
 
-        internal void UpdateTimeAxis(float interval)
-        {
-            timeAxis -= interval;
-        }
-
         //重启序列
         private void NextLoop()
         {
             cycles++;
             curNodeIndex = 0;
-            timeAxis = 0;
+            //timeAxis = 0;
+        }
+
+        internal void UpdateTimeAxis(float deltaTime)
+        {
+            timeAxis += deltaTime;
         }
     }
 }
