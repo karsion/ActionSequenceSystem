@@ -3,10 +3,11 @@
 // Copyright (c) 2018 Karsion
 //   
 // https://github.com/karsion
-// Date: 2018-03-02 9:34
+// Date: 2018-03-20 11:38
 // ***************************************************************************
 
 using System;
+using UnityEngine;
 
 namespace UnrealM
 {
@@ -35,14 +36,21 @@ namespace UnrealM
             return this;
         }
 
-        //internal override void Start(ActionSequence actionSequence)
-        //{
-        //    actionSequence.isStopTimeAxis = true;
-        //}
-
         internal override bool Update(ActionSequence actionSequence, float deltaTime)
         {
-            return condition();
+            bool res = false;
+            try
+            {
+                res = condition();
+            }
+            catch (Exception e)
+            {
+                Debug.LogException(e);
+                actionSequence.Stop();
+                return true;
+            }
+
+            return res;
         }
 
         internal override void Release()

@@ -14,8 +14,6 @@ namespace UnrealM
         {
         }
 
-        //internal abstract void Start(ActionSequence actionSequence);
-
         internal abstract bool Update(ActionSequence actionSequence, float deltaTime);
 
         internal abstract void Release();

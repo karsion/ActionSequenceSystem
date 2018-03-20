@@ -106,6 +106,7 @@ public class ActionSequenceSystemExample : MonoBehaviour
         //Stop all sequences is ActionSequenceSystem
         if (Input.GetKeyDown(KeyCode.End))
         {
+            Debug.Log("手动停止所有序列");
             ActionSequenceSystem.StopAll();
         }
 

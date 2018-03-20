@@ -3,7 +3,7 @@
 // Copyright (c) 2018 Karsion
 //   
 // https://github.com/karsion
-// Date: 2018-03-02 9:34
+// Date: 2018-03-20 11:39
 // ***************************************************************************
 
 using System;
@@ -39,7 +39,7 @@ namespace UnrealM
         //是否已经运行完
         public bool isFinshed { get; private set; }
 
-        private bool bSetStop = false;
+        public bool bSetStop { get; private set; }
 
 #if UNITY_EDITOR
         public static void GetObjectPoolInfo(out int countActive, out int countAll)
@@ -60,21 +60,28 @@ namespace UnrealM
         }
 
         #region Chaining
-        //private ActionSequence StratFirstNode()
-        //{
-        //    if (nodes.Count == 1)
-        //    {
-        //        nodes[0].Start(this);
-        //    }
+        public ActionSequence Hide()
+        {
+            nodes.Add(ActionNodeSetActive.Get(false));
+            return this;
+        }
 
-        //    return this;
-        //}
+        public ActionSequence Show()
+        {
+            nodes.Add(ActionNodeSetActive.Get(true));
+            return this;
+        }
+
+        public ActionSequence ToggleActive()
+        {
+            nodes.Add(ActionNodeSetActive.Get(true, true));
+            return this;
+        }
 
         //增加一个运行节点
         public ActionSequence Interval(float interval)
         {
             nodes.Add(ActionNodeInterval.Get(interval));
-            //return StratFirstNode();
             return this;
         }
 
@@ -82,7 +89,6 @@ namespace UnrealM
         public ActionSequence Action(Action action)
         {
             nodes.Add(ActionNodeAction.Get(action));
-            //return StratFirstNode();
             return this;
         }
 
@@ -91,7 +97,6 @@ namespace UnrealM
         {
             ActionNodeAction actionNodeAction = ActionNodeAction.Get(action);
             nodes.Add(actionNodeAction);
-            //return StratFirstNode();
             return this;
         }
 
@@ -99,7 +104,6 @@ namespace UnrealM
         public ActionSequence Condition(Func<bool> condition)
         {
             nodes.Add(ActionNodeCondition.Get(condition));
-            //return StratFirstNode();
             return this;
         }
 
@@ -122,13 +126,13 @@ namespace UnrealM
         {
             this.id = id;
             hasID = true;
-
             curNodeIndex = 0;
             isFinshed = false;
             cycles = 0;
             timeAxis = 0;
             loopTime = 0;
             bSetStop = false;
+
             //isStopTimeAxis = false;
             return this;
         }
@@ -136,13 +140,14 @@ namespace UnrealM
         private ActionSequence Start()
         {
             hasID = false;
-
+            id = null;
             curNodeIndex = 0;
             isFinshed = false;
             cycles = 0;
             timeAxis = 0;
             loopTime = 0;
             bSetStop = false;
+
             //isStopTimeAxis = false;
             return this;
         }
@@ -170,11 +175,10 @@ namespace UnrealM
             timeAxis = 0;
             loopTime = 0;
             bSetStop = false;
-            //isStopTimeAxis = false;
-            Release();
+
+            //Release();
         }
 
-        //internal bool isStopTimeAxis = false;
         //序列更新
         internal bool Update(float deltaTime)
         {
@@ -184,10 +188,6 @@ namespace UnrealM
                 Kill();
                 return false;
             }
-
-            //if (!isStopTimeAxis)
-            //{
-            //}
 
             //用索引更新节点
             if (nodes[curNodeIndex].Update(this, deltaTime))
@@ -203,17 +203,16 @@ namespace UnrealM
                     }
 
                     //无限循环的节点 或 有限，运行次数++
-                    NextLoop();
+                    cycles++;
+                    curNodeIndex = 0;
                 }
-
-                //nodes[curNodeIndex].Start(this);
             }
 
             return true;
         }
 
         //回收序列，回收序列中的节点
-        private void Release()
+        public void Release()
         {
             opSequences.Release(this);
             for (int i = 0; i < nodes.Count; i++)
@@ -222,14 +221,6 @@ namespace UnrealM
             }
 
             nodes.Clear();
-        }
-
-        //重启序列
-        private void NextLoop()
-        {
-            cycles++;
-            curNodeIndex = 0;
-            //timeAxis = 0;
         }
 
         internal void UpdateTimeAxis(float deltaTime)

@@ -3,7 +3,7 @@
 // Copyright (c) 2018 Karsion
 //   
 // https://github.com/karsion
-// Date: 2018-03-02 9:34
+// Date: 2018-03-20 11:38
 // ***************************************************************************
 
 using System;
@@ -32,6 +32,14 @@ namespace UnrealM
             {
                 sequence.Stop();
             }
+        }
+
+        //AutoHide
+        public static ActionSequence Hider(this Component id, float delay)
+        {
+            ActionSequence seq = ActionSequenceSystem.GetSequence(id);
+            seq.Interval(delay).Hide();
+            return seq;
         }
 
         //直接延迟动作

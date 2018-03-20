@@ -3,10 +3,11 @@
 // Copyright (c) 2018 Karsion
 //   
 // https://github.com/karsion
-// Date: 2018-03-02 9:34
+// Date: 2018-03-20 11:39
 // ***************************************************************************
 
 using System;
+using UnityEngine;
 
 namespace UnrealM
 {
@@ -35,20 +36,32 @@ namespace UnrealM
             return opNodeAction.Get().SetAction(action);
         }
 
-        //internal override void Start(ActionSequence actionSequence)
-        //{
-        //}
-
         internal override bool Update(ActionSequence actionSequence, float deltaTime)
         {
             actionSequence.UpdateTimeAxis(deltaTime);
             if (null != action)
             {
-                action();
+                try
+                {
+                    action();
+                }
+                catch (Exception e)
+                {
+                    Debug.LogException(e);
+                    actionSequence.Stop();
+                }
             }
             else if (null != actionLoop)
             {
-                actionLoop(actionSequence.cycles);
+                try
+                {
+                    actionLoop(actionSequence.cycles);
+                }
+                catch (Exception e)
+                {
+                    Debug.LogException(e);
+                    actionSequence.Stop();
+                }
             }
 
             return true;

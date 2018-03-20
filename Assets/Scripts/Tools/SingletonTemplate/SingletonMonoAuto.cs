@@ -3,13 +3,13 @@
 // Copyright (c) 2018 Karsion
 //   
 // https://github.com/karsion
-// Date: 2018-03-02 9:34
+// Date: 2018-03-20 11:39
 // ***************************************************************************
 
 using System;
 using UnityEngine;
 
-public abstract class SingletonMono<T> : MonoBehaviour where T : MonoBehaviour
+public abstract class SingletonMonoAuto<T> : MonoBehaviour where T : MonoBehaviour
 {
     private static T _instance = null;
     private bool _duplicateToDestroy;
@@ -33,7 +33,7 @@ public abstract class SingletonMono<T> : MonoBehaviour where T : MonoBehaviour
         if (_instance == null)
         {
             _instance = GetComponent<T>();
-            (_instance as SingletonMono<T>).OnSingletonInit();
+            (_instance as SingletonMonoAuto<T>).OnSingletonInit();
             DontDestroyOnLoad(_instance.gameObject);
             return;
         }
@@ -45,7 +45,7 @@ public abstract class SingletonMono<T> : MonoBehaviour where T : MonoBehaviour
             return;
         }
 
-        (_instance as SingletonMono<T>).OnSingletonInit();
+        (_instance as SingletonMonoAuto<T>).OnSingletonInit();
         DontDestroyOnLoad(_instance.gameObject);
     }
 

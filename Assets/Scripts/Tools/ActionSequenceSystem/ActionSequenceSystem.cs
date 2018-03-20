@@ -3,7 +3,7 @@
 // Copyright (c) 2018 Karsion
 //   
 // https://github.com/karsion
-// Date: 2018-03-02 9:34
+// Date: 2018-03-20 11:39
 // ***************************************************************************
 
 using System;
@@ -14,7 +14,7 @@ namespace UnrealM
 {
     //开动作序列扩展
 
-    public class ActionSequenceSystem : SingletonMono<ActionSequenceSystem>
+    public class ActionSequenceSystem : SingletonMonoAuto<ActionSequenceSystem>
     {
         private readonly List<ActionSequence> listSequenceAlive = new List<ActionSequence>(64);
 
@@ -59,6 +59,15 @@ namespace UnrealM
             //Remove Finshed Sequence(Finshed is Released)
             if (isSomeSequenceStoped)
             {
+                for (int i = 0; i < listSequenceAlive.Count; i++)
+                {
+                    ActionSequence actionSequence = ListSequenceAlive[i];
+                    if (actionSequence.isFinshed)
+                    {
+                        actionSequence.Release();
+                    }
+                }
+
                 listSequenceAlive.RemoveAll(seq => seq.isFinshed);
             }
         }
