@@ -12,31 +12,34 @@ using UnityEngine;
 
 namespace UnrealM
 {
-    //¿ª¶¯×÷ĞòÁĞÀà
+    //å¼€åŠ¨ä½œåºåˆ—ç±»
     public class ActionSequence
     {
         internal static readonly ObjectPool<ActionSequence> opSequences = new ObjectPool<ActionSequence>(64);
 
-        //½ÚµãÁĞ±í£¬Ä¬ÈÏ°ÑÊı×éÈİÁ¿ÉèÎª8
-        public readonly List<ActionNode> nodes = new List<ActionNode>(8);
+        //èŠ‚ç‚¹åˆ—è¡¨ï¼Œé»˜è®¤æŠŠæ•°ç»„å®¹é‡è®¾ä¸º16
+        public readonly List<ActionNode> nodes = new List<ActionNode>(16);
 
-        //µ±Ç°Ö´ĞĞµÄ½ÚµãË÷Òı
+        //å½“å‰æ‰§è¡Œçš„èŠ‚ç‚¹ç´¢å¼•
         private int curNodeIndex = 0;
 
-        //Ê±¼äÖá
+        //æ—¶é—´è½´
         public float timeAxis { get; private set; }
 
-        //Ä¿±ê×é¼ş£¬×é¼şÏú»ÙµÄÊ±ºò£¬±¾¶¯×÷ĞòÁĞÒ²ÏàÓ¦Ïú»Ù
+        //ç›®æ ‡ç»„ä»¶ï¼Œç»„ä»¶é”€æ¯çš„æ—¶å€™ï¼Œæœ¬åŠ¨ä½œåºåˆ—ä¹Ÿç›¸åº”é”€æ¯
         public Component id { get; private set; }
         private bool hasID = false;
 
-        //ĞèÒªÑ­»·µÄ´ÎÊı
+        //è®¾ç½®ä¸€ä¸ªå¥æŸ„ç”¨äºæ­£ç¡®çš„åœæ­¢åºåˆ—
+        public ActionSequenceHandle handle { get; private set; }
+
+        //éœ€è¦å¾ªç¯çš„æ¬¡æ•°
         public int loopTime { get; private set; }
 
-        //ÒÑ¾­ÔËĞĞµÄ´ÎÊı
+        //å·²ç»è¿è¡Œçš„æ¬¡æ•°
         public int cycles { get; private set; }
 
-        //ÊÇ·ñÒÑ¾­ÔËĞĞÍê
+        //æ˜¯å¦å·²ç»è¿è¡Œå®Œ
         public bool isFinshed { get; private set; }
 
         public bool bSetStop { get; private set; }
@@ -78,21 +81,21 @@ namespace UnrealM
             return this;
         }
 
-        //Ôö¼ÓÒ»¸öÔËĞĞ½Úµã
+        //å¢åŠ ä¸€ä¸ªè¿è¡ŒèŠ‚ç‚¹
         public ActionSequence Interval(float interval)
         {
             nodes.Add(ActionNodeInterval.Get(interval));
             return this;
         }
 
-        //Ôö¼ÓÒ»¸ö¶¯×÷½Úµã
+        //å¢åŠ ä¸€ä¸ªåŠ¨ä½œèŠ‚ç‚¹
         public ActionSequence Action(Action action)
         {
             nodes.Add(ActionNodeAction.Get(action));
             return this;
         }
 
-        //Ôö¼ÓÒ»¸ö´øÑ­»·´ÎÊıµÄ¶¯×÷½Úµã
+        //å¢åŠ ä¸€ä¸ªå¸¦å¾ªç¯æ¬¡æ•°çš„åŠ¨ä½œèŠ‚ç‚¹
         public ActionSequence Action(Action<int> action)
         {
             ActionNodeAction actionNodeAction = ActionNodeAction.Get(action);
@@ -100,14 +103,14 @@ namespace UnrealM
             return this;
         }
 
-        //Ôö¼ÓÒ»¸öÌõ¼ş½Úµã
+        //å¢åŠ ä¸€ä¸ªæ¡ä»¶èŠ‚ç‚¹
         public ActionSequence Condition(Func<bool> condition)
         {
             nodes.Add(ActionNodeCondition.Get(condition));
             return this;
         }
 
-        //ÉèÖÃÑ­»·
+        //è®¾ç½®å¾ªç¯
         public ActionSequence Loop(int loopTime = -1)
         {
             if (loopTime > 0)
@@ -121,7 +124,7 @@ namespace UnrealM
         }
         #endregion
 
-        //¿ªÆôĞòÁĞ
+        //å¼€å¯åºåˆ—
         private ActionSequence Start(Component id)
         {
             this.id = id;
@@ -132,8 +135,7 @@ namespace UnrealM
             timeAxis = 0;
             loopTime = 0;
             bSetStop = false;
-
-            //isStopTimeAxis = false;
+            handle = null;
             return this;
         }
 
@@ -147,18 +149,17 @@ namespace UnrealM
             timeAxis = 0;
             loopTime = 0;
             bSetStop = false;
-
-            //isStopTimeAxis = false;
+            handle = null;
             return this;
         }
 
-        //Íâ²¿µ÷ÓÃÍ£Ö¹£¬ÄÚ²¿Ö´ĞĞµÄÊ±ºò²Å»á×ÔÉ±£¬ÎªÁË±£³ÖÔËĞĞÁĞ±íÓë»º´æ³ØÍ¬²½
+        //å¤–éƒ¨è°ƒç”¨åœæ­¢ï¼Œå†…éƒ¨æ‰§è¡Œçš„æ—¶å€™æ‰ä¼šè‡ªæ€ï¼Œä¸ºäº†ä¿æŒè¿è¡Œåˆ—è¡¨ä¸ç¼“å­˜æ± åŒæ­¥
         internal void Stop()
         {
             bSetStop = true;
         }
 
-        //ĞòÁĞ×ÔÉ±
+        //åºåˆ—è‡ªæ€
         private void Kill()
         {
             if (isFinshed)
@@ -175,34 +176,37 @@ namespace UnrealM
             timeAxis = 0;
             loopTime = 0;
             bSetStop = false;
-
-            //Release();
+            if (handle != null)
+            {
+                handle.sequence = null;
+                handle = null;
+            }
         }
 
-        //ĞòÁĞ¸üĞÂ
+        //åºåˆ—æ›´æ–°
         internal bool Update(float deltaTime)
         {
-            //SetStop to kill || Ã»ÓĞid£¬Auto kill || ¿ªÁËĞòÁĞÃ»ÓĞ¼ÓÈÎºÎ½Úµã
+            //SetStop to kill || æ²¡æœ‰idï¼ŒAuto kill || å¼€äº†åºåˆ—æ²¡æœ‰åŠ ä»»ä½•èŠ‚ç‚¹
             if (bSetStop || (hasID && id == null) || (nodes.Count == 0))
             {
                 Kill();
                 return false;
             }
 
-            //ÓÃË÷Òı¸üĞÂ½Úµã
+            //ç”¨ç´¢å¼•æ›´æ–°èŠ‚ç‚¹
             if (nodes[curNodeIndex].Update(this, deltaTime))
             {
                 curNodeIndex++;
                 if (curNodeIndex >= nodes.Count)
                 {
-                    //ÔËĞĞ´ÎÊı>=Ñ­»·´ÎÊıÁË£¬¾ÍÍ£Ö¹
+                    //è¿è¡Œæ¬¡æ•°>=å¾ªç¯æ¬¡æ•°äº†ï¼Œå°±åœæ­¢
                     if (loopTime > -1 && cycles >= loopTime)
                     {
                         Kill();
                         return false;
                     }
 
-                    //ÎŞÏŞÑ­»·µÄ½Úµã »ò ÓĞÏŞ£¬ÔËĞĞ´ÎÊı++
+                    //æ— é™å¾ªç¯çš„èŠ‚ç‚¹ æˆ– æœ‰é™ï¼Œè¿è¡Œæ¬¡æ•°++
                     cycles++;
                     curNodeIndex = 0;
                 }
@@ -211,7 +215,7 @@ namespace UnrealM
             return true;
         }
 
-        //»ØÊÕĞòÁĞ£¬»ØÊÕĞòÁĞÖĞµÄ½Úµã
+        //å›æ”¶åºåˆ—ï¼Œå›æ”¶åºåˆ—ä¸­çš„èŠ‚ç‚¹
         public void Release()
         {
             opSequences.Release(this);
@@ -226,6 +230,28 @@ namespace UnrealM
         internal void UpdateTimeAxis(float deltaTime)
         {
             timeAxis += deltaTime;
+        }
+
+        internal ActionSequence SetHandle(ActionSequenceHandle handle)
+        {
+            //å¯èƒ½æœ‰äººæ§åˆ¶è¿™ä¸ªSequenceï¼Œå°†ä¼šä¸¢å¼ƒå‰ä»»ï¼Œå¯ç”¨æ–°äºº
+            if (this.handle != null)
+            {
+                Debug.LogWarning("try set handle, but this sequence is already controlled by a handle! Original handle lose control of this sequence and input handle take control.");
+                this.handle.sequence = null;
+            }
+
+            //å¯èƒ½å¥æŸ„è¿˜åœ¨æ§åˆ¶å…¶ä»–Sequenceï¼Œä¸¢å¤±ä¸Šä¸€ä¸ªSequenceçš„æ§åˆ¶æƒï¼Œæ§åˆ¶å½“å‰çš„Sequence
+            if (handle.sequence != null)
+            {
+                Debug.LogWarning("try set handle, but the input handle already controls a sequence! Lose control of the original sequence and take control this sequence");
+                handle.sequence.handle = null;
+            }
+
+            //è®¾ç½®å¥æŸ„
+            this.handle = handle;
+            handle.sequence = this;
+            return this;
         }
     }
 }

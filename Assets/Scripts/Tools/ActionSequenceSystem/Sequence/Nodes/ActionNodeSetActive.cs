@@ -3,14 +3,13 @@
 // Copyright (c) 2018 Karsion
 //   
 // https://github.com/karsion
-// Date: 2018-03-20 11:39
+// Date: 2018-04-11 10:32
 // ***************************************************************************
 
 namespace UnrealM
 {
     public class ActionNodeSetActive : ActionNode
     {
-        //全局池
         private static readonly ObjectPool<ActionNodeSetActive> opNodeHide = new ObjectPool<ActionNodeSetActive>(64);
 #if UNITY_EDITOR
         public static void GetObjectPoolInfo(out int countActive, out int countAll)
@@ -35,7 +34,8 @@ namespace UnrealM
             actionSequence.UpdateTimeAxis(deltaTime);
             if (actionSequence.id)
             {
-                actionSequence.id.gameObject.SetActive(false);
+                bool final = isToggle ? !actionSequence.id.gameObject.activeSelf : isActive;
+                actionSequence.id.gameObject.SetActive(final);
             }
 
             return true;

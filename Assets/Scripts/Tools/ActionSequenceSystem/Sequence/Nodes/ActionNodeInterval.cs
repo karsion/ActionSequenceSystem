@@ -33,10 +33,6 @@ namespace UnrealM
             return this;
         }
 
-        //internal override void Start(ActionSequence actionSequence)
-        //{
-        //}
-
         internal override bool Update(ActionSequence actionSequence, float deltaTime)
         {
             actionSequence.UpdateTimeAxis(deltaTime);

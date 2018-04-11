@@ -3,7 +3,7 @@
 // Copyright (c) 2018 Karsion
 //   
 // https://github.com/karsion
-// Date: 2018-03-20 11:39
+// Date: 2018-04-11 10:37
 // ***************************************************************************
 
 using UnityEngine;
@@ -45,6 +45,8 @@ public class ActionSequenceSystemIssue : MonoBehaviour
         //问题：Sequence执行完之后，把引用它的变量执行停止，会停止到其他东西？
         //问题原因：执行完之后自动回收到池子，这时引用还指向这个Sequence，当其他逻辑调用，
         //获取到这个Sequence做了别的事情的时候，调用引用停止它，就会停止到其他逻辑，务必小心
+        //解决办法：加入ActionSequenceHanlde来正确的引用和停止Sequence
+        //已修复：2018-4-11 10:36:35
     }
 
     private void Update()

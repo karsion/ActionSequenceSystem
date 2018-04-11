@@ -1,4 +1,4 @@
-// ***************************************************************************
+ï»¿// ***************************************************************************
 // Copyright (c) 2018 ZhongShan KPP Technology Co
 // Copyright (c) 2018 Karsion
 //   
@@ -13,14 +13,14 @@ namespace UnrealM
 {
     public static class ActionSequenceSystemEx
     {
-        //ÓÃComponent×÷ÎªID¿ªĞòÁĞ
+        //ç”¨Componentä½œä¸ºIDå¼€åºåˆ—
         public static ActionSequence Sequence(this Component id)
         {
             ActionSequence seq = ActionSequenceSystem.GetSequence(id);
             return seq;
         }
 
-        //ÓÃComponent×÷ÎªIDÍ£Ö¹ĞòÁĞ
+        //ç”¨Componentä½œä¸ºIDåœæ­¢åºåˆ—
         public static void StopSequence(this Component id)
         {
             ActionSequenceSystem.StopSequence(id);
@@ -34,6 +34,13 @@ namespace UnrealM
             }
         }
 
+        public static ActionSequence Shower(this Component id, float delay)
+        {
+            ActionSequence seq = ActionSequenceSystem.GetSequence(id);
+            seq.Interval(delay).Show();
+            return seq;
+        }
+
         //AutoHide
         public static ActionSequence Hider(this Component id, float delay)
         {
@@ -42,7 +49,7 @@ namespace UnrealM
             return seq;
         }
 
-        //Ö±½ÓÑÓ³Ù¶¯×÷
+        //ç›´æ¥å»¶è¿ŸåŠ¨ä½œ
         public static ActionSequence Delayer(this Component id, float delay, Action action)
         {
             ActionSequence seq = ActionSequenceSystem.GetSequence(id);
@@ -50,7 +57,7 @@ namespace UnrealM
             return seq;
         }
 
-        //Ö±½ÓÑ­»·¶¯×÷
+        //ç›´æ¥å¾ªç¯åŠ¨ä½œ
         public static ActionSequence Looper(this Component id, float interval, int loopTime, bool isActionAtStart, Action action)
         {
             ActionSequence seq = ActionSequenceSystem.GetSequence(id);
@@ -67,7 +74,7 @@ namespace UnrealM
             return seq;
         }
 
-        //Ö±½ÓÑ­»·¶¯×÷
+        //ç›´æ¥å¾ªç¯åŠ¨ä½œ
         public static ActionSequence Looper(this Component id, float interval, int loopTime, bool isActionAtStart, Action<int> action)
         {
             ActionSequence seq = ActionSequenceSystem.GetSequence(id);

@@ -11,6 +11,9 @@ using UnrealM;
 
 public class ActionSequenceSystemExample : MonoBehaviour
 {
+    private readonly ActionSequenceHandle infiniteSequenceHandle = new ActionSequenceHandle();
+
+    public Transform tfShowHideExample;
     // Use this for initialization
     private void Start()
     {
@@ -47,11 +50,15 @@ public class ActionSequenceSystemExample : MonoBehaviour
         ActionSequenceSystem.Looper(0.2f, 10, false, () => Debug.Log("No id looper"));
 
         //Notes：An instance must be preserved to manually stop an infinite loop sequence.
-        ActionSequence looper = ActionSequenceSystem.Looper(0.2f, -1, false, () => Debug.Log("No id infinite looper"));
-        looper.Stop();
+        ActionSequenceSystem.Looper(0.2f, -1, false, () => Debug.Log("No id infinite looper")).SetHandle(infiniteSequenceHandle);
+        infiniteSequenceHandle.StopSequence();
+
+        //Start a toggle GameObject active sequence
+        tfShowHideExample.Hider(0.5f);
+        tfShowHideExample.Sequence().Interval(0.5f).ToggleActive().Loop();
     }
 
-    private ActionSequence delayer;
+    //private ActionSequence delayer;
 
     // Update is called once per frame
     private void Update()
@@ -70,18 +77,18 @@ public class ActionSequenceSystemExample : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.B))
         {
-            delayer.StopSequence();
+            infiniteSequenceHandle.StopSequence();
         }
 
         if (Input.GetKeyDown(KeyCode.X))
         {
-            delayer = transform.Looper(1, 5, false, i =>
+            transform.Looper(1, 5, false, i =>
             {
                 if (i == 2)
                 {
-                    delayer.StopSequence();
+                    infiniteSequenceHandle.StopSequence();
                 }
-            });
+            }).SetHandle(infiniteSequenceHandle);
         }
 
         if (Input.GetKeyDown(KeyCode.C))
