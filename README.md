@@ -43,6 +43,11 @@ ActionSequenceSystem.Delayer(5, () => Debug.Log("No id delayer"));
 ActionSequenceSystem.Looper(0.2f, 10, false, () => Debug.Log("No id looper"));
 
 //Notes：An instance must be preserved to manually stop an infinite loop sequence.
-ActionSequence looper = ActionSequenceSystem.Looper(0.2f, -1, false, () => Debug.Log("No id infinite looper"));
-looper.Stop();
+ActionSequenceHandle infiniteSequenceHandle = new ActionSequenceHandle();
+ActionSequenceSystem.Looper(0.2f, -1, false, () => Debug.Log("No id infinite looper")).SetHandle(infiniteSequenceHandle);
+infiniteSequenceHandle.StopSequence();
+
+//Start a toggle GameObject active sequence
+tfShowHideExample.Hider(0.5f);
+tfShowHideExample.Sequence().Interval(0.5f).ToggleActive().Loop();
 ```
