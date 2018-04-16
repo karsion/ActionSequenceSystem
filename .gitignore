@@ -1,12 +1,11 @@
+Build/
 Temp/
 Library/
+ProjectSettings/ProjectVersion.txt
 ActionSequenceSystem.v12.suo
 ActionSequenceSystem.sln
 ActionSequenceSystem.CSharp.csproj
 ActionSequenceSystem.CSharp.Editor.csproj
-/Build
-ProjectSettings/ProjectVersion.txt
-ProjectSettings/ProjectVersion.txt
-ProjectSettings/ProjectVersion.txt
-ProjectSettings/ProjectVersion.txt
-ProjectSettings/ProjectVersion.txt
+ActionSequenceSystem.sln.DotSettings.user
+
+
