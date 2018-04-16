@@ -71,7 +71,7 @@ namespace UnrealM
         }
 
         //直接延迟动作
-        public static ActionSequence WaitFor(this Component id, float delay, Func<bool> condition, Action action)
+        public static ActionSequence WaitFor(this Component id, Func<bool> condition, Action action)
         {
             return Sequence(id).WaitFor(condition).Action(action);
         }

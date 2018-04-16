@@ -24,13 +24,9 @@ namespace UnrealM
         //从池中获取实例并初始化运行时间
         internal static ActionNodeInterval Get(float interval)
         {
-            return opNodeInterval.Get().SetInterval(interval);
-        }
-
-        private ActionNodeInterval SetInterval(float interval)
-        {
-            this.interval = interval;
-            return this;
+            ActionNodeInterval node = opNodeInterval.Get();
+            node.interval = interval;
+            return node;
         }
 
         internal override bool Update(ActionSequence actionSequence, float deltaTime)

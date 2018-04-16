@@ -28,12 +28,18 @@ namespace UnrealM
 
         internal static ActionNodeAction Get(Action action)
         {
-            return opNodeAction.Get().SetAction(action);
+            ActionNodeAction node = opNodeAction.Get();
+            node.action = action;
+            node.actionLoop = null;
+            return node;
         }
 
         internal static ActionNodeAction Get(Action<int> action)
         {
-            return opNodeAction.Get().SetAction(action);
+            ActionNodeAction node = opNodeAction.Get();
+            node.action = null;
+            node.actionLoop = action;
+            return node;
         }
 
         internal override bool Update(ActionSequence actionSequence, float deltaTime)
@@ -72,20 +78,6 @@ namespace UnrealM
             actionLoop = null;
             action = null;
             opNodeAction.Release(this);
-        }
-
-        private ActionNodeAction SetAction(Action action)
-        {
-            actionLoop = null;
-            this.action = action;
-            return this;
-        }
-
-        private ActionNodeAction SetAction(Action<int> action)
-        {
-            this.action = null;
-            actionLoop = action;
-            return this;
         }
     }
 }
