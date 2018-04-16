@@ -29,7 +29,7 @@ this.Sequence()
 this.Sequence()
     .Loop()
     .Interval(0.2f)
-    .Condition(() => Input.GetKeyDown(KeyCode.Q))
+    .WaitFor(() => Input.GetKeyDown(KeyCode.Q))
     .Action(n => Debug.Log("Q键 按下次数" + n));
 
 //Stop all sequences start by this ID
