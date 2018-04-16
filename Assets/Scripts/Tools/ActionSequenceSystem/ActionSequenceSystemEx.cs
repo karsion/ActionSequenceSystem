@@ -3,7 +3,7 @@
 // Copyright (c) 2018 Karsion
 //   
 // https://github.com/karsion
-// Date: 2018-03-20 11:38
+// Date: 2018-03-02 9:34
 // ***************************************************************************
 
 using System;
@@ -13,11 +13,17 @@ namespace UnrealM
 {
     public static class ActionSequenceSystemEx
     {
+        #region Start Stop
+
         //用Component作为ID开序列
         public static ActionSequence Sequence(this Component id)
         {
-            ActionSequence seq = ActionSequenceSystem.GetSequence(id);
-            return seq;
+            return ActionSequenceSystem.GetSequence(id);
+        }
+
+        public static ActionSequence Sequence(this Component id, ActionSequenceHandle handle)
+        {
+            return ActionSequenceSystem.GetSequence(id).SetHandle(handle);
         }
 
         //用Component作为ID停止序列
@@ -25,70 +31,75 @@ namespace UnrealM
         {
             ActionSequenceSystem.StopSequence(id);
         }
+        #endregion
 
-        public static void StopSequence(this ActionSequence sequence)
-        {
-            if (sequence != null)
-            {
-                sequence.Stop();
-            }
-        }
-
+        #region Shower Hider
         public static ActionSequence Shower(this Component id, float delay)
         {
-            ActionSequence seq = ActionSequenceSystem.GetSequence(id);
-            seq.Interval(delay).Show();
-            return seq;
+            return Sequence(id).Interval(delay).Show();
         }
 
         //AutoHide
         public static ActionSequence Hider(this Component id, float delay)
         {
-            ActionSequence seq = ActionSequenceSystem.GetSequence(id);
-            seq.Interval(delay).Hide();
-            return seq;
+            return Sequence(id).Interval(delay).Hide();
         }
+        #endregion
+
+        #region Delayer Looper WaitFor
 
         //直接延迟动作
         public static ActionSequence Delayer(this Component id, float delay, Action action)
         {
-            ActionSequence seq = ActionSequenceSystem.GetSequence(id);
-            seq.Interval(delay).Action(action);
-            return seq;
+            return Sequence(id).Interval(delay).Action(action);
         }
 
         //直接循环动作
         public static ActionSequence Looper(this Component id, float interval, int loopTime, bool isActionAtStart, Action action)
         {
-            ActionSequence seq = ActionSequenceSystem.GetSequence(id);
-            if (isActionAtStart)
-            {
-                seq.Action(action).Interval(interval);
-            }
-            else
-            {
-                seq.Interval(interval).Action(action);
-            }
+            return isActionAtStart ?
+                Sequence(id).Action(action).Interval(interval).Loop(loopTime) :
+                Sequence(id).Interval(interval).Action(action).Loop(loopTime);
+        }
 
-            seq.Loop(loopTime);
-            return seq;
+        //直接循环动作带Loop次数
+        public static ActionSequence Looper(this Component id, float interval, int loopTime, bool isActionAtStart, Action<int> action)
+        {
+            return isActionAtStart ?
+                Sequence(id).Action(action).Interval(interval).Loop(loopTime) :
+                Sequence(id).Interval(interval).Action(action).Loop(loopTime);
+        }
+
+        //直接延迟动作
+        public static ActionSequence WaitFor(this Component id, float delay, Func<bool> condition, Action action)
+        {
+            return Sequence(id).WaitFor(condition).Action(action);
+        }
+        #endregion
+
+        #region Delayer Looper with handle
+
+        //直接延迟动作
+        public static ActionSequence Delayer(this Component id, ActionSequenceHandle handle, float delay, Action action)
+        {
+            return Sequence(id).SetHandle(handle).Interval(delay).Action(action);
         }
 
         //直接循环动作
-        public static ActionSequence Looper(this Component id, float interval, int loopTime, bool isActionAtStart, Action<int> action)
+        public static ActionSequence Looper(this Component id, ActionSequenceHandle handle, float interval, int loopTime, bool isActionAtStart, Action action)
         {
-            ActionSequence seq = ActionSequenceSystem.GetSequence(id);
-            if (isActionAtStart)
-            {
-                seq.Action(action).Interval(interval);
-            }
-            else
-            {
-                seq.Interval(interval).Action(action);
-            }
-
-            seq.Loop(loopTime);
-            return seq;
+            return isActionAtStart ?
+                Sequence(id).SetHandle(handle).Action(action).Interval(interval).Loop(loopTime) :
+                Sequence(id).SetHandle(handle).Interval(interval).Action(action).Loop(loopTime);
         }
+
+        //直接循环动作带Loop次数
+        public static ActionSequence Looper(this Component id, ActionSequenceHandle handle, float interval, int loopTime, bool isActionAtStart, Action<int> action)
+        {
+            return isActionAtStart ?
+                Sequence(id).SetHandle(handle).Action(action).Interval(interval).Loop(loopTime) :
+                Sequence(id).SetHandle(handle).Interval(interval).Action(action).Loop(loopTime);
+        }
+        #endregion
     }
 }

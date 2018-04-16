@@ -13,7 +13,6 @@ using UnityEngine;
 namespace UnrealM
 {
     //开动作序列扩展
-
     public class ActionSequenceSystem : SingletonMonoAuto<ActionSequenceSystem>
     {
         private readonly List<ActionSequence> listSequenceAlive = new List<ActionSequence>(64);
@@ -94,50 +93,29 @@ namespace UnrealM
             }
         }
 
-        #region 无ID启动（注意要手动关闭无限循环的序列，不然机器就会爆炸……）
+        #region 无ID启动（注意要用Handle手动关闭无限循环的序列，不然机器就会爆炸……）
         public static ActionSequence Sequence()
         {
-            ActionSequence seq = GetSequence();
-            return seq;
+            return GetSequence();
         }
 
         public static ActionSequence Delayer(float delay, Action action)
         {
-            ActionSequence seq = GetSequence();
-            seq.Interval(delay).Action(action);
-            return seq;
+            return GetSequence().Interval(delay).Action(action);
         }
 
         public static ActionSequence Looper(float interval, int loopTime, bool isActionAtStart, Action action)
         {
-            ActionSequence seq = GetSequence();
-            if (isActionAtStart)
-            {
-                seq.Action(action).Interval(interval);
-            }
-            else
-            {
-                seq.Interval(interval).Action(action);
-            }
-
-            seq.Loop(loopTime);
-            return seq;
+            return isActionAtStart ?
+                GetSequence().Action(action).Interval(interval).Loop(loopTime) :
+                GetSequence().Interval(interval).Action(action).Loop(loopTime);
         }
 
         public static ActionSequence Looper(float interval, int loopTime, bool isActionAtStart, Action<int> action)
         {
-            ActionSequence seq = GetSequence();
-            if (isActionAtStart)
-            {
-                seq.Action(action).Interval(interval);
-            }
-            else
-            {
-                seq.Interval(interval).Action(action);
-            }
-
-            seq.Loop(loopTime);
-            return seq;
+            return isActionAtStart ?
+                GetSequence().Action(action).Interval(interval).Loop(loopTime) :
+                GetSequence().Interval(interval).Action(action).Loop(loopTime);
         }
         #endregion
     }

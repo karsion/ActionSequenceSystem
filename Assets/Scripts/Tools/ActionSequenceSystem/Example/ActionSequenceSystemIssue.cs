@@ -33,19 +33,19 @@ public class ActionSequenceSystemIssue : MonoBehaviour
         this.Sequence()
             .Loop()
             .Interval(1f)
-            .Condition(() => Input.GetKeyDown(KeyCode.Q))
+            .WaitFor(() => Input.GetKeyDown(KeyCode.Q))
             .Action(n => Debug.Log("Q键 按下次数" + n));
 
         this.Sequence()
             .Loop(5)
-            .Condition(() => Input.GetKeyDown(KeyCode.W))
+            .WaitFor(() => Input.GetKeyDown(KeyCode.W))
             .Action(n => Debug.Log("W键 按下次数" + n))
             .Interval(1f);
 
         //问题：Sequence执行完之后，把引用它的变量执行停止，会停止到其他东西？
         //问题原因：执行完之后自动回收到池子，这时引用还指向这个Sequence，当其他逻辑调用，
         //获取到这个Sequence做了别的事情的时候，调用引用停止它，就会停止到其他逻辑，务必小心
-        //解决办法：加入ActionSequenceHanlde来正确的引用和停止Sequence
+        //解决办法：加入ActionSequenceHanlde，用handle实例来正确的引用和停止Sequence
         //已修复：2018-4-11 10:36:35
     }
 

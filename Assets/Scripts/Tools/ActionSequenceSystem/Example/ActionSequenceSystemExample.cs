@@ -42,7 +42,7 @@ public class ActionSequenceSystemExample : MonoBehaviour
         this.Sequence()
             .Loop()
             .Interval(1f)
-            .Condition(() => Input.GetKeyDown(KeyCode.Q))
+            .WaitFor(() => Input.GetKeyDown(KeyCode.Q))
             .Action(n => Debug.Log("Q键 按下次数" + n));
 
         //Start a sequence without id.

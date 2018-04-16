@@ -24,7 +24,7 @@ namespace UnrealM
             GUILayout.Label(string.Format("ActionNode: {0}/{1}", countActive, countAll));
             ActionNodeInterval.GetObjectPoolInfo(out countActive, out countAll);
             GUILayout.Label(string.Format("IntervalNode: {0}/{1}", countActive, countAll));
-            ActionNodeCondition.GetObjectPoolInfo(out countActive, out countAll);
+            ActionNodeWaitFor.GetObjectPoolInfo(out countActive, out countAll);
             GUILayout.Label(string.Format("ConditionNode: {0}/{1}", countActive, countAll));
             ActionNodeSetActive.GetObjectPoolInfo(out countActive, out countAll);
             GUILayout.Label(string.Format("HideNode: {0}/{1}", countActive, countAll));

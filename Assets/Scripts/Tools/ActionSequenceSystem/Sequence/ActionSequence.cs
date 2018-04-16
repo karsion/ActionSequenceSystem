@@ -1,4 +1,4 @@
-// ***************************************************************************
+﻿// ***************************************************************************
 // Copyright (c) 2018 ZhongShan KPP Technology Co
 // Copyright (c) 2018 Karsion
 //   
@@ -104,12 +104,11 @@ namespace UnrealM
         }
 
         //增加一个条件节点
-        public ActionSequence Condition(Func<bool> condition)
+        public ActionSequence WaitFor(Func<bool> condition)
         {
-            nodes.Add(ActionNodeCondition.Get(condition));
+            nodes.Add(ActionNodeWaitFor.Get(condition));
             return this;
         }
-
         //设置循环
         public ActionSequence Loop(int loopTime = -1)
         {
@@ -157,6 +156,11 @@ namespace UnrealM
         internal void Stop()
         {
             bSetStop = true;
+            if (handle != null)
+            {
+                handle.sequence = null;
+                handle = null;
+            }
         }
 
         //序列自杀
@@ -176,11 +180,6 @@ namespace UnrealM
             timeAxis = 0;
             loopTime = 0;
             bSetStop = false;
-            if (handle != null)
-            {
-                handle.sequence = null;
-                handle = null;
-            }
         }
 
         //序列更新
@@ -244,7 +243,7 @@ namespace UnrealM
             //可能句柄还在控制其他Sequence，丢失上一个Sequence的控制权，控制当前的Sequence
             if (handle.sequence != null)
             {
-                Debug.LogWarning("try set handle, but the input handle already controls a sequence! Lose control of the original sequence and take control this sequence");
+                //Debug.LogWarning("try set handle, but the input handle already controls a sequence! Lose control of the original sequence and take control this sequence");
                 handle.sequence.handle = null;
             }
 

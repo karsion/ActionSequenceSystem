@@ -12,28 +12,24 @@ using UnityEngine;
 namespace UnrealM
 {
     //判定条件节点
-    public class ActionNodeCondition : ActionNode
+    public class ActionNodeWaitFor : ActionNode
     {
-        internal static readonly ObjectPool<ActionNodeCondition> opNodeCondition = new ObjectPool<ActionNodeCondition>(64);
+        internal static readonly ObjectPool<ActionNodeWaitFor> opNodeWaitFor = new ObjectPool<ActionNodeWaitFor>(64);
 
         internal Func<bool> condition;
 #if UNITY_EDITOR
         public static void GetObjectPoolInfo(out int countActive, out int countAll)
         {
-            countActive = opNodeCondition.countActive;
-            countAll = opNodeCondition.countAll;
+            countActive = opNodeWaitFor.countActive;
+            countAll = opNodeWaitFor.countAll;
         }
 #endif
 
-        internal static ActionNodeCondition Get(Func<bool> condition)
+        internal static ActionNodeWaitFor Get(Func<bool> condition)
         {
-            return opNodeCondition.Get().SetCondition(condition);
-        }
-
-        private ActionNodeCondition SetCondition(Func<bool> condition)
-        {
-            this.condition = condition;
-            return this;
+            ActionNodeWaitFor node = opNodeWaitFor.Get();
+            node.condition = condition;
+            return node;
         }
 
         internal override bool Update(ActionSequence actionSequence, float deltaTime)
@@ -56,7 +52,7 @@ namespace UnrealM
         internal override void Release()
         {
             condition = null;
-            opNodeCondition.Release(this);
+            opNodeWaitFor.Release(this);
         }
     }
 }
