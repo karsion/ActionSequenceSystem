@@ -98,8 +98,7 @@ namespace UnrealM
         //增加一个带循环次数的动作节点
         public ActionSequence Action(Action<int> action)
         {
-            ActionNodeAction actionNodeAction = ActionNodeAction.Get(action);
-            nodes.Add(actionNodeAction);
+            nodes.Add(ActionNodeAction.Get(action));
             return this;
         }
 
@@ -157,11 +156,6 @@ namespace UnrealM
         internal void Stop()
         {
             bSetStop = true;
-            if (handle != null)
-            {
-                handle.sequence = null;
-                handle = null;
-            }
         }
 
         //序列自杀
@@ -181,6 +175,11 @@ namespace UnrealM
             timeAxis = 0;
             loopTime = 0;
             bSetStop = false;
+            if (handle != null)
+            {
+                handle.sequence = null;
+                handle = null;
+            }
         }
 
         //序列更新
