@@ -54,6 +54,17 @@ namespace UnrealM
             return Sequence(id).Interval(delay).Action(action);
         }
 
+        public static ActionSequence Looper(this Component id, float interval, Action<int> action)
+        {
+            return Sequence(id).Interval(interval).Action(action).Loop();
+        }
+
+        //直接循环动作
+        public static ActionSequence Looper(this Component id, float interval, Action action)
+        {
+            return Sequence(id).Interval(interval).Action(action).Loop();
+        }
+
         //直接循环动作
         public static ActionSequence Looper(this Component id, float interval, int loopTime, bool isActionAtStart, Action action)
         {
@@ -82,23 +93,31 @@ namespace UnrealM
         //直接延迟动作
         public static ActionSequence Delayer(this Component id, ActionSequenceHandle handle, float delay, Action action)
         {
-            return Sequence(id).SetHandle(handle).Interval(delay).Action(action);
+            return Delayer(id, delay, action).SetHandle(handle);
+        }
+
+        //直接循环动作
+        public static ActionSequence Looper(this Component id, ActionSequenceHandle handle, float interval, Action action)
+        {
+            return Looper(id, interval, action).SetHandle(handle);
+        }
+
+        //直接循环动作
+        public static ActionSequence Looper(this Component id, ActionSequenceHandle handle, float interval, Action<int> action)
+        {
+            return Looper(id, interval, action).SetHandle(handle);
         }
 
         //直接循环动作
         public static ActionSequence Looper(this Component id, ActionSequenceHandle handle, float interval, int loopTime, bool isActionAtStart, Action action)
         {
-            return isActionAtStart ?
-                Sequence(id).SetHandle(handle).Action(action).Interval(interval).Loop(loopTime) :
-                Sequence(id).SetHandle(handle).Interval(interval).Action(action).Loop(loopTime);
+            return Looper(id, interval, loopTime, isActionAtStart, action).SetHandle(handle);
         }
 
         //直接循环动作带Loop次数
         public static ActionSequence Looper(this Component id, ActionSequenceHandle handle, float interval, int loopTime, bool isActionAtStart, Action<int> action)
         {
-            return isActionAtStart ?
-                Sequence(id).SetHandle(handle).Action(action).Interval(interval).Loop(loopTime) :
-                Sequence(id).SetHandle(handle).Interval(interval).Action(action).Loop(loopTime);
+            return Looper(id, interval, loopTime, isActionAtStart, action).SetHandle(handle);
         }
         #endregion
     }

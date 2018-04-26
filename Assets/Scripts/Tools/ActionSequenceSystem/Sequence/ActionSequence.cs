@@ -52,14 +52,9 @@ namespace UnrealM
         }
 #endif
 
-        internal static ActionSequence GetInstance(Component component)
+        internal static ActionSequence GetInstance(Component component = null)
         {
             return opSequences.Get().Start(component);
-        }
-
-        internal static ActionSequence GetInstance()
-        {
-            return opSequences.Get().Start();
         }
 
         #region Chaining
@@ -124,24 +119,10 @@ namespace UnrealM
         #endregion
 
         //开启序列
-        private ActionSequence Start(Component id)
+        private ActionSequence Start(Component id = null)
         {
+            hasID = id;
             this.id = id;
-            hasID = true;
-            curNodeIndex = 0;
-            isFinshed = false;
-            cycles = 0;
-            timeAxis = 0;
-            loopTime = 0;
-            bSetStop = false;
-            handle = null;
-            return this;
-        }
-
-        private ActionSequence Start()
-        {
-            hasID = false;
-            id = null;
             curNodeIndex = 0;
             isFinshed = false;
             cycles = 0;

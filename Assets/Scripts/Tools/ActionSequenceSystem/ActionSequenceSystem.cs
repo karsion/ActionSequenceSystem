@@ -28,16 +28,8 @@ namespace UnrealM
 #endif
         #endregion
 
-        //Get a sequence without id
-        private static ActionSequence GetSequence()
-        {
-            ActionSequence seq = ActionSequence.GetInstance();
-            instance.listSequenceAlive.Add(seq);
-            return seq;
-        }
-
-        //Get a sequence with id
-        internal static ActionSequence GetSequence(Component component)
+        //Get a sequence
+        internal static ActionSequence GetSequence(Component component = null)
         {
             ActionSequence seq = ActionSequence.GetInstance(component);
             instance.listSequenceAlive.Add(seq);
@@ -93,7 +85,7 @@ namespace UnrealM
             }
         }
 
-        #region 无ID启动（注意要用Handle手动关闭无限循环的序列，不然机器就会爆炸……）
+        //#region 无ID启动（注意要用Handle手动关闭无限循环的序列，不然机器就会爆炸……）
         public static ActionSequence Sequence()
         {
             return GetSequence();
@@ -117,6 +109,6 @@ namespace UnrealM
                 GetSequence().Action(action).Interval(interval).Loop(loopTime) :
                 GetSequence().Interval(interval).Action(action).Loop(loopTime);
         }
-        #endregion
+        //#endregion
     }
 }

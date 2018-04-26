@@ -20,11 +20,11 @@ public class ActionSequenceSystemIssue : MonoBehaviour
         //用同一个实例（Pool中只有1个），会导致Update2次
         //解决办法：Release应该和List.Remove同步，就可以了
         //已修复：2018-3-2 10:33:48
-        ActionSequence looper = ActionSequenceSystem.Looper(0.2f, -1, false, () => Debug.Log("No id infinite looper"));
-        looper.Stop();
-        looper = ActionSequenceSystem.Looper(0.3f, -1, false, () => Debug.Log("No id infinite looper"));
-        looper.Stop();
-        looper = ActionSequenceSystem.Looper(0.5f, -1, false, () => Debug.Log("No id infinite looper"));
+        //ActionSequence looper = ActionSequenceSystem.Looper(0.2f, -1, false, () => Debug.Log("No id infinite looper"));
+        //looper.Stop();
+        //looper = ActionSequenceSystem.Looper(0.3f, -1, false, () => Debug.Log("No id infinite looper"));
+        //looper.Stop();
+        //looper = ActionSequenceSystem.Looper(0.5f, -1, false, () => Debug.Log("No id infinite looper"));
 
         //问题：conditionNode执行时，时间轴一直增加
         //问题原因：

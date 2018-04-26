@@ -19,19 +19,19 @@ namespace UnrealM
         }
 
         //用Handle开序列
-        public ActionSequence Sequence()
+        public ActionSequence Sequence(Component id = null)
         {
-            return ActionSequenceSystem.Sequence().SetHandle(this);
+            return ActionSequenceSystem.GetSequence(id).SetHandle(this);
         }
 
         //直接延迟动作
-        public ActionSequence Delayer(float delay, Action action)
+        public ActionSequence Delayer(Component id, float delay, Action action)
         {
-            return Sequence().Interval(delay).Action(action);
+            return Sequence(id).Interval(delay).Action(action);
         }
 
         //直接循环动作
-        public ActionSequence Looper(float interval, int loopTime, bool isActionAtStart, Action action)
+        public ActionSequence Looper(Component id, float interval, int loopTime, bool isActionAtStart, Action action)
         {
             return isActionAtStart ?
                 Sequence().Action(action).Interval(interval).Loop(loopTime) :
@@ -39,7 +39,7 @@ namespace UnrealM
         }
 
         //直接循环动作带Loop次数
-        public ActionSequence Looper(float interval, int loopTime, bool isActionAtStart, Action<int> action)
+        public ActionSequence Looper(Component id, float interval, int loopTime, bool isActionAtStart, Action<int> action)
         {
             return isActionAtStart ?
                 Sequence().Action(action).Interval(interval).Loop(loopTime) :
