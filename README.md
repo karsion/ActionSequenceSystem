@@ -76,7 +76,7 @@ this.Sequence().Loop(3).Interval(0.5f).Action(() => Debug.Log(-1));//Same
 相当于计次计时器的缩写，循环次数设置为-1
 ``` csharp
 //Start a infinite loop timer
-this.InfiniteLooper(1, i => Debug.Log("InfiniteLooper" + i));
+this.Infiniter(1, i => Debug.Log("Infiniter" + i));
 ```
 
 ### 开启自定义序列
