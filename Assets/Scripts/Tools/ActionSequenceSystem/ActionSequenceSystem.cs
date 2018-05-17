@@ -109,6 +109,21 @@ namespace UnrealM
                 GetSequence().Action(action).Interval(interval).Loop(loopTime) :
                 GetSequence().Interval(interval).Action(action).Loop(loopTime);
         }
+
+        public static ActionSequence Delayer(ActionSequenceHandle handle, float delay, Action action)
+        {
+            return Delayer(delay, action).SetHandle(handle);
+        }
+
+        public static ActionSequence Looper(ActionSequenceHandle handle, float interval, int loopTime, bool isActionAtStart, Action action)
+        {
+            return Looper(interval, loopTime, isActionAtStart, action).SetHandle(handle);
+        }
+
+        public static ActionSequence Looper(ActionSequenceHandle handle, float interval, int loopTime, bool isActionAtStart, Action<int> action)
+        {
+            return Looper(interval, loopTime, isActionAtStart, action).SetHandle(handle);
+        }
         //#endregion
     }
 }

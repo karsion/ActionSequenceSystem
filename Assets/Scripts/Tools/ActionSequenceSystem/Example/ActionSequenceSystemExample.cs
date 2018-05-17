@@ -11,7 +11,6 @@ using UnrealM;
 
 public class ActionSequenceSystemExample : MonoBehaviour
 {
-    private readonly ActionSequenceHandle infiniteSequenceHandle = new ActionSequenceHandle();
 
     public Transform tfShowHideExample;
     // Use this for initialization
@@ -27,6 +26,9 @@ public class ActionSequenceSystemExample : MonoBehaviour
         //Start a loop timer
         this.Looper(0.5f, 3, false, () => Debug.Log(-1));
         this.Sequence().Loop(3).Interval(0.5f).Action(() => Debug.Log(-1)); //Same
+
+        //Start a infinite loop timer
+        this.Infiniter(1, i => Debug.Log("Infiniter" + i));
 
         //Start a long sequence
         this.Sequence()
@@ -49,16 +51,10 @@ public class ActionSequenceSystemExample : MonoBehaviour
         ActionSequenceSystem.Delayer(5, () => Debug.Log("No id delayer"));
         ActionSequenceSystem.Looper(0.2f, 10, false, () => Debug.Log("No id looper"));
 
-        //Notes：An instance must be preserved to manually stop an infinite loop sequence.
-        ActionSequenceSystem.Looper(0.2f, -1, false, () => Debug.Log("No id infinite looper")).SetHandle(infiniteSequenceHandle);
-        infiniteSequenceHandle.StopSequence();
-
         //Start a toggle GameObject active sequence
         tfShowHideExample.Hider(0.5f);
         tfShowHideExample.Sequence().Interval(0.5f).ToggleActive().Loop();
     }
-
-    //private ActionSequence delayer;
 
     // Update is called once per frame
     private void Update()
@@ -73,22 +69,6 @@ public class ActionSequenceSystemExample : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.S))
         {
             this.Looper(1, -1, true, count => Debug.Log("S" + count));
-        }
-
-        if (Input.GetKeyDown(KeyCode.B))
-        {
-            infiniteSequenceHandle.StopSequence();
-        }
-
-        if (Input.GetKeyDown(KeyCode.X))
-        {
-            transform.Looper(1, 5, false, i =>
-            {
-                if (i == 2)
-                {
-                    infiniteSequenceHandle.StopSequence();
-                }
-            }).SetHandle(infiniteSequenceHandle);
         }
 
         if (Input.GetKeyDown(KeyCode.C))

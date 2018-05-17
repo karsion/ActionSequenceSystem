@@ -54,13 +54,13 @@ namespace UnrealM
             return Sequence(id).Interval(delay).Action(action);
         }
 
-        public static ActionSequence Looper(this Component id, float interval, Action<int> action)
+        public static ActionSequence Infiniter(this Component id, float interval, Action<int> action)
         {
             return Sequence(id).Interval(interval).Action(action).Loop();
         }
 
         //直接循环动作
-        public static ActionSequence Looper(this Component id, float interval, Action action)
+        public static ActionSequence Infiniter(this Component id, float interval, Action action)
         {
             return Sequence(id).Interval(interval).Action(action).Loop();
         }
@@ -97,15 +97,15 @@ namespace UnrealM
         }
 
         //直接循环动作
-        public static ActionSequence Looper(this Component id, ActionSequenceHandle handle, float interval, Action action)
+        public static ActionSequence Infiniter(this Component id, ActionSequenceHandle handle, float interval, Action action)
         {
-            return Looper(id, interval, action).SetHandle(handle);
+            return Infiniter(id, interval, action).SetHandle(handle);
         }
 
         //直接循环动作
-        public static ActionSequence Looper(this Component id, ActionSequenceHandle handle, float interval, Action<int> action)
+        public static ActionSequence Infiniter(this Component id, ActionSequenceHandle handle, float interval, Action<int> action)
         {
-            return Looper(id, interval, action).SetHandle(handle);
+            return Infiniter(id, interval, action).SetHandle(handle);
         }
 
         //直接循环动作
