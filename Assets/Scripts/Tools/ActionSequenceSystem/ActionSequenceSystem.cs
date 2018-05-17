@@ -52,7 +52,7 @@ namespace UnrealM
             {
                 for (int i = 0; i < listSequenceAlive.Count; i++)
                 {
-                    ActionSequence actionSequence = ListSequenceAlive[i];
+                    ActionSequence actionSequence = listSequenceAlive[i];
                     if (actionSequence.isFinshed)
                     {
                         actionSequence.Release();
