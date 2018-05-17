@@ -27,7 +27,7 @@ ActionSequence对Component实力做了依赖和扩展，使其可以随Component
 4. WaitFor：知道条件判断为true才跳下一个节点
 
 ### 结构图
-```flow
+```
 graph TD
 ActionSequenceSystem-->ActionSequence
 ActionSequence-->ActionNode
@@ -123,8 +123,8 @@ infiniteSequenceHandle.StopSequence();
 简单来说就是引用一个计时器，让我们可以随时手动停止它<br>
 但ActionSequence自身有停止的方法，为什么还要使用ActionSequenceHandle？
 1. ActionSequenceSystem内部使用的是内存池来共享ActionSequence实例，ActionSequence运行完之后会自动回收到池子里
-2. 比如【对象1】使用ActionSequence seq保存对计时器的引用，seq = this.Delayer(...)，计时器跑完之后回到池子里，这时seq引用的计时器在逻辑已经不再对自己有效
-3. 接下来【对象2】向系统申请分配一个ActionSequence，能会取出上【对象1】引用着的ActionSequence，如果【对象1】去停止seq，就会造成逻辑失误，因为自身的计时器早已运行完被系统回收，现在停掉的是别人的计时器
+2. 比如【对象1】使用ActionSequence seq保存对计时器的引用，seq = this.Delayer(...)，计时器跑完之后回到池子里，这时seq引用的计时器在逻辑已经不再对自己有效，但内存中还保持着引用
+3. 接下来【对象2】向系统申请分配一个ActionSequence，取出【对象1】用过还保持引用着的那个ActionSequence实例，【对象2】使用ActionSequence时如果【对象1】去停止seq，就会造成逻辑上的失误，因为自身的计时器早已运行完被系统回收，现在停掉的是别人的计时器
 4. 因为使用了内存池，ActionSequenceHandle的引入就是解决上述问题的
 ``` csharp
 public class ActionSequenceHandleExample : MonoBehaviour
