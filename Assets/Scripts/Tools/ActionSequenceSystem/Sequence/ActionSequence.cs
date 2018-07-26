@@ -18,7 +18,7 @@ namespace UnrealM
         internal static readonly ObjectPool<ActionSequence> opSequences = new ObjectPool<ActionSequence>(64);
 
         //节点列表，默认把数组容量设为16
-        public readonly List<ActionNode> nodes = new List<ActionNode>(16);
+        internal readonly List<ActionNode> nodes = new List<ActionNode>(16);
 
         //当前执行的节点索引
         private int curNodeIndex = 0;
@@ -27,9 +27,9 @@ namespace UnrealM
         public float timeAxis { get; private set; }
         public bool useUnscaledTime { get; private set; }
 
+        private bool hasID = false;
         //目标组件，组件销毁的时候，本动作序列也相应销毁
         public Component id { get; private set; }
-        private bool hasID = false;
 
         //设置一个句柄用于正确的停止序列
         public ActionSequenceHandle handle { get; private set; }
@@ -117,6 +117,13 @@ namespace UnrealM
             this.loopTime = loopTime;
             return this;
         }
+
+        //设置Update模式
+        public ActionSequence SetUnscaleTime()
+        {
+            useUnscaledTime = true;
+            return this;
+        }
         #endregion
 
         //开启序列
@@ -133,6 +140,15 @@ namespace UnrealM
             useUnscaledTime = false;
             handle = null;
             return this;
+        }
+
+        //用指定的ID去尝试停止，ID不对的话，可能是已经停止的了
+        public void Stop(Component callerID)
+        {
+            if (hasID && id == callerID)
+            {
+                Stop();
+            }
         }
 
         //外部调用停止，内部执行的时候才会自杀，为了保持运行列表与缓存池同步
@@ -199,7 +215,7 @@ namespace UnrealM
         }
 
         //回收序列，回收序列中的节点
-        public void Release()
+        internal void Release()
         {
             opSequences.Release(this);
             for (int i = 0; i < nodes.Count; i++)
@@ -234,12 +250,6 @@ namespace UnrealM
             //设置句柄
             this.handle = handle;
             handle.sequence = this;
-            return this;
-        }
-
-        internal ActionSequence SetUnscaleTime()
-        {
-            useUnscaledTime = true;
             return this;
         }
     }
