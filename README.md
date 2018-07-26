@@ -2,12 +2,13 @@
 [![release](https://img.shields.io/badge/release-v1.0.2-blue.svg)](https://github.com/karsion/ActionSequenceSystem/master/releases)
 
 # ActionSequenceSystem
-A Unity3D C# multifunctional timer system<br>
-一个U3D C# 多功能计时器系统
+A Unity3D C# multifunctional chaining timer system<br>
+一个U3D C# 多功能链式计时器
 
 ## 简要说明 
-- 使用了内存池存放序列和节点，一般情况下不会产生GC
-- 使用了Component或其子类作为ID受控，一旦物体被销毁，计时器也会随之自动回收
+- 使用链式编程，支持deltaTime和unscaledDeltaTime
+- 使用了内存池存放序列和节点，一般情况下不会产生GC，计时器运行完会自动回收
+- 使用了Component或其子类作为ID受控，一旦ID被销毁，计时器会随之自动回收
 - 一般情况我们启动之后就不去控制停止了，计时器运行完或ID被销毁会自动回收
 - <font color=red>如果需要手动停止特定的计时器的话需要引入句柄概念，既Handle，请看使用方法的最后</font>
 
