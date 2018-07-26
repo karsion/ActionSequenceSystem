@@ -18,7 +18,7 @@ A Unity3D C# multifunctional timer system<br>
 ActionSequenceSystem（使用了内存池）分配ActionSequence，刷新存活的ActionSequence，自动回收销毁的ActionSequence<br>
 ### ActionSequence 序列
 ActionSequence内部有一个List<ActionNode>容器，增加不同的ActionNode实现不同的行为<br>
-ActionSequence对Component实力做了依赖和扩展，使其可以随Component实力的销毁自动回收
+ActionSequence对Component实例做了依赖和扩展，使其可以随Component实例的销毁自动回收
 
 ### ActionNode 节点
 1. Action：执行函数
