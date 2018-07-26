@@ -8,7 +8,7 @@ public class ActionSequenceHandleExample : MonoBehaviour
     private void Start()
     {
         //Notes：An instance must be preserved to manually stop an infinite loop sequence.
-        ActionSequenceSystem.Looper(infiniteSequenceHandle, 0.2f, -1, false, () => Debug.Log("No id infinite looper"));
+        this.Looper(infiniteSequenceHandle, 1f, () => Debug.Log("No id infinite looper")).SetUnscaleTime();
     }
 
     private void Update()
@@ -22,11 +22,12 @@ public class ActionSequenceHandleExample : MonoBehaviour
         {
             transform.Looper(infiniteSequenceHandle, 1, 5, false, i =>
             {
+                Debug.Log("transform looper " + i);
                 if (i == 2)
                 {
                     infiniteSequenceHandle.StopSequence();
                 }
-            });
+            }).SetUnscaleTime();
         }
     }
 }

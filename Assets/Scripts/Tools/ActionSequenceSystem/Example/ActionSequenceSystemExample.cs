@@ -28,7 +28,7 @@ public class ActionSequenceSystemExample : MonoBehaviour
         this.Sequence().Loop(3).Interval(0.5f).Action(() => Debug.Log(-1)); //Same
 
         //Start a infinite loop timer
-        this.Infiniter(1, i => Debug.Log("Infiniter" + i));
+        this.Looper(1, i => Debug.Log("Infiniter" + i));
 
         //Start a long sequence
         this.Sequence()

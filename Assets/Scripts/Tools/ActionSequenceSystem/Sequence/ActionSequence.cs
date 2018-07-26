@@ -25,6 +25,7 @@ namespace UnrealM
 
         //时间轴
         public float timeAxis { get; private set; }
+        public bool useUnscaledTime { get; private set; }
 
         //目标组件，组件销毁的时候，本动作序列也相应销毁
         public Component id { get; private set; }
@@ -129,6 +130,7 @@ namespace UnrealM
             timeAxis = 0;
             loopTime = 0;
             bSetStop = false;
+            useUnscaledTime = false;
             handle = null;
             return this;
         }
@@ -156,6 +158,7 @@ namespace UnrealM
             timeAxis = 0;
             loopTime = 0;
             bSetStop = false;
+            useUnscaledTime = false;
             if (handle != null)
             {
                 handle.sequence = null;
@@ -231,6 +234,12 @@ namespace UnrealM
             //设置句柄
             this.handle = handle;
             handle.sequence = this;
+            return this;
+        }
+
+        internal ActionSequence SetUnscaleTime()
+        {
+            useUnscaledTime = true;
             return this;
         }
     }

@@ -3,7 +3,7 @@
 // Copyright (c) 2018 Karsion
 //   
 // https://github.com/karsion
-// Date: 2018-03-20 11:39
+// Date: 2018-07-25 21:14
 // ***************************************************************************
 
 using System;
@@ -40,11 +40,12 @@ namespace UnrealM
         {
             //Update Sequence(Auto release)
             bool isSomeSequenceStoped = false;
+            float unscaledDeltaTime = Time.unscaledDeltaTime;
             float deltaTime = Time.deltaTime;
             for (int i = 0; i < listSequenceAlive.Count; i++)
             {
                 //It's stopped when Update return false and release self
-                isSomeSequenceStoped |= !listSequenceAlive[i].Update(deltaTime);
+                isSomeSequenceStoped |= !listSequenceAlive[i].Update(listSequenceAlive[i].useUnscaledTime ?  unscaledDeltaTime: deltaTime);
             }
 
             //Remove Finshed Sequence(Finshed is Released)
@@ -66,12 +67,16 @@ namespace UnrealM
         //最终停止的会在Update中批量Release回Pool，并同步List
         public static void StopSequence(Component id)
         {
-            List<ActionSequence> listSequenceAlive = instance.listSequenceAlive;
-            for (int i = 0; i < listSequenceAlive.Count; i++)
+            StopSequence(instance.listSequenceAlive, id);
+        }
+
+        private static void StopSequence(List<ActionSequence> sequences, Component id)
+        {
+            for (int i = 0; i < sequences.Count; i++)
             {
-                if (id == listSequenceAlive[i].id)
+                if (id == sequences[i].id)
                 {
-                    listSequenceAlive[i].Stop();
+                    sequences[i].Stop();
                 }
             }
         }
@@ -124,6 +129,7 @@ namespace UnrealM
         {
             return Looper(interval, loopTime, isActionAtStart, action).SetHandle(handle);
         }
+
         //#endregion
     }
 }
