@@ -17,10 +17,11 @@ A Unity3D C# multifunctional chaining timer system<br>
 
 ## 设计架构 
 ### ActionSequenceSystem 序列系统
-ActionSequenceSystem（使用了内存池）分配ActionSequence，刷新存活的ActionSequence，自动回收销毁的ActionSequence<br>
+使用了内存池，分配ActionSequence，刷新存活的ActionSequence，回收销毁的ActionSequence<br>
 ### ActionSequence 序列
-ActionSequence内部有一个List<ActionNode>容器，增加不同的ActionNode实现不同的行为<br>
-ActionSequence对Component实例做了依赖和扩展，使其可以随Component实例的销毁自动回收
+对Component做了扩展，在脚本中使用this作为入口 
+对Component实例做了依赖，使其可以随Component实例的销毁自动回收
+可自定义，加入不同的ActionNode实现不同的行为链<br>
 
 ### ActionNode 节点
 1. Action：执行函数
