@@ -125,15 +125,15 @@ ActionSequenceSystem.Looper(0.2f, 10, false, () => Debug.Log("No id looper"));
 
 //Notes：An instance must be preserved to manually stop an infinite loop sequence.
 ActionSequenceHandle infiniteSequenceHandle = new ActionSequenceHandle();
-ActionSequenceSystem.Looper(0.2f, -1, false, () => Debug.Log("No id infinite looper")).SetHandle(infiniteSequenceHandle);
+ActionSequenceSystem.Looper(infiniteSequenceHandle，0.2f, () => Debug.Log("No id infinite looper"));
 infiniteSequenceHandle.StopSequence();
 ```
 
 ### ActionSequenceHandle用法
 简单来说就是引用一个计时器，让我们可以随时手动停止它<br>
-什么情况下使用ActionSequenceHandle？
-1.继承Component的类，为了方便书写与阅读，使用ActionSequenceHandle受控(但多了一个new ActionSequenceHandle()操作)
-2.非继承Component的类需要使用ActionSequenceHandle才能受控
+什么情况下使用ActionSequenceHandle？<br>
+1.继承Component的类，为了方便书写与阅读，用ActionSequenceHandle受控(但多了一个new操作)<br>
+2.非继承Component的类需要使用ActionSequenceHandle才能受控<br>
 ``` csharp
 public class ActionSequenceHandleExample : MonoBehaviour
 {
