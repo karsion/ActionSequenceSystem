@@ -17,17 +17,19 @@ A Unity3D C# multifunctional chaining timer system<br>
 
 ## 设计架构 
 ### ActionSequenceSystem 序列系统
-使用了内存池，分配ActionSequence，刷新存活的ActionSequence，回收销毁的ActionSequence<br>
+- 使用了内存池
+- 管理ActionSequence
+
 ### ActionSequence 序列
-对Component做了扩展，在脚本中使用this作为入口 
-对Component实例做了依赖，使其可以随Component实例的销毁自动回收
-可自定义，加入不同的ActionNode实现不同的行为链<br>
+- 对Component做了扩展，在脚本中使用this作为入口 
+- 对Component实例做了依赖，使其可以随Component实例的销毁自动回收
+- 可自定义，加入不同的ActionNode实现不同的行为链
 
 ### ActionNode 节点
-1. Action：执行函数
-2. Interval：延迟一段时间
-3. SetActive：激活物体/返激活物体
-4. WaitFor：知道条件判断为true才跳下一个节点
+- Action：执行函数
+- Interval：延迟一段时间
+- SetActive：激活物体/返激活物体
+- WaitFor：知道条件判断为true才跳下一个节点
 
 ### 结构图
 ```
@@ -46,7 +48,7 @@ ActionNode-->WaitFor
 ---
 
 ## 使用方法
-说明：下面使用方法中的this的类型为Component或其子类（this is Component）
+说明：下面使用方法中的this的类型为Component或其子类（其实this is MonoBehaviour）
 ### 延迟开关GameObject功能
 既然用了Component来做ID，控制gameObject显示隐藏就是举手之劳，何乐而不为
 ``` csharp
