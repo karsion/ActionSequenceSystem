@@ -124,6 +124,16 @@
             Used by the editor. Display relevant information.
             </summary>
         </member>
+        <member name="P:UnrealM.ActionSequenceSystem.countActiveSequence">
+            <summary>
+            Used by the editor. Display relevant information.
+            </summary>
+        </member>
+        <member name="P:UnrealM.ActionSequenceSystem.countAllSequence">
+            <summary>
+            Used by the editor. Display relevant information.
+            </summary>
+        </member>
         <member name="P:UnrealM.ActionSequenceSystem.countActiveAction">
             <summary>
             Used by the editor. Display relevant information.
@@ -531,17 +541,21 @@
             <param name="loopTime">循环次数，-1为无限，0和1都是1次</param>
             <returns></returns>
         </member>
-        <member name="M:UnrealM.ActionSequence.SetUnscaleTime">
-            <summary>
-            设置Update模式
-            </summary>
-            <returns></returns>
-        </member>
         <member name="M:UnrealM.ActionSequence.Stop(UnityEngine.Component)">
             <summary>
             用指定的ID去尝试停止，ID不对的话，可能是已经停止的了
             </summary>
             <param name="callerID"></param>
+        </member>
+        <member name="P:UnrealM.ActionSequence.countActive">
+            <summary>
+            内存池活动元素
+            </summary>
+        </member>
+        <member name="P:UnrealM.ActionSequence.countAll">
+            <summary>
+            内存池总数
+            </summary>
         </member>
         <member name="P:UnrealM.ActionSequence.nodesCount">
             <summary>
@@ -551,11 +565,6 @@
         <member name="P:UnrealM.ActionSequence.timeAxis">
             <summary>
             时间轴
-            </summary>
-        </member>
-        <member name="P:UnrealM.ActionSequence.useUnscaledTime">
-            <summary>
-            是否使用不缩放的时间
             </summary>
         </member>
         <member name="P:UnrealM.ActionSequence.id">
@@ -586,16 +595,6 @@
         <member name="P:UnrealM.ActionSequence.bSetStop">
             <summary>
             是否下一帧停止
-            </summary>
-        </member>
-        <member name="P:UnrealM.ActionSequence.countActive">
-            <summary>
-            内存池活动元素
-            </summary>
-        </member>
-        <member name="P:UnrealM.ActionSequence.countAll">
-            <summary>
-            内存池总数
             </summary>
         </member>
         <member name="T:UnrealM.ActionSequenceHandle">

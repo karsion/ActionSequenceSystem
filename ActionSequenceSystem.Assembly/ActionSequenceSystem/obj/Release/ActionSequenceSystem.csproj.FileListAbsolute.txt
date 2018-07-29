@@ -1,0 +1,5 @@
+E:\GitHub\ActionSequenceSystem\ActionSequenceSystem.Assembly\bin\Release\ActionSequenceSystem\ActionSequenceSystem.XML
+E:\GitHub\ActionSequenceSystem\ActionSequenceSystem.Assembly\bin\Release\ActionSequenceSystem\ActionSequenceSystem.dll
+E:\GitHub\ActionSequenceSystem\ActionSequenceSystem.Assembly\bin\Release\ActionSequenceSystem\ActionSequenceSystem.pdb
+E:\GitHub\ActionSequenceSystem\ActionSequenceSystem.Assembly\ActionSequenceSystem\obj\Release\ActionSequenceSystem.dll
+E:\GitHub\ActionSequenceSystem\ActionSequenceSystem.Assembly\ActionSequenceSystem\obj\Release\ActionSequenceSystem.pdb

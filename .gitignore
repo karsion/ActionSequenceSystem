@@ -9,3 +9,4 @@ ActionSequenceSystem.CSharp.Editor.csproj
 ActionSequenceSystem.sln.DotSettings.user
 
 
+*.pdb
