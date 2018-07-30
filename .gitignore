@@ -3,8 +3,14 @@ Temp/
 Library/
 ProjectSettings/ProjectVersion.txt
 *.pdb
+<<<<<<< HEAD
 
 *.suo
 /ActionSequenceSystem.Assembly/ActionSequenceSystem/obj
 /ActionSequenceSystem.Assembly/ActionSequenceSystem/*.user
 /ActionSequenceSystem.Assembly/*.suo
+=======
+*.suo
+>>>>>>> 01e43c6fd1e2ba1c5f3b2683bb4cf000f9618ac6
+/UnityExamples/UnityExamples.v12.suo
+/ActionSequenceSystem.Assembly/ActionSequenceSystem.Assembly.v12.suo
