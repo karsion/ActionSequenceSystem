@@ -81,7 +81,7 @@ this.Sequence().Loop(3).Interval(0.5f).Action(() => Debug.Log(-1));//Same
 相当于计次计时器的缩写，循环次数设置为-1
 ``` csharp
 //Start a infinite loop timer
-this.Infiniter(1, i => Debug.Log("Infiniter" + i));
+this.Looper(1, i => Debug.Log("Infiniter" + i));
 ```
 
 ### 开启自定义序列
@@ -125,7 +125,7 @@ ActionSequenceSystem.Looper(0.2f, 10, false, () => Debug.Log("No id looper"));
 
 //Notes：An instance must be preserved to manually stop an infinite loop sequence.
 ActionSequenceHandle infiniteSequenceHandle = new ActionSequenceHandle();
-ActionSequenceSystem.Looper(infiniteSequenceHandle，0.2f, () => Debug.Log("No id infinite looper"));
+infiniteSequenceHandle.Looper(0.2f, () => Debug.Log("No id infinite looper"));
 infiniteSequenceHandle.StopSequence();
 ```
 
