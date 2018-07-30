@@ -2,11 +2,9 @@ Build/
 Temp/
 Library/
 ProjectSettings/ProjectVersion.txt
-ActionSequenceSystem.v12.suo
-ActionSequenceSystem.sln
-ActionSequenceSystem.CSharp.csproj
-ActionSequenceSystem.CSharp.Editor.csproj
-ActionSequenceSystem.sln.DotSettings.user
-
-
 *.pdb
+
+*.suo
+/ActionSequenceSystem.Assembly/ActionSequenceSystem/obj
+/ActionSequenceSystem.Assembly/ActionSequenceSystem/*.user
+/ActionSequenceSystem.Assembly/*.suo
