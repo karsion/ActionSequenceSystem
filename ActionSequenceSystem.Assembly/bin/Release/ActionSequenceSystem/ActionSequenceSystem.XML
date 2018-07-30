@@ -412,7 +412,7 @@
             <param name="action">调用的函数，循环次数作为参数</param>
             <returns></returns>
         </member>
-        <member name="M:UnrealM.ActionSequenceSystemUnscaledEx.WaitFor(UnityEngine.Component,System.Func{System.Boolean},System.Action)">
+        <member name="M:UnrealM.ActionSequenceSystemUnscaledEx.WaitForUnscaled(UnityEngine.Component,System.Func{System.Boolean},System.Action)">
             <summary>
             等待条件判断成功后调用函数
             </summary>

@@ -118,7 +118,7 @@ namespace UnrealM
         /// <param name="condition">判断函数，函数返回true，调用action</param>
         /// <param name="action">调用函数</param>
         /// <returns></returns>
-        public static ActionSequence WaitFor(this Component id, Func<bool> condition, Action action)
+        public static ActionSequence WaitForUnscaled(this Component id, Func<bool> condition, Action action)
         {
             return SequenceUnscaled(id).WaitFor(condition).Action(action);
         }
