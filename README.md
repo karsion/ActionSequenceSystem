@@ -132,8 +132,8 @@ infiniteSequenceHandle.StopSequence();
 ### ActionSequenceHandle用法
 简单来说就是引用一个计时器，让我们可以随时手动停止它<br>
 什么情况下使用ActionSequenceHandle？<br>
-1.继承Component的类，为了方便书写与阅读，用ActionSequenceHandle受控(但多了一个new操作)<br>
-2.非继承Component的类需要使用ActionSequenceHandle才能受控<br>
+1.继承Component的类，为了方便书写与阅读，用ActionSequenceHandle受控（但多了一个new操作）<br>
+2.非继承Component的类需要使用ActionSequenceHandle才能受控（也可以继承ActionSequenceHandle）<br>
 ``` csharp
 public class ActionSequenceHandleExample : MonoBehaviour
 {
