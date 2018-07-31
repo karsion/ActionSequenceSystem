@@ -37,8 +37,9 @@ namespace UnrealM
         /// </summary>
         public static int countAll { get { return opNodes.countAll; } }
 
-        //节点列表，默认把数组容量设为比较大，做长链的时候不至于重建数组
+        //节点列表，默认把数组容量设为比较大，做长链的时候不容易自动扩容
         private readonly List<ActionNode> nodes = new List<ActionNode>(16);
+
         //当前执行的节点索引
         private int curNodeIndex = 0;
 

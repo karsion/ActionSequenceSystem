@@ -44,8 +44,8 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scripts\Tools\ActionSequenceSystem\ActionSequenceSystem.cs" />
-    <Compile Include="Scripts\Tools\ActionSequenceSystem\ActionSequenceSystemEx.cs" />
-    <Compile Include="Scripts\Tools\ActionSequenceSystem\ActionSequenceSystemUnscaledEx.cs" />
+    <Compile Include="Scripts\Tools\ActionSequenceSystem\ComponentExtension\ActionSequenceSystemEx.cs" />
+    <Compile Include="Scripts\Tools\ActionSequenceSystem\ComponentExtension\ActionSequenceSystemUnscaledEx.cs" />
     <Compile Include="Scripts\Tools\ActionSequenceSystem\Sequence\ActionSequence.cs" />
     <Compile Include="Scripts\Tools\ActionSequenceSystem\ActionSequenceHandle.cs" />
     <Compile Include="Scripts\Tools\ActionSequenceSystem\Sequence\Nodes\ActionNode.cs" />

@@ -43,7 +43,10 @@ namespace UnrealM
         /// <param name="sequence">停止指定的ActionSequence</param>
         public static void StopSequence(this Component id, ActionSequence sequence)
         {
-            sequence.Stop(id);
+            if (sequence != null)
+            {
+                sequence.Stop(id);
+            }
         }
         #endregion
 
