@@ -105,12 +105,12 @@ this.Sequence()
 
 ### 停止序列
 ``` csharp
-//Stop the specified sequence if run with thisID
-//Sometimes. It may have been recycled automatically
-ActionSequence delayer = this.Delayer(10, () => Debug.Log(10));
-this.StopSequence(delayer);
+//Stop the sequence with the specified ID
+private ActionSequence sequence;
+sequence = this.Looper(0.5f, 3, false, () => Debug.Log(-1));
+sequence.Stop(this);
 
-//Stop all sequences start by this ID
+//Stop all sequences by this ID
 this.StopSequence();
 
 //Allso transform as ID
@@ -125,36 +125,40 @@ ActionSequenceSystem.Looper(0.2f, 10, false, () => Debug.Log("No id looper"));
 
 //Notes：An instance must be preserved to manually stop an infinite loop sequence.
 ActionSequenceHandle infiniteSequenceHandle = new ActionSequenceHandle();
-infiniteSequenceHandle.Looper(0.2f, () => Debug.Log("No id infinite looper"));
+ActionSequenceSystem.Looper(0.2f, -1, false, () => Debug.Log("No id infinite looper")).SetHandle(infiniteSequenceHandle);
 infiniteSequenceHandle.StopSequence();
 ```
 
-### ActionSequenceHandle用法
+### 停止序列特殊技巧：ActionSequenceHandle用法
 简单来说就是引用一个计时器，让我们可以随时手动停止它<br>
-什么情况下使用ActionSequenceHandle？<br>
-1.继承Component的类，为了方便书写与阅读，用ActionSequenceHandle受控（但多了一个new操作）<br>
-2.非继承Component的类需要使用ActionSequenceHandle才能受控（也可以继承ActionSequenceHandle）<br>
+但ActionSequence自身有停止的方法，为什么还要使用ActionSequenceHandle？<br>
+ActionSequenceHandle是为了处理“开启全局计时器时不传入ID，又要控制这个计时器”的情况
 ``` csharp
 public class ActionSequenceHandleExample : MonoBehaviour
 {
     private readonly ActionSequenceHandle infiniteSequenceHandle = new ActionSequenceHandle();
-
+    private ActionSequence sequence;
+    
     private void Start()
     {
         //Notes：An instance must be preserved to manually stop an infinite loop sequence.
-        infiniteSequenceHandle.Looper(0.2f, () => Debug.Log("No id infinite looper"));
+        ActionSequenceSystem.Looper(infiniteSequenceHandle, 0.2f, -1, false, () => Debug.Log("No id infinite looper"));
+        sequence = this.Looper(0.5f, 3, false, () => Debug.Log("this looper"));
     }
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.B))
         {
+            //使用ActionSequenceHandle停止
             infiniteSequenceHandle.StopSequence();
+            //使用ActionSequence停止
+            sequence.Stop(this);
+            this.StopSequence(sequence);//Same as sequence.Stop(this);
         }
 
         if (Input.GetKeyDown(KeyCode.X))
         {
-            //warning: this operation may lose handle of the previous timer
             transform.Looper(infiniteSequenceHandle, 1, 5, false, i =>
             {
                 if (i == 2)
