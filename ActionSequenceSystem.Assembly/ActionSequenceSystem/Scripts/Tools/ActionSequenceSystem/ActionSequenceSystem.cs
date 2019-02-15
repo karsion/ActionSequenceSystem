@@ -16,10 +16,16 @@ namespace UnrealM
     {
         internal class SequenceUpdater
         {
-            internal readonly List<ActionSequence> listSequenceAlive = new List<ActionSequence>(200);
+            internal readonly List<ActionSequence> listSequenceAlive = new List<ActionSequence>(256);
 
             internal void Add(ActionSequence sequence)
             {
+                if (listSequenceAlive.Contains(sequence))
+                {
+                    Debug.LogError("ActionSequence 重复");
+                    return;
+                }
+
                 listSequenceAlive.Add(sequence);
             }
 
@@ -264,6 +270,30 @@ namespace UnrealM
         }
 
         /// <summary>
+        /// 循环调用函数，循环次数作为参数，并设置次数，是否立即开始
+        /// </summary>
+        /// <param name="interval">延迟</param>
+        /// <param name="loopTime">循环调用次数</param>
+        /// <param name="action">调用的函数</param>
+        /// <returns></returns>
+        public static ActionSequence Looper(float interval, int loopTime, Action action)
+        {
+            return Sequence().Interval(interval).Action(action).Loop(loopTime);
+        }
+
+        /// <summary>
+        /// 循环调用函数，循环次数作为参数，并设置次数，是否立即开始
+        /// </summary>
+        /// <param name="interval">延迟</param>
+        /// <param name="loopTime">循环调用次数</param>
+        /// <param name="action">调用的函数，循环次数作为参数</param>
+        /// <returns></returns>
+        public static ActionSequence Looper(float interval, int loopTime, Action<int> action)
+        {
+            return Sequence().Interval(interval).Action(action).Loop(loopTime);
+        }
+
+        /// <summary>
         /// 循环调用函数，并设置次数，是否立即开始
         /// </summary>
         /// <param name="interval">延迟</param>
@@ -275,7 +305,7 @@ namespace UnrealM
         {
             return isActionAtStart ? 
                 Sequence().Action(action).Interval(interval).Loop(loopTime) : 
-                Sequence().Interval(interval).Action(action).Loop(loopTime);
+                Looper(interval, loopTime, action);
         }
 
         /// <summary>
@@ -290,7 +320,7 @@ namespace UnrealM
         {
             return isActionAtStart ? 
                 Sequence().Action(action).Interval(interval).Loop(loopTime) : 
-                Sequence().Interval(interval).Action(action).Loop(loopTime);
+                Looper(interval, loopTime, action);
         }
         #endregion
 

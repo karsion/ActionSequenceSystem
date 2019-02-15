@@ -112,6 +112,32 @@ namespace UnrealM
         }
 
         /// <summary>
+        /// 循环调用函数，循环次数作为参数，并设置次数，是否立即开始
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="interval">延迟</param>
+        /// <param name="loopTime">循环调用次数</param>
+        /// <param name="action">调用的函数</param>
+        /// <returns></returns>
+        public static ActionSequence Looper(this Component id, float interval, int loopTime, Action action)
+        {
+            return Sequence(id).Interval(interval).Action(action).Loop(loopTime);
+        }
+
+        /// <summary>
+        /// 循环调用函数，循环次数作为参数，并设置次数，是否立即开始
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="interval">延迟</param>
+        /// <param name="loopTime">循环调用次数</param>
+        /// <param name="action">调用的函数，循环次数作为参数</param>
+        /// <returns></returns>
+        public static ActionSequence Looper(this Component id, float interval, int loopTime, Action<int> action)
+        {
+            return Sequence(id).Interval(interval).Action(action).Loop(loopTime);
+        }
+
+        /// <summary>
         /// 循环调用函数，并设置次数，是否立即开始
         /// </summary>
         /// <param name="id"></param>
@@ -123,8 +149,8 @@ namespace UnrealM
         public static ActionSequence Looper(this Component id, float interval, int loopTime, bool isActionAtStart, Action action)
         {
             return isActionAtStart ?
-                Sequence(id).Action(action).Interval(interval).Loop(loopTime) :
-                Sequence(id).Interval(interval).Action(action).Loop(loopTime);
+                id.Sequence().Action(action).Interval(interval).Loop(loopTime) :
+                id.Looper(interval, loopTime, action);
         }
 
         /// <summary>
@@ -139,8 +165,8 @@ namespace UnrealM
         public static ActionSequence Looper(this Component id, float interval, int loopTime, bool isActionAtStart, Action<int> action)
         {
             return isActionAtStart ?
-                Sequence(id).Action(action).Interval(interval).Loop(loopTime) :
-                Sequence(id).Interval(interval).Action(action).Loop(loopTime);
+                id.Sequence().Action(action).Interval(interval).Loop(loopTime) :
+                id.Looper(interval, loopTime, action);
         }
 
         /// <summary>
@@ -152,7 +178,7 @@ namespace UnrealM
         /// <returns></returns>
         public static ActionSequence WaitFor(this Component id, Func<bool> condition, Action action)
         {
-            return Sequence(id).WaitFor(condition).Action(action);
+            return id.Sequence().WaitFor(condition).Action(action);
         }
         #endregion
 

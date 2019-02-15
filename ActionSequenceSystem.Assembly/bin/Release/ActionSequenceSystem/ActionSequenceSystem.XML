@@ -44,6 +44,24 @@
             <param name="action">调用的函数，循环次数作为参数</param>
             <returns></returns>
         </member>
+        <member name="M:UnrealM.ActionSequenceSystem.Looper(System.Single,System.Int32,System.Action)">
+            <summary>
+            循环调用函数，循环次数作为参数，并设置次数，是否立即开始
+            </summary>
+            <param name="interval">延迟</param>
+            <param name="loopTime">循环调用次数</param>
+            <param name="action">调用的函数</param>
+            <returns></returns>
+        </member>
+        <member name="M:UnrealM.ActionSequenceSystem.Looper(System.Single,System.Int32,System.Action{System.Int32})">
+            <summary>
+            循环调用函数，循环次数作为参数，并设置次数，是否立即开始
+            </summary>
+            <param name="interval">延迟</param>
+            <param name="loopTime">循环调用次数</param>
+            <param name="action">调用的函数，循环次数作为参数</param>
+            <returns></returns>
+        </member>
         <member name="M:UnrealM.ActionSequenceSystem.Looper(System.Single,System.Int32,System.Boolean,System.Action)">
             <summary>
             循环调用函数，并设置次数，是否立即开始
@@ -240,6 +258,26 @@
             <param name="id"></param>
             <param name="interval">延迟</param>
             <param name="action">调用的函数</param>
+            <returns></returns>
+        </member>
+        <member name="M:UnrealM.ActionSequenceSystemEx.Looper(UnityEngine.Component,System.Single,System.Int32,System.Action)">
+            <summary>
+            循环调用函数，循环次数作为参数，并设置次数，是否立即开始
+            </summary>
+            <param name="id"></param>
+            <param name="interval">延迟</param>
+            <param name="loopTime">循环调用次数</param>
+            <param name="action">调用的函数</param>
+            <returns></returns>
+        </member>
+        <member name="M:UnrealM.ActionSequenceSystemEx.Looper(UnityEngine.Component,System.Single,System.Int32,System.Action{System.Int32})">
+            <summary>
+            循环调用函数，循环次数作为参数，并设置次数，是否立即开始
+            </summary>
+            <param name="id"></param>
+            <param name="interval">延迟</param>
+            <param name="loopTime">循环调用次数</param>
+            <param name="action">调用的函数，循环次数作为参数</param>
             <returns></returns>
         </member>
         <member name="M:UnrealM.ActionSequenceSystemEx.Looper(UnityEngine.Component,System.Single,System.Int32,System.Boolean,System.Action)">
@@ -661,6 +699,24 @@
             <param name="interval">延迟</param>
             <param name="loopTime">循环调用次数</param>
             <param name="isActionAtStart">是否立即开始</param>
+            <param name="action">调用的函数，循环次数作为参数</param>
+            <returns></returns>
+        </member>
+        <member name="M:UnrealM.ActionSequenceHandle.Looper(System.Single,System.Int32,System.Action)">
+            <summary>
+            循环调用函数，循环次数作为参数，并设置次数，是否立即开始
+            </summary>
+            <param name="interval">延迟</param>
+            <param name="loopTime">循环调用次数</param>
+            <param name="action">调用的函数</param>
+            <returns></returns>
+        </member>
+        <member name="M:UnrealM.ActionSequenceHandle.Looper(System.Single,System.Int32,System.Action{System.Int32})">
+            <summary>
+            循环调用函数，循环次数作为参数，并设置次数，是否立即开始
+            </summary>
+            <param name="interval">延迟</param>
+            <param name="loopTime">循环调用次数</param>
             <param name="action">调用的函数，循环次数作为参数</param>
             <returns></returns>
         </member>
