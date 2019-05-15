@@ -1,5 +1,4 @@
 ﻿using System;
-using UnityEngine;
 
 namespace UnrealM
 {
@@ -9,9 +8,14 @@ namespace UnrealM
     /// 目前设计为一对一控制，重复SetHandle的话，会丢失对上一个Sequence的控制权
     /// 考虑到如果设计为一对多的话，内部需要保存一个数组，会浪费内存，一对多的使用情况也很少，故不支持
     /// </summary>
-    public class ActionSequenceHandle
+    public class ActionSequenceHandle : IDisposable
     {
         internal ActionSequence sequence;
+
+        /// <summary>
+        /// IDisposable
+        /// </summary>
+        public void Dispose() { StopSequence(); }
 
         /// <summary>
         /// 停止sequence
@@ -195,5 +199,6 @@ namespace UnrealM
                 SequenceUnscaled().Action(action).Interval(interval).Loop(loopTime) :
                 SequenceUnscaled().Interval(interval).Action(action).Loop(loopTime);
         }
+
     }
 }

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnityExamples.CSharp", "UnityExamples.CSharp.csproj", "{7E732E6F-4892-309E-9F78-A30E9A86E1F3}"
+# Visual Studio 15
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnityExamples", "UnityExamples.csproj", "{28467513-8DBA-079A-EB4E-CB2C4C403BB3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,10 +9,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{7E732E6F-4892-309E-9F78-A30E9A86E1F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7E732E6F-4892-309E-9F78-A30E9A86E1F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7E732E6F-4892-309E-9F78-A30E9A86E1F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7E732E6F-4892-309E-9F78-A30E9A86E1F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28467513-8DBA-079A-EB4E-CB2C4C403BB3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28467513-8DBA-079A-EB4E-CB2C4C403BB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28467513-8DBA-079A-EB4E-CB2C4C403BB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28467513-8DBA-079A-EB4E-CB2C4C403BB3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

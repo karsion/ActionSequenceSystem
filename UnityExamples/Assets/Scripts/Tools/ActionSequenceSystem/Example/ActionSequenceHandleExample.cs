@@ -8,7 +8,8 @@ public class ActionSequenceHandleExample : MonoBehaviour
     private void Start()
     {
         //Notes：An instance must be preserved to manually stop an infinite loop sequence.
-        this.LooperUnscaled(infiniteSequenceHandle, 1f, () => Debug.Log("No id infinite looper"));
+        //this.LooperUnscaled(infiniteSequenceHandle, 1f, () => Debug.Log("No id infinite looper"));
+        infiniteSequenceHandle.Looper(2f, () => transform.Rotate(15, 0, 0));
     }
 
     private void Update()
