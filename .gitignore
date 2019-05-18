@@ -20,3 +20,5 @@ ProjectSettings/ProjectVersion.txt
 /UnityExamples/_ReSharper.Caches
 /UnityExamples/UnityExamples.sln.DotSettings.user
 /ActionSequenceSystem.Assembly/ActionSequenceSystem.Assembly.sln.DotSettings.user
+/UnityExamples/obj
+/UnityExamples/Logs
