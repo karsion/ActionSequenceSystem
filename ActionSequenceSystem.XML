@@ -1,0 +1,779 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ActionSequenceSystem</name>
+    </assembly>
+    <members>
+        <member name="T:UnrealM.ActionSequenceSystem">
+            <summary>
+            ActionSequenceSystem is a multifunctional chaining timer system
+            </summary>
+        </member>
+        <member name="M:UnrealM.ActionSequenceSystem.StopSequenceAll">
+            <summary>
+            停止所有Sequence
+            </summary>
+        </member>
+        <member name="M:UnrealM.ActionSequenceSystem.Sequence">
+            <summary>
+            无ID启动
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:UnrealM.ActionSequenceSystem.Delayer(System.Single,System.Action)">
+            <summary>
+            延迟调用函数
+            </summary>
+            <param name="delay">延迟</param>
+            <param name="action">调用的函数</param>
+            <returns></returns>
+        </member>
+        <member name="M:UnrealM.ActionSequenceSystem.Looper(System.Single,System.Action)">
+            <summary>
+            无限循环调用函数
+            </summary>
+            <param name="interval">延迟</param>
+            <param name="action">调用的函数</param>
+            <returns></returns>
+        </member>
+        <member name="M:UnrealM.ActionSequenceSystem.Looper(System.Single,System.Action{System.Int32})">
+            <summary>
+            延迟调用函数，循环次数作为参数
+            </summary>
+            <param name="interval">延迟</param>
+            <param name="action">调用的函数，循环次数作为参数</param>
+            <returns></returns>
+        </member>
+        <member name="M:UnrealM.ActionSequenceSystem.Looper(System.Single,System.Int32,System.Action)">
+            <summary>
+            循环调用函数，循环次数作为参数，并设置次数，是否立即开始
+            </summary>
+            <param name="interval">延迟</param>
+            <param name="loopTime">循环调用次数</param>
+            <param name="action">调用的函数</param>
+            <returns></returns>
+        </member>
+        <member name="M:UnrealM.ActionSequenceSystem.Looper(System.Single,System.Int32,System.Action{System.Int32})">
+            <summary>
+            循环调用函数，循环次数作为参数，并设置次数，是否立即开始
+            </summary>
+            <param name="interval">延迟</param>
+            <param name="loopTime">循环调用次数</param>
+            <param name="action">调用的函数，循环次数作为参数</param>
+            <returns></returns>
+        </member>
+        <member name="M:UnrealM.ActionSequenceSystem.Looper(System.Single,System.Int32,System.Boolean,System.Action)">
+            <summary>
+            循环调用函数，并设置次数，是否立即开始
+            </summary>
+            <param name="interval">延迟</param>
+            <param name="loopTime">循环调用次数</param>
+            <param name="isActionAtStart">是否立即开始</param>
+            <param name="action">调用的函数</param>
+            <returns></returns>
+        </member>
+        <member name="M:UnrealM.ActionSequenceSystem.Looper(System.Single,System.Int32,System.Boolean,System.Action{System.Int32})">
+            <summary>
+            循环调用函数，循环次数作为参数，并设置次数，是否立即开始
+            </summary>
+            <param name="interval">延迟</param>
+            <param name="loopTime">循环调用次数</param>
+            <param name="isActionAtStart">是否立即开始</param>
+            <param name="action">调用的函数，循环次数作为参数</param>
+            <returns></returns>
+        </member>
+        <member name="M:UnrealM.ActionSequenceSystem.SequenceUnscaled">
+            <summary>
+            无ID启动
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:UnrealM.ActionSequenceSystem.DelayerUnscaled(System.Single,System.Action)">
+            <summary>
+            延迟调用函数
+            </summary>
+            <param name="delay">延迟</param>
+            <param name="action">调用的函数</param>
+            <returns></returns>
+        </member>
+        <member name="M:UnrealM.ActionSequenceSystem.LooperUnscaled(System.Single,System.Action)">
+            <summary>
+            无限循环调用函数
+            </summary>
+            <param name="interval">延迟</param>
+            <param name="action">调用的函数</param>
+            <returns></returns>
+        </member>
+        <member name="M:UnrealM.ActionSequenceSystem.LooperUnscaled(System.Single,System.Action{System.Int32})">
+            <summary>
+            延迟调用函数，循环次数作为参数
+            </summary>
+            <param name="interval">延迟</param>
+            <param name="action">调用的函数，循环次数作为参数</param>
+            <returns></returns>
+        </member>
+        <member name="M:UnrealM.ActionSequenceSystem.LooperUnscaled(System.Single,System.Int32,System.Boolean,System.Action)">
+            <summary>
+            循环调用函数，并设置次数，是否立即开始
+            </summary>
+            <param name="interval">延迟</param>
+            <param name="loopTime">循环调用次数</param>
+            <param name="isActionAtStart">是否立即开始</param>
+            <param name="action">调用的函数</param>
+            <returns></returns>
+        </member>
+        <member name="M:UnrealM.ActionSequenceSystem.LooperUnscaled(System.Single,System.Int32,System.Boolean,System.Action{System.Int32})">
+            <summary>
+            循环调用函数，循环次数作为参数，并设置次数，是否立即开始
+            </summary>
+            <param name="interval">延迟</param>
+            <param name="loopTime">循环调用次数</param>
+            <param name="isActionAtStart">是否立即开始</param>
+            <param name="action">调用的函数，循环次数作为参数</param>
+            <returns></returns>
+        </member>
+        <member name="P:UnrealM.ActionSequenceSystem.ListSequenceAlive">
+            <summary>
+            Used by the editor. Display relevant information.
+            </summary>
+        </member>
+        <member name="P:UnrealM.ActionSequenceSystem.ListSequenceUnscaleAlive">
+            <summary>
+            Used by the editor. Display relevant information.
+            </summary>
+        </member>
+        <member name="P:UnrealM.ActionSequenceSystem.countActiveSequence">
+            <summary>
+            Used by the editor. Display relevant information.
+            </summary>
+        </member>
+        <member name="P:UnrealM.ActionSequenceSystem.countAllSequence">
+            <summary>
+            Used by the editor. Display relevant information.
+            </summary>
+        </member>
+        <member name="P:UnrealM.ActionSequenceSystem.countActiveAction">
+            <summary>
+            Used by the editor. Display relevant information.
+            </summary>
+        </member>
+        <member name="P:UnrealM.ActionSequenceSystem.countAllAction">
+            <summary>
+            Used by the editor. Display relevant information.
+            </summary>
+        </member>
+        <member name="P:UnrealM.ActionSequenceSystem.countActiveInterval">
+            <summary>
+            Used by the editor. Display relevant information.
+            </summary>
+        </member>
+        <member name="P:UnrealM.ActionSequenceSystem.countAllInterval">
+            <summary>
+            Used by the editor. Display relevant information.
+            </summary>
+        </member>
+        <member name="P:UnrealM.ActionSequenceSystem.countActiveSetActive">
+            <summary>
+            Used by the editor. Display relevant information.
+            </summary>
+        </member>
+        <member name="P:UnrealM.ActionSequenceSystem.countAllSetActive">
+            <summary>
+            Used by the editor. Display relevant information.
+            </summary>
+        </member>
+        <member name="P:UnrealM.ActionSequenceSystem.countActiveWaitFor">
+            <summary>
+            Used by the editor. Display relevant information.
+            </summary>
+        </member>
+        <member name="P:UnrealM.ActionSequenceSystem.countAllWaitFor">
+            <summary>
+            Used by the editor. Display relevant information.
+            </summary>
+        </member>
+        <member name="T:UnrealM.ActionSequenceSystemEx">
+            <summary>
+            Methods that extend known Unity components and allow to directly create and control timer from their instances
+            </summary>
+        </member>
+        <member name="M:UnrealM.ActionSequenceSystemEx.Sequence(UnityEngine.Component)">
+            <summary>
+            用Component作为ID开序列
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UnrealM.ActionSequenceSystemEx.StopSequence(UnityEngine.Component)">
+            <summary>
+            用Component作为ID停止序列
+            </summary>
+            <param name="id"></param>
+        </member>
+        <member name="M:UnrealM.ActionSequenceSystemEx.StopSequence(UnityEngine.Component,UnrealM.ActionSequence)">
+            <summary>
+            用Component作为ID停止指定的序列
+            </summary>
+            <param name="id"></param>
+            <param name="sequence">停止指定的ActionSequence</param>
+        </member>
+        <member name="M:UnrealM.ActionSequenceSystemEx.Shower(UnityEngine.Component,System.Single)">
+            <summary>
+            延迟激活ID的GameObject
+            </summary>
+            <param name="id"></param>
+            <param name="delay">延迟</param>
+            <returns></returns>
+        </member>
+        <member name="M:UnrealM.ActionSequenceSystemEx.Hider(UnityEngine.Component,System.Single)">
+            <summary>
+            延迟反激活ID的GameObject
+            </summary>
+            <param name="id"></param>
+            <param name="delay">延迟</param>
+            <returns></returns>
+        </member>
+        <member name="M:UnrealM.ActionSequenceSystemEx.Delayer(UnityEngine.Component,System.Single,System.Action)">
+            <summary>
+            延迟调用函数
+            </summary>
+            <param name="id"></param>
+            <param name="delay">延迟</param>
+            <param name="action">调用的函数</param>
+            <returns></returns>
+        </member>
+        <member name="M:UnrealM.ActionSequenceSystemEx.Looper(UnityEngine.Component,System.Single,System.Action{System.Int32})">
+            <summary>
+            延迟调用函数，循环次数作为参数
+            </summary>
+            <param name="id"></param>
+            <param name="interval">延迟</param>
+            <param name="action">调用的函数，循环次数作为参数</param>
+            <returns></returns>
+        </member>
+        <member name="M:UnrealM.ActionSequenceSystemEx.Looper(UnityEngine.Component,System.Single,System.Action)">
+            <summary>
+            无限循环调用函数
+            </summary>
+            <param name="id"></param>
+            <param name="interval">延迟</param>
+            <param name="action">调用的函数</param>
+            <returns></returns>
+        </member>
+        <member name="M:UnrealM.ActionSequenceSystemEx.Looper(UnityEngine.Component,System.Single,System.Int32,System.Action)">
+            <summary>
+            循环调用函数，循环次数作为参数，并设置次数，是否立即开始
+            </summary>
+            <param name="id"></param>
+            <param name="interval">延迟</param>
+            <param name="loopTime">循环调用次数</param>
+            <param name="action">调用的函数</param>
+            <returns></returns>
+        </member>
+        <member name="M:UnrealM.ActionSequenceSystemEx.Looper(UnityEngine.Component,System.Single,System.Int32,System.Action{System.Int32})">
+            <summary>
+            循环调用函数，循环次数作为参数，并设置次数，是否立即开始
+            </summary>
+            <param name="id"></param>
+            <param name="interval">延迟</param>
+            <param name="loopTime">循环调用次数</param>
+            <param name="action">调用的函数，循环次数作为参数</param>
+            <returns></returns>
+        </member>
+        <member name="M:UnrealM.ActionSequenceSystemEx.Looper(UnityEngine.Component,System.Single,System.Int32,System.Boolean,System.Action)">
+            <summary>
+            循环调用函数，并设置次数，是否立即开始
+            </summary>
+            <param name="id"></param>
+            <param name="interval">延迟</param>
+            <param name="loopTime">循环调用次数</param>
+            <param name="isActionAtStart">是否立即开始</param>
+            <param name="action">调用的函数</param>
+            <returns></returns>
+        </member>
+        <member name="M:UnrealM.ActionSequenceSystemEx.Looper(UnityEngine.Component,System.Single,System.Int32,System.Boolean,System.Action{System.Int32})">
+            <summary>
+            循环调用函数，循环次数作为参数，并设置次数，是否立即开始
+            </summary>
+            <param name="id"></param>
+            <param name="interval">延迟</param>
+            <param name="loopTime">循环调用次数</param>
+            <param name="isActionAtStart">是否立即开始</param>
+            <param name="action">调用的函数，循环次数作为参数</param>
+            <returns></returns>
+        </member>
+        <member name="M:UnrealM.ActionSequenceSystemEx.WaitFor(UnityEngine.Component,System.Func{System.Boolean},System.Action)">
+            <summary>
+            等待条件判断成功后调用函数
+            </summary>
+            <param name="id"></param>
+            <param name="condition">判断函数，函数返回true，调用action</param>
+            <param name="action">调用函数</param>
+            <returns></returns>
+        </member>
+        <member name="M:UnrealM.ActionSequenceSystemEx.Sequence(UnityEngine.Component,UnrealM.ActionSequenceHandle)">
+            <summary>
+            用Component作为ID开序列，并使用“控制句柄”
+            </summary>
+            <param name="id"></param>
+            <param name="handle">控制句柄</param>
+            <returns></returns>
+        </member>
+        <member name="M:UnrealM.ActionSequenceSystemEx.Delayer(UnityEngine.Component,UnrealM.ActionSequenceHandle,System.Single,System.Action)">
+            <summary>
+            延迟调用函数
+            </summary>
+            <param name="id"></param>
+            <param name="handle">控制句柄</param>
+            <param name="delay">延迟</param>
+            <param name="action">调用的函数</param>
+            <returns></returns>
+        </member>
+        <member name="M:UnrealM.ActionSequenceSystemEx.Looper(UnityEngine.Component,UnrealM.ActionSequenceHandle,System.Single,System.Action)">
+            <summary>
+            无限循环调用函数
+            </summary>
+            <param name="id"></param>
+            <param name="handle">控制句柄</param>
+            <param name="interval">延迟</param>
+            <param name="action">调用的函数</param>
+            <returns></returns>
+        </member>
+        <member name="M:UnrealM.ActionSequenceSystemEx.Looper(UnityEngine.Component,UnrealM.ActionSequenceHandle,System.Single,System.Action{System.Int32})">
+            <summary>
+            无限循环调用函数
+            </summary>
+            <param name="id"></param>
+            <param name="handle">控制句柄</param>
+            <param name="interval">延迟</param>
+            <param name="action">调用的函数，循环次数作为参数</param>
+            <returns></returns>
+        </member>
+        <member name="M:UnrealM.ActionSequenceSystemEx.Looper(UnityEngine.Component,UnrealM.ActionSequenceHandle,System.Single,System.Int32,System.Boolean,System.Action)">
+            <summary>
+            循环调用函数，并设置次数，是否立即开始
+            </summary>
+            <param name="id"></param>
+            <param name="handle">控制句柄</param>
+            <param name="interval">延迟</param>
+            <param name="loopTime">循环调用次数</param>
+            <param name="isActionAtStart">是否立即开始</param>
+            <param name="action">调用的函数</param>
+            <returns></returns>
+        </member>
+        <member name="M:UnrealM.ActionSequenceSystemEx.Looper(UnityEngine.Component,UnrealM.ActionSequenceHandle,System.Single,System.Int32,System.Boolean,System.Action{System.Int32})">
+            <summary>
+            循环调用函数，循环次数作为参数，并设置次数，是否立即开始
+            </summary>
+            <param name="id"></param>
+            <param name="handle">控制句柄</param>
+            <param name="interval">延迟</param>
+            <param name="loopTime">循环调用次数</param>
+            <param name="isActionAtStart">是否立即开始</param>
+            <param name="action">调用的函数，循环次数作为参数</param>
+            <returns></returns>
+        </member>
+        <member name="T:UnrealM.ActionSequenceSystemUnscaledEx">
+            <summary>
+            Methods that extend known Unity components and allow to directly create and control timer from their instances
+            </summary>
+        </member>
+        <member name="M:UnrealM.ActionSequenceSystemUnscaledEx.SequenceUnscaled(UnityEngine.Component)">
+            <summary>
+            用Component作为ID开序列
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UnrealM.ActionSequenceSystemUnscaledEx.ShowerUnscaled(UnityEngine.Component,System.Single)">
+            <summary>
+            延迟激活ID的GameObject
+            </summary>
+            <param name="id"></param>
+            <param name="delay">延迟</param>
+            <returns></returns>
+        </member>
+        <member name="M:UnrealM.ActionSequenceSystemUnscaledEx.HiderUnscaled(UnityEngine.Component,System.Single)">
+            <summary>
+            延迟反激活ID的GameObject
+            </summary>
+            <param name="id"></param>
+            <param name="delay">延迟</param>
+            <returns></returns>
+        </member>
+        <member name="M:UnrealM.ActionSequenceSystemUnscaledEx.DelayerUnscaled(UnityEngine.Component,System.Single,System.Action)">
+            <summary>
+            延迟调用函数
+            </summary>
+            <param name="id"></param>
+            <param name="delay">延迟</param>
+            <param name="action">调用的函数</param>
+            <returns></returns>
+        </member>
+        <member name="M:UnrealM.ActionSequenceSystemUnscaledEx.LooperUnscaled(UnityEngine.Component,System.Single,System.Action{System.Int32})">
+            <summary>
+            延迟调用函数，循环次数作为参数
+            </summary>
+            <param name="id"></param>
+            <param name="interval">延迟</param>
+            <param name="action">调用的函数，循环次数作为参数</param>
+            <returns></returns>
+        </member>
+        <member name="M:UnrealM.ActionSequenceSystemUnscaledEx.LooperUnscaled(UnityEngine.Component,System.Single,System.Action)">
+            <summary>
+            无限循环调用函数
+            </summary>
+            <param name="id"></param>
+            <param name="interval">延迟</param>
+            <param name="action">调用的函数</param>
+            <returns></returns>
+        </member>
+        <member name="M:UnrealM.ActionSequenceSystemUnscaledEx.LooperUnscaled(UnityEngine.Component,System.Single,System.Int32,System.Boolean,System.Action)">
+            <summary>
+            循环调用函数，并设置次数，是否立即开始
+            </summary>
+            <param name="id"></param>
+            <param name="interval">延迟</param>
+            <param name="loopTime">循环调用次数</param>
+            <param name="isActionAtStart">是否立即开始</param>
+            <param name="action">调用的函数</param>
+            <returns></returns>
+        </member>
+        <member name="M:UnrealM.ActionSequenceSystemUnscaledEx.LooperUnscaled(UnityEngine.Component,System.Single,System.Int32,System.Boolean,System.Action{System.Int32})">
+            <summary>
+            循环调用函数，循环次数作为参数，并设置次数，是否立即开始
+            </summary>
+            <param name="id"></param>
+            <param name="interval">延迟</param>
+            <param name="loopTime">循环调用次数</param>
+            <param name="isActionAtStart">是否立即开始</param>
+            <param name="action">调用的函数，循环次数作为参数</param>
+            <returns></returns>
+        </member>
+        <member name="M:UnrealM.ActionSequenceSystemUnscaledEx.WaitForUnscaled(UnityEngine.Component,System.Func{System.Boolean},System.Action)">
+            <summary>
+            等待条件判断成功后调用函数
+            </summary>
+            <param name="id"></param>
+            <param name="condition">判断函数，函数返回true，调用action</param>
+            <param name="action">调用函数</param>
+            <returns></returns>
+        </member>
+        <member name="M:UnrealM.ActionSequenceSystemUnscaledEx.SequenceUnscaled(UnityEngine.Component,UnrealM.ActionSequenceHandle)">
+            <summary>
+            用Component作为ID开序列，并使用“控制句柄”
+            </summary>
+            <param name="id"></param>
+            <param name="handle">控制句柄</param>
+            <returns></returns>
+        </member>
+        <member name="M:UnrealM.ActionSequenceSystemUnscaledEx.DelayerUnscaled(UnityEngine.Component,UnrealM.ActionSequenceHandle,System.Single,System.Action)">
+            <summary>
+            延迟调用函数
+            </summary>
+            <param name="id"></param>
+            <param name="handle">控制句柄</param>
+            <param name="delay">延迟</param>
+            <param name="action">调用的函数</param>
+            <returns></returns>
+        </member>
+        <member name="M:UnrealM.ActionSequenceSystemUnscaledEx.LooperUnscaled(UnityEngine.Component,UnrealM.ActionSequenceHandle,System.Single,System.Action)">
+            <summary>
+            无限循环调用函数
+            </summary>
+            <param name="id"></param>
+            <param name="handle">控制句柄</param>
+            <param name="interval">延迟</param>
+            <param name="action">调用的函数</param>
+            <returns></returns>
+        </member>
+        <member name="M:UnrealM.ActionSequenceSystemUnscaledEx.LooperUnscaled(UnityEngine.Component,UnrealM.ActionSequenceHandle,System.Single,System.Action{System.Int32})">
+            <summary>
+            无限循环调用函数
+            </summary>
+            <param name="id"></param>
+            <param name="handle">控制句柄</param>
+            <param name="interval">延迟</param>
+            <param name="action">调用的函数，循环次数作为参数</param>
+            <returns></returns>
+        </member>
+        <member name="M:UnrealM.ActionSequenceSystemUnscaledEx.LooperUnscaled(UnityEngine.Component,UnrealM.ActionSequenceHandle,System.Single,System.Int32,System.Boolean,System.Action)">
+            <summary>
+            循环调用函数，并设置次数，是否立即开始
+            </summary>
+            <param name="id"></param>
+            <param name="handle">控制句柄</param>
+            <param name="interval">延迟</param>
+            <param name="loopTime">循环调用次数</param>
+            <param name="isActionAtStart">是否立即开始</param>
+            <param name="action">调用的函数</param>
+            <returns></returns>
+        </member>
+        <member name="M:UnrealM.ActionSequenceSystemUnscaledEx.LooperUnscaled(UnityEngine.Component,UnrealM.ActionSequenceHandle,System.Single,System.Int32,System.Boolean,System.Action{System.Int32})">
+            <summary>
+            循环调用函数，循环次数作为参数，并设置次数，是否立即开始
+            </summary>
+            <param name="id"></param>
+            <param name="handle">控制句柄</param>
+            <param name="interval">延迟</param>
+            <param name="loopTime">循环调用次数</param>
+            <param name="isActionAtStart">是否立即开始</param>
+            <param name="action">调用的函数，循环次数作为参数</param>
+            <returns></returns>
+        </member>
+        <member name="T:UnrealM.ActionSequence">
+            <summary>
+            行动序列类
+            </summary>
+        </member>
+        <member name="M:UnrealM.ActionSequence.Hide">
+            <summary>
+            设置GameObject隐藏（SetActive）
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:UnrealM.ActionSequence.Show">
+            <summary>
+            设置GameObject显示（SetActive(false)）
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:UnrealM.ActionSequence.ToggleActive">
+            <summary>
+            设置GameObject反显示隐藏（SetActive(!activeSelf)）
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:UnrealM.ActionSequence.Interval(System.Single)">
+            <summary>
+            增加一个运行节点
+            </summary>
+            <param name="interval">时间间隔</param>
+            <returns></returns>
+        </member>
+        <member name="M:UnrealM.ActionSequence.Action(System.Action)">
+            <summary>
+            增加一个行动节点
+            </summary>
+            <param name="action">调用的函数</param>
+            <returns></returns>
+        </member>
+        <member name="M:UnrealM.ActionSequence.Action(System.Action{System.Int32})">
+            <summary>
+            增加一个带循环次数行动节点
+            </summary>
+            <param name="action">调用的函数带循环次数</param>
+            <returns></returns>
+        </member>
+        <member name="M:UnrealM.ActionSequence.WaitFor(System.Func{System.Boolean})">
+            <summary>
+            增加一个条件节点
+            </summary>
+            <param name="condition">判断条件函数，返回true则跳下一节点</param>
+            <returns></returns>
+        </member>
+        <member name="M:UnrealM.ActionSequence.Loop(System.Int32)">
+            <summary>
+            设置循环
+            </summary>
+            <param name="loopTime">循环次数，-1为无限，0和1都是1次</param>
+            <returns></returns>
+        </member>
+        <member name="M:UnrealM.ActionSequence.Stop(UnityEngine.Component)">
+            <summary>
+            用指定的ID去尝试停止，ID不对的话，可能是已经停止的了
+            </summary>
+            <param name="callerID"></param>
+        </member>
+        <member name="P:UnrealM.ActionSequence.countActive">
+            <summary>
+            内存池活动元素
+            </summary>
+        </member>
+        <member name="P:UnrealM.ActionSequence.countAll">
+            <summary>
+            内存池总数
+            </summary>
+        </member>
+        <member name="P:UnrealM.ActionSequence.nodesCount">
+            <summary>
+            获取ActionNode列表的元素个数
+            </summary>
+        </member>
+        <member name="P:UnrealM.ActionSequence.timeAxis">
+            <summary>
+            时间轴
+            </summary>
+        </member>
+        <member name="P:UnrealM.ActionSequence.id">
+            <summary>
+            目标组件，组件销毁的时候，本动作序列也相应销毁
+            </summary>
+        </member>
+        <member name="P:UnrealM.ActionSequence.handle">
+            <summary>
+            设置一个句柄用于正确的停止序列
+            </summary>
+        </member>
+        <member name="P:UnrealM.ActionSequence.loopTime">
+            <summary>
+            需要循环的次数
+            </summary>
+        </member>
+        <member name="P:UnrealM.ActionSequence.cycles">
+            <summary>
+            已经运行的次数
+            </summary>
+        </member>
+        <member name="P:UnrealM.ActionSequence.isFinshed">
+            <summary>
+            是否已经运行完
+            </summary>
+        </member>
+        <member name="P:UnrealM.ActionSequence.bSetStop">
+            <summary>
+            是否下一帧停止
+            </summary>
+        </member>
+        <member name="T:UnrealM.ActionSequenceHandle">
+            <summary>
+            这个类设计为单独控制Sequence的停止，如果你想手动停止的话
+            也可以缓存Sequence，使用Sequence停止时，需要判断是否正在使用当前ID
+            目前设计为一对一控制，重复SetHandle的话，会丢失对上一个Sequence的控制权
+            考虑到如果设计为一对多的话，内部需要保存一个数组，会浪费内存，一对多的使用情况也很少，故不支持
+            </summary>
+        </member>
+        <member name="M:UnrealM.ActionSequenceHandle.Dispose">
+            <summary>
+            IDisposable
+            </summary>
+        </member>
+        <member name="M:UnrealM.ActionSequenceHandle.StopSequence">
+            <summary>
+            停止sequence
+            </summary>
+            <localize>
+            <zh-CN>停止当前控制的sequence</zh-CN>
+            <en>Stop the handling sequence</en>
+            </localize>
+        </member>
+        <member name="M:UnrealM.ActionSequenceHandle.Sequence">
+            <summary>
+            用Handle开序列
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:UnrealM.ActionSequenceHandle.Delayer(System.Single,System.Action)">
+            <summary>
+            延迟调用函数
+            </summary>
+            <param name="delay">延迟</param>
+            <param name="action">调用的函数</param>
+            <returns></returns>
+        </member>
+        <member name="M:UnrealM.ActionSequenceHandle.Looper(System.Single,System.Action)">
+            <summary>
+            无限循环调用函数
+            </summary>
+            <param name="interval">延迟</param>
+            <param name="action">调用的函数</param>
+            <returns></returns>
+        </member>
+        <member name="M:UnrealM.ActionSequenceHandle.Looper(System.Single,System.Action{System.Int32})">
+            <summary>
+            无限循环调用函数，循环次数作为参数
+            </summary>
+            <param name="interval">延迟</param>
+            <param name="action">调用的函数，循环次数作为参数</param>
+            <returns></returns>
+        </member>
+        <member name="M:UnrealM.ActionSequenceHandle.Looper(System.Single,System.Int32,System.Boolean,System.Action)">
+            <summary>
+            循环调用函数，并设置次数，是否立即开始
+            </summary>
+            <param name="interval">延迟</param>
+            <param name="loopTime">循环调用次数</param>
+            <param name="isActionAtStart">是否立即开始</param>
+            <param name="action">调用的函数</param>
+            <returns></returns>
+        </member>
+        <member name="M:UnrealM.ActionSequenceHandle.Looper(System.Single,System.Int32,System.Boolean,System.Action{System.Int32})">
+            <summary>
+            循环调用函数，循环次数作为参数，并设置次数，是否立即开始
+            </summary>
+            <param name="interval">延迟</param>
+            <param name="loopTime">循环调用次数</param>
+            <param name="isActionAtStart">是否立即开始</param>
+            <param name="action">调用的函数，循环次数作为参数</param>
+            <returns></returns>
+        </member>
+        <member name="M:UnrealM.ActionSequenceHandle.Looper(System.Single,System.Int32,System.Action)">
+            <summary>
+            循环调用函数，循环次数作为参数，并设置次数，是否立即开始
+            </summary>
+            <param name="interval">延迟</param>
+            <param name="loopTime">循环调用次数</param>
+            <param name="action">调用的函数</param>
+            <returns></returns>
+        </member>
+        <member name="M:UnrealM.ActionSequenceHandle.Looper(System.Single,System.Int32,System.Action{System.Int32})">
+            <summary>
+            循环调用函数，循环次数作为参数，并设置次数，是否立即开始
+            </summary>
+            <param name="interval">延迟</param>
+            <param name="loopTime">循环调用次数</param>
+            <param name="action">调用的函数，循环次数作为参数</param>
+            <returns></returns>
+        </member>
+        <member name="M:UnrealM.ActionSequenceHandle.SequenceUnscaled">
+            <summary>
+            用Handle开序列
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:UnrealM.ActionSequenceHandle.DelayerUnscaled(System.Single,System.Action)">
+            <summary>
+            延迟调用函数
+            </summary>
+            <param name="delay">延迟</param>
+            <param name="action">调用的函数</param>
+            <returns></returns>
+        </member>
+        <member name="M:UnrealM.ActionSequenceHandle.LooperUnscaled(System.Single,System.Action)">
+            <summary>
+            无限循环调用函数
+            </summary>
+            <param name="interval">延迟</param>
+            <param name="action">调用的函数</param>
+            <returns></returns>
+        </member>
+        <member name="M:UnrealM.ActionSequenceHandle.LooperUnscaled(System.Single,System.Action{System.Int32})">
+            <summary>
+            无限循环调用函数，循环次数作为参数
+            </summary>
+            <param name="interval">延迟</param>
+            <param name="action">调用的函数，循环次数作为参数</param>
+            <returns></returns>
+        </member>
+        <member name="M:UnrealM.ActionSequenceHandle.LooperUnscaled(System.Single,System.Int32,System.Boolean,System.Action)">
+            <summary>
+            循环调用函数，并设置次数，是否立即开始
+            </summary>
+            <param name="interval">延迟</param>
+            <param name="loopTime">循环调用次数</param>
+            <param name="isActionAtStart">是否立即开始</param>
+            <param name="action">调用的函数</param>
+            <returns></returns>
+        </member>
+        <member name="M:UnrealM.ActionSequenceHandle.LooperUnscaled(System.Single,System.Int32,System.Boolean,System.Action{System.Int32})">
+            <summary>
+            循环调用函数，循环次数作为参数，并设置次数，是否立即开始
+            </summary>
+            <param name="interval">延迟</param>
+            <param name="loopTime">循环调用次数</param>
+            <param name="isActionAtStart">是否立即开始</param>
+            <param name="action">调用的函数，循环次数作为参数</param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

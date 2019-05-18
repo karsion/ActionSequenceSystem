@@ -1,0 +1,9 @@
+{
+	"name": "com.jpp.actionsequence",
+	"displayName": "ActionSequenceSystem",
+	"description": "A multifunctional chaining timer system",
+	"version": "1.0.1",
+	"unity": "2018.3",
+	"license": "MIT",
+	"dependencies": {}
+}
