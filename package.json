@@ -1,0 +1,9 @@
+{
+	"name": "com.jpp.actionsequence",
+	"displayName": "ActionSequenceSystem",
+	"description": "金胖胖链式计时器包",
+	"version": "1.0.1",
+	"unity": "2018.3",
+	"license": "MIT",
+	"dependencies": {}
+}
