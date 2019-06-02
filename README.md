@@ -4,6 +4,8 @@
 # ActionSequenceSystem
 A Unity3D C# multifunctional chaining timer system<br>
 一个U3D C# 多功能链式计时器
+- 支持Unity Package Manager，在manifest.json中添加以下代码
+- "com.jpp.actionsequence": "https://github.com/karsion/ActionSequenceSystem.git#1.0.3",
 
 ## 简要说明 
 - 简单上手：在脚本中使用this作为入口，e.g. this.Delayer(1, DoSomething);
