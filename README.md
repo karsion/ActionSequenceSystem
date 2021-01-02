@@ -1,6 +1,11 @@
 [![license](http://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/karsion/ActionSequenceSystem/master/LICENSE.TXT)
 [![release](https://img.shields.io/badge/release-v1.0.2-blue.svg)](https://github.com/karsion/ActionSequenceSystem/master/releases)
 
+！！！Mac端的使用没问题，但是iOS打包之后无法使用，异常为MissingMethodexception：default constructor not found for type UnrealM.ActionNodeInterval
+！！！Mac use of the Mac side is no problem, but the iOS can not be used after packaging, return MissingMethodexception：default constructor not found for type UnrealM.ActionNodeInterval
+！！！未支持Editor模式
+！！！Editor model not supported
+
 # ActionSequenceSystem
 A Unity3D C# multifunctional chaining timer system<br>
 一个U3D C# 多功能链式计时器
