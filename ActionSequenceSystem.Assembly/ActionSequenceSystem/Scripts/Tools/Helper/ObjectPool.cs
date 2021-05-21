@@ -41,7 +41,7 @@ namespace UnrealM
             this.getT = getT;
             if (count < 0)
             {
-                throw new ArgumentOutOfRangeException("count");
+                throw new ArgumentOutOfRangeException(nameof(count));
             }
 
             stack = new Stack<T>(count);
@@ -49,9 +49,9 @@ namespace UnrealM
 
         public int countAll { get; private set; }
 
-        public int countActive { get { return countAll - countInactive; } }
+        public int countActive => countAll - countInactive;
 
-        public int countInactive { get { return stack.Count; } }
+        public int countInactive => stack.Count;
 
         public T Get()
         {

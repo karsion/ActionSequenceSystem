@@ -83,56 +83,79 @@ namespace UnrealM
         /// <summary>
         /// Used by the editor. Display relevant information.
         /// </summary>
-        public List<ActionSequence> ListSequenceAlive { get { return updater.listSequenceAlive; } }
+        public List<ActionSequence> ListSequenceAlive => updater.listSequenceAlive;
+
         /// <summary>
         /// Used by the editor. Display relevant information.
         /// </summary>
-        public List<ActionSequence> ListSequenceUnscaleAlive { get { return updaterUnscale.listSequenceAlive; } }
+        public List<ActionSequence> ListSequenceUnscaleAlive => updaterUnscale.listSequenceAlive;
+
         /// <summary>
         /// Used by the editor. Display relevant information.
         /// </summary>
-        public static int countActiveSequence { get { return ActionSequence.opNodes.countActive; } }
+        public static int countActiveSequence => ActionSequence.opNodes.countActive;
+
         /// <summary>
         /// Used by the editor. Display relevant information.
         /// </summary>
-        public static int countAllSequence { get { return ActionSequence.opNodes.countAll; } }
+        public static int countAllSequence => ActionSequence.opNodes.countAll;
+
         /// <summary>
         /// Used by the editor. Display relevant information.
         /// </summary>
-        public static int countActiveAction { get { return ActionNodeAction.opNodes.countActive; } }
+        public static int countActiveAction => ActionNodeAction.opNodes.countActive;
+
         /// <summary>
         /// Used by the editor. Display relevant information.
         /// </summary>
-        public static int countAllAction { get { return ActionNodeAction.opNodes.countAll; } }
+        public static int countAllAction => ActionNodeAction.opNodes.countAll;
+
         /// <summary>
         /// Used by the editor. Display relevant information.
         /// </summary>
-        public static int countActiveInterval { get { return ActionNodeInterval.opNodes.countActive; } }
+        public static int countActiveInterval => ActionNodeInterval.opNodes.countActive;
+
         /// <summary>
         /// Used by the editor. Display relevant information.
         /// </summary>
-        public static int countAllInterval { get { return ActionNodeInterval.opNodes.countAll; } }
+        public static int countAllInterval => ActionNodeInterval.opNodes.countAll;
+
         /// <summary>
         /// Used by the editor. Display relevant information.
         /// </summary>
-        public static int countActiveSetActive { get { return ActionNodeSetActive.opNodes.countActive; } }
+        public static int countActiveEnable => ActionNodeEnable.opNodes.countActive;
+
         /// <summary>
         /// Used by the editor. Display relevant information.
         /// </summary>
-        public static int countAllSetActive { get { return ActionNodeSetActive.opNodes.countAll; } }
+        public static int countAllEnable => ActionNodeEnable.opNodes.countAll;
+
         /// <summary>
         /// Used by the editor. Display relevant information.
         /// </summary>
-        public static int countActiveWaitFor { get { return ActionNodeWaitFor.opNodes.countActive; } }
+        public static int countActiveSetActive => ActionNodeSetActive.opNodes.countActive;
+
         /// <summary>
         /// Used by the editor. Display relevant information.
         /// </summary>
-        public static int countAllWaitFor { get { return ActionNodeWaitFor.opNodes.countAll; } }
+        public static int countAllSetActive => ActionNodeSetActive.opNodes.countAll;
+
+        /// <summary>
+        /// Used by the editor. Display relevant information.
+        /// </summary>
+        public static int countActiveWaitFor => ActionNodeWaitFor.opNodes.countActive;
+
+        /// <summary>
+        /// Used by the editor. Display relevant information.
+        /// </summary>
+        public static int countAllWaitFor => ActionNodeWaitFor.opNodes.countAll;
+
         #endregion
 
         private static void CreateCheck()
         {
             if (isInited || !Application.isPlaying || isQuitting) return;
+
             isInited = true;
             Create();
         }

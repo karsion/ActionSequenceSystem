@@ -43,14 +43,56 @@ namespace UnrealM
         /// <param name="sequence">停止指定的ActionSequence</param>
         public static void StopSequence(this Component id, ActionSequence sequence)
         {
-            if (sequence != null)
-            {
-                sequence.Stop(id);
-            }
+            sequence?.Stop(id);
+        }
+        #endregion
+
+        #region Enabler Disabler
+        /// <summary>
+        /// 延迟启用ID的Behaviour
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="delay">延迟</param>
+        /// <returns></returns>
+        public static ActionSequence Enabler(this Behaviour id, float delay)
+        {
+            return Sequence(id).Interval(delay).Enable();
+        }
+
+        /// <summary>
+        /// 延迟禁用ID的Behaviour
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="delay">延迟</param>
+        /// <returns></returns>
+        public static ActionSequence Disabler(this Behaviour id, float delay)
+        {
+            return Sequence(id).Interval(delay).Disable();
         }
         #endregion
 
         #region Shower Hider
+
+        /// <summary>
+        /// 停止延迟激活的GameObject(ID是Transform)
+        /// </summary>
+        /// <param name="go"></param>
+        public static void StopShowerHider(this GameObject go)
+        {
+            StopSequence(go.transform);
+        }
+
+        /// <summary>
+        /// 延迟激活的GameObject(ID是Transform)
+        /// </summary>
+        /// <param name="go"></param>
+        /// <param name="delay">延迟</param>
+        /// <returns></returns>
+        public static ActionSequence Shower(this GameObject go, float delay)
+        {
+            return Sequence(go.transform).Interval(delay).Show();
+        }
+
         /// <summary>
         /// 延迟激活ID的GameObject
         /// </summary>
@@ -60,6 +102,17 @@ namespace UnrealM
         public static ActionSequence Shower(this Component id, float delay)
         {
             return Sequence(id).Interval(delay).Show();
+        }
+
+        /// <summary>
+        /// 延迟反激活ID的GameObject(ID是Transform)
+        /// </summary>
+        /// <param name="go"></param>
+        /// <param name="delay">延迟</param>
+        /// <returns></returns>
+        public static ActionSequence Hider(this GameObject go, float delay)
+        {
+            return Sequence(go.transform).Interval(delay).Hide();
         }
 
         /// <summary>

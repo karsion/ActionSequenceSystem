@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "Assembly-CSharp.csproj", "{CF4BACDE-A912-24FB-56B6-2244E6C31633}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jpp.ActionSequence", "Jpp.ActionSequence.csproj", "{0FAB9183-44E2-CDF0-9ABA-357F3AC8D23C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,10 +9,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{CF4BACDE-A912-24FB-56B6-2244E6C31633}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CF4BACDE-A912-24FB-56B6-2244E6C31633}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CF4BACDE-A912-24FB-56B6-2244E6C31633}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CF4BACDE-A912-24FB-56B6-2244E6C31633}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0FAB9183-44E2-CDF0-9ABA-357F3AC8D23C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0FAB9183-44E2-CDF0-9ABA-357F3AC8D23C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0FAB9183-44E2-CDF0-9ABA-357F3AC8D23C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0FAB9183-44E2-CDF0-9ABA-357F3AC8D23C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

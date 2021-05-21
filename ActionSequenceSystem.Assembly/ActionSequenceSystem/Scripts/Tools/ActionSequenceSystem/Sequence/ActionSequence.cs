@@ -30,30 +30,30 @@ namespace UnrealM
         /// <summary>
         /// 内存池活动元素
         /// </summary>
-        public static int countActive { get { return opNodes.countActive; } }
+        public static int countActive => opNodes.countActive;
 
         /// <summary>
         /// 内存池总数
         /// </summary>
-        public static int countAll { get { return opNodes.countAll; } }
+        public static int countAll => opNodes.countAll;
 
         //节点列表，默认把数组容量设为比较大，做长链的时候不容易自动扩容
         private readonly List<ActionNode> nodes = new List<ActionNode>(16);
 
         //当前执行的节点索引
-        private int curNodeIndex = 0;
+        private int curNodeIndex;
 
         /// <summary>
         /// 获取ActionNode列表的元素个数
         /// </summary>
-        public int nodesCount { get { return nodes.Count; } }
+        public int nodesCount => nodes.Count;
 
         /// <summary>
         /// 时间轴
         /// </summary>
         public float timeAxis { get; private set; }
 
-        private bool hasID = false;
+        private bool hasID;
 
         /// <summary>
         /// 目标组件，组件销毁的时候，本动作序列也相应销毁
@@ -85,8 +85,6 @@ namespace UnrealM
         /// </summary>
         internal bool bSetStop { get; private set; }
 
-
-
         internal static ActionSequence GetInstance(Component component = null)
         {
             return opNodes.Get().Start(component);
@@ -115,6 +113,25 @@ namespace UnrealM
             return this;
         }
 
+        /// <summary>
+        /// 设置GameObject隐藏（SetActive）
+        /// </summary>
+        /// <returns></returns>
+        public ActionSequence Disable()
+        {
+            nodes.Add(ActionNodeEnable.Get(false));
+            return this;
+        }
+
+        /// <summary>
+        /// 设置GameObject显示（SetActive(false)）
+        /// </summary>
+        /// <returns></returns>
+        public ActionSequence Enable()
+        {
+            nodes.Add(ActionNodeEnable.Get(true));
+            return this;
+        }
 
         /// <summary>
         /// 设置GameObject隐藏（SetActive）

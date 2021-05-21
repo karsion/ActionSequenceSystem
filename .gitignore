@@ -22,3 +22,5 @@ ProjectSettings/ProjectVersion.txt
 /ActionSequenceSystem.Assembly/ActionSequenceSystem.Assembly.sln.DotSettings.user
 /UnityExamples/obj
 /UnityExamples/Logs
+.vs
+obj

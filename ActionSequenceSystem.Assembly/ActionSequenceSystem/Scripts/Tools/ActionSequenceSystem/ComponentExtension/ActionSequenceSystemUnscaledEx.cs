@@ -18,7 +18,53 @@ namespace UnrealM
             return ActionSequenceSystem.SequenceUnscaled(id);
         }
 
+        #region Enabler Disabler
+        /// <summary>
+        /// 延迟启用ID的Behaviour
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="delay">延迟</param>
+        /// <returns></returns>
+        public static ActionSequence EnablerUnscaled(this Behaviour id, float delay)
+        {
+            return SequenceUnscaled(id).Interval(delay).Enable();
+        }
+
+        /// <summary>
+        /// 延迟禁用ID的Behaviour
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="delay">延迟</param>
+        /// <returns></returns>
+        public static ActionSequence DisablerUnscaled(this Behaviour id, float delay)
+        {
+            return SequenceUnscaled(id).Interval(delay).Disable();
+        }
+        #endregion
+
         #region Shower Hider
+        /// <summary>
+        /// 延迟激活GameObject(ID是Transform)
+        /// </summary>
+        /// <param name="go"></param>
+        /// <param name="delay">延迟</param>
+        /// <returns></returns>
+        public static ActionSequence ShowerUnscaled(this GameObject go, float delay)
+        {
+            return SequenceUnscaled(go.transform).Interval(delay).Show();
+        }
+
+        /// <summary>
+        /// 延迟反激活GameObject(ID是Transform)
+        /// </summary>
+        /// <param name="go"></param>
+        /// <param name="delay">延迟</param>
+        /// <returns></returns>
+        public static ActionSequence HiderUnscaled(this GameObject go, float delay)
+        {
+            return SequenceUnscaled(go.transform).Interval(delay).Hide();
+        }
+
         /// <summary>
         /// 延迟激活ID的GameObject
         /// </summary>

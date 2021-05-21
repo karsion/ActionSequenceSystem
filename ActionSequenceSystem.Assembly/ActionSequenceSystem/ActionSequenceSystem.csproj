@@ -50,6 +50,7 @@
     <Compile Include="Scripts\Tools\ActionSequenceSystem\ActionSequenceHandle.cs" />
     <Compile Include="Scripts\Tools\ActionSequenceSystem\Sequence\Nodes\ActionNode.cs" />
     <Compile Include="Scripts\Tools\ActionSequenceSystem\Sequence\Nodes\ActionNodeAction.cs" />
+    <Compile Include="Scripts\Tools\ActionSequenceSystem\Sequence\Nodes\ActionNodeEnable.cs" />
     <Compile Include="Scripts\Tools\ActionSequenceSystem\Sequence\Nodes\ActionNodeInterval.cs" />
     <Compile Include="Scripts\Tools\ActionSequenceSystem\Sequence\Nodes\ActionNodeSetActive.cs" />
     <Compile Include="Scripts\Tools\ActionSequenceSystem\Sequence\Nodes\ActionNodeWaitFor.cs" />

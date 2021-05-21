@@ -20,23 +20,26 @@ namespace UnrealM
             base.OnInspectorGUI();
 
             GUILayout.Label("NodePool State: Active/All", EditorStyles.boldLabel);
-            GUILayout.Label(string.Format("Action: {0}/{1}", ActionSequenceSystem.countActiveAction, ActionSequenceSystem.countAllAction));
-            GUILayout.Label(string.Format("Interval: {0}/{1}", ActionSequenceSystem.countActiveInterval, ActionSequenceSystem.countAllInterval));
-            GUILayout.Label(string.Format("Condition: {0}/{1}", ActionSequenceSystem.countActiveWaitFor, ActionSequenceSystem.countAllWaitFor));
-            GUILayout.Label(string.Format("SetActive: {0}/{1}", ActionSequenceSystem.countActiveSetActive, ActionSequenceSystem.countAllSetActive));
-            GUILayout.Label(string.Format("Sequence: {0}/{1}", ActionSequence.countActive, ActionSequence.countAll));
+            GUILayout.Label($"Action: {ActionSequenceSystem.countActiveAction}/{ActionSequenceSystem.countAllAction}");
+            GUILayout.Label($"Interval: {ActionSequenceSystem.countActiveInterval}/{ActionSequenceSystem.countAllInterval}");
+            GUILayout.Label($"Condition: {ActionSequenceSystem.countActiveWaitFor}/{ActionSequenceSystem.countAllWaitFor}");
+            GUILayout.Label($"Enable: {ActionSequenceSystem.countActiveEnable}/{ActionSequenceSystem.countAllEnable}");
+            GUILayout.Label($"SetActive: {ActionSequenceSystem.countActiveSetActive}/{ActionSequenceSystem.countAllSetActive}");
+            GUILayout.Label($"Sequence: {ActionSequence.countActive}/{ActionSequence.countAll}");
             EditorGUILayout.Separator();
 
             //Showing ActionSequences in progress
             GUILayout.Label("ActionSequences in progress", EditorStyles.boldLabel);
             ActionSequenceSystem actionSequenceSystem = target as ActionSequenceSystem;
-            isShowSequenceInfo = EditorGUILayout.Foldout(isShowSequenceInfo, string.Format("Sequence: {0}", actionSequenceSystem.ListSequenceAlive.Count));
+            isShowSequenceInfo = EditorGUILayout.Foldout(isShowSequenceInfo,
+                $"Sequence: {actionSequenceSystem.ListSequenceAlive.Count}");
             if (isShowSequenceInfo)
             {
                 UpdateInfo(actionSequenceSystem.ListSequenceAlive);
             }
 
-            isShowSequenceUnscaledInfo = EditorGUILayout.Foldout(isShowSequenceUnscaledInfo, string.Format("SequenceUnscaled: {0}", actionSequenceSystem.ListSequenceUnscaleAlive.Count));
+            isShowSequenceUnscaledInfo = EditorGUILayout.Foldout(isShowSequenceUnscaledInfo,
+                $"SequenceUnscaled: {actionSequenceSystem.ListSequenceUnscaleAlive.Count}");
             if (isShowSequenceUnscaledInfo)
             {
                 UpdateInfo(actionSequenceSystem.ListSequenceUnscaleAlive);
@@ -53,17 +56,17 @@ namespace UnrealM
 
                 if (sequence.loopTime == 0) //It's a delayer
                 {
-                    GUILayout.Box(string.Format("  ID: {0}\n  Time({1:F2})", sequence.id, sequence.timeAxis), "TextArea");
+                    GUILayout.Box($"  ID: {sequence.id}\n  Time({sequence.timeAxis:F2})", "TextArea");
                 }
                 else if (sequence.loopTime < 0) //It's a infinite looper
                 {
-                    GUILayout.Box(string.Format("  ID: {0}\n  Time({1:F2})   Loop({2}/{3})   Node[{4}]", sequence.id, sequence.timeAxis,
-                                                sequence.cycles, sequence.loopTime, sequence.nodesCount), "TextArea");
+                    GUILayout.Box(
+                        $"  ID: {sequence.id}\n  Time({sequence.timeAxis:F2})   Loop({sequence.cycles}/{sequence.loopTime})   Node[{sequence.nodesCount}]", "TextArea");
                 }
                 else //It's a count looper
                 {
-                    GUILayout.Box(string.Format("  ID: {0}\n  Time({1:F2})   Loop({2}/{3})   Node[{4}]", sequence.id, sequence.timeAxis,
-                                                sequence.cycles, sequence.loopTime + 1, sequence.nodesCount), "TextArea");
+                    GUILayout.Box(
+                        $"  ID: {sequence.id}\n  Time({sequence.timeAxis:F2})   Loop({sequence.cycles}/{sequence.loopTime + 1})   Node[{sequence.nodesCount}]", "TextArea");
                 }
             }
         }
