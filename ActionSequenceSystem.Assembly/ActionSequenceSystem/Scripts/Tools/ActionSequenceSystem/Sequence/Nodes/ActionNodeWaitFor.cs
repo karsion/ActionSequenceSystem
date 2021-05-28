@@ -1,12 +1,4 @@
-﻿// ***************************************************************************
-// Copyright (c) 2018 ZhongShan KPP Technology Co
-// Copyright (c) 2018 Karsion
-//   
-// https://github.com/karsion
-// Date: 2018-03-20 11:38
-// ***************************************************************************
-
-using System;
+﻿using System;
 using UnityEngine;
 
 namespace UnrealM

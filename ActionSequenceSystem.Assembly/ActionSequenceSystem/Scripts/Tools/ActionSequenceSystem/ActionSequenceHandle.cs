@@ -26,10 +26,7 @@ namespace UnrealM
         /// </localize>
         public void StopSequence()
         {
-            if (sequence != null)
-            {
-                sequence.Stop();
-            }
+            sequence?.Stop();
         }
 
         /// <summary>
@@ -42,6 +39,18 @@ namespace UnrealM
         }
 
         /// <summary>
+        /// 延迟调用IAction接口
+        /// </summary>
+        /// <param name="delay">延迟</param>
+        /// <param name="action">调用的函数</param>
+        /// <param name="actionId">用于区分多路回调</param>
+        /// <returns></returns>
+        public ActionSequence Delayer(float delay, IAction action, int actionId)
+        {
+            return Sequence().Interval(delay).IAction(action, actionId);
+        }
+
+        /// <summary>
         /// 延迟调用函数
         /// </summary>
         /// <param name="delay">延迟</param>
@@ -50,6 +59,18 @@ namespace UnrealM
         public ActionSequence Delayer(float delay, Action action)
         {
             return Sequence().Interval(delay).Action(action);
+        }
+
+        /// <summary>
+        /// 延迟调用IAction接口，循环次数作为参数
+        /// </summary>
+        /// <param name="delay">延迟</param>
+        /// <param name="action">调用的函数</param>
+        /// <param name="actionId">用于区分多路回调</param>
+        /// <returns></returns>
+        public ActionSequence Looper(float delay, IAction action, int actionId)
+        {
+            return Sequence().Interval(delay).IAction(action, actionId).Loop();
         }
 
         /// <summary>
@@ -138,6 +159,18 @@ namespace UnrealM
         }
 
         /// <summary>
+        /// 延迟调用IAction接口
+        /// </summary>
+        /// <param name="delay">延迟</param>
+        /// <param name="action">调用的函数</param>
+        /// <param name="actionId">用于区分多路回调</param>
+        /// <returns></returns>
+        public ActionSequence DelayerUnscaled(float delay, IAction action, int actionId)
+        {
+            return SequenceUnscaled().Interval(delay).IAction(action, actionId);
+        }
+
+        /// <summary>
         /// 延迟调用函数
         /// </summary>
         /// <param name="delay">延迟</param>
@@ -146,6 +179,18 @@ namespace UnrealM
         public ActionSequence DelayerUnscaled(float delay, Action action)
         {
             return SequenceUnscaled().Interval(delay).Action(action);
+        }
+
+        /// <summary>
+        /// 延迟调用IAction接口，循环次数作为参数
+        /// </summary>
+        /// <param name="delay">延迟</param>
+        /// <param name="action">调用的函数</param>
+        /// <param name="actionId">用于区分多路回调</param>
+        /// <returns></returns>
+        public ActionSequence LooperUnscaled(float delay, IAction action, int actionId)
+        {
+            return SequenceUnscaled().Interval(delay).IAction(action, actionId).Loop();
         }
 
         /// <summary>
@@ -199,6 +244,5 @@ namespace UnrealM
                 SequenceUnscaled().Action(action).Interval(interval).Loop(loopTime) :
                 SequenceUnscaled().Interval(interval).Action(action).Loop(loopTime);
         }
-
     }
 }

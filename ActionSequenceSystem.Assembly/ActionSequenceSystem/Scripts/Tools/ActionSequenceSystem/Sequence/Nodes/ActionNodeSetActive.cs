@@ -1,12 +1,4 @@
-﻿// ***************************************************************************
-// Copyright (c) 2018 ZhongShan KPP Technology Co
-// Copyright (c) 2018 Karsion
-//   
-// https://github.com/karsion
-// Date: 2018-04-11 10:32
-// ***************************************************************************
-
-namespace UnrealM
+﻿namespace UnrealM
 {
     internal class ActionNodeSetActive : ActionNode
     {

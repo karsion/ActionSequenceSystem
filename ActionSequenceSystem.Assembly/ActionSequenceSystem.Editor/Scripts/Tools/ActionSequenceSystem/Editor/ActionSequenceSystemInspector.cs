@@ -1,9 +1,4 @@
-﻿// /****************************************************************************
-//  * Copyright (c) 2018 ZhongShan KPP Technology Co
-//  * Date: 2018-07-29 8:55
-//  ****************************************************************************/
-
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
@@ -21,6 +16,7 @@ namespace UnrealM
 
             GUILayout.Label("NodePool State: Active/All", EditorStyles.boldLabel);
             GUILayout.Label($"Action: {ActionSequenceSystem.countActiveAction}/{ActionSequenceSystem.countAllAction}");
+            GUILayout.Label($"IAction: {ActionSequenceSystem.countActiveIAction}/{ActionSequenceSystem.countAllIAction}");
             GUILayout.Label($"Interval: {ActionSequenceSystem.countActiveInterval}/{ActionSequenceSystem.countAllInterval}");
             GUILayout.Label($"Condition: {ActionSequenceSystem.countActiveWaitFor}/{ActionSequenceSystem.countAllWaitFor}");
             GUILayout.Label($"Enable: {ActionSequenceSystem.countActiveEnable}/{ActionSequenceSystem.countAllEnable}");

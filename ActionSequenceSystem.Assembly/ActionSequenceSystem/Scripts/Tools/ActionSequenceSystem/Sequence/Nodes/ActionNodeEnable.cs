@@ -1,7 +1,4 @@
-﻿// // Copyright: Shenzhen Magic Tree Games Studio
-// // Author: Nice
-
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace UnrealM
 {

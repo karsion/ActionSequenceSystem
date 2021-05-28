@@ -1,9 +1,4 @@
-﻿// /****************************************************************************
-//  * Copyright (c) 2018 ZhongShan KPP Technology Co
-//  * Date: 2018-07-27 18:14
-//  ****************************************************************************/
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -99,6 +94,16 @@ namespace UnrealM
         /// Used by the editor. Display relevant information.
         /// </summary>
         public static int countAllSequence => ActionSequence.opNodes.countAll;
+
+        /// <summary>
+        /// Used by the editor. Display relevant information.
+        /// </summary>
+        public static int countActiveIAction => ActionNodeIAction.opNodes.countActive;
+
+        /// <summary>
+        /// Used by the editor. Display relevant information.
+        /// </summary>
+        public static int countAllIAction => ActionNodeIAction.opNodes.countAll;
 
         /// <summary>
         /// Used by the editor. Display relevant information.
@@ -249,7 +254,7 @@ namespace UnrealM
             instance.updaterUnscale.StopAll();
         }
 
-        //#region 无ID启动（注意要用Handle手动关闭无限循环的序列，不然机器就会爆炸……）
+        //#region 无ID启动（注意要用返回的ActionSequence手动关闭无限循环的序列，不然机器就会爆炸……）
         /// <summary>
         /// 无ID启动
         /// </summary>

@@ -1,12 +1,4 @@
-﻿// ***************************************************************************
-// Copyright (c) 2018 ZhongShan KPP Technology Co
-// Copyright (c) 2018 Karsion
-//   
-// https://github.com/karsion
-// Date: 2018-03-02 9:34
-// ***************************************************************************
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -29,7 +21,7 @@ namespace UnrealM
         {
             if (count < 0)
             {
-                throw new ArgumentOutOfRangeException("count");
+                throw new ArgumentOutOfRangeException(nameof(count));
             }
 
             stack = new Stack<T>(count);
@@ -58,15 +50,7 @@ namespace UnrealM
             T t;
             if (stack.Count == 0)
             {
-                if (getT != null)
-                {
-                    t = getT();
-                }
-                else
-                {
-                    t = default(T) ?? Activator.CreateInstance<T>();
-                }
-
+                t = getT != null ? getT() : Activator.CreateInstance<T>();
                 countAll++;
             }
             else

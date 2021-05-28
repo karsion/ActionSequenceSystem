@@ -89,6 +89,20 @@ namespace UnrealM
         #endregion
 
         #region Delayer Looper WaitFor
+
+        /// <summary>
+        /// 延迟调用函数
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="delay">延迟</param>
+        /// <param name="action">调用的函数</param>
+        /// <param name="actionId">用于区分多路回调</param>
+        /// <returns></returns>
+        public static ActionSequence DelayerUnscaled(this Component id, float delay, IAction action, int actionId)
+        {
+            return SequenceUnscaled(id).Interval(delay).IAction(action, actionId);
+        }
+
         /// <summary>
         /// 延迟调用函数
         /// </summary>
@@ -99,6 +113,19 @@ namespace UnrealM
         public static ActionSequence DelayerUnscaled(this Component id, float delay, Action action)
         {
             return SequenceUnscaled(id).Interval(delay).Action(action);
+        }
+
+        /// <summary>
+        /// 延迟调用IAction接口，循环次数作为参数
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="delay">延迟</param>
+        /// <param name="action">调用的函数</param>
+        /// <param name="actionId">用于区分多路回调</param>
+        /// <returns></returns>
+        public static ActionSequence LooperUnscaled(this Component id, float delay, IAction action, int actionId)
+        {
+            return SequenceUnscaled(id).Interval(delay).IAction(action, actionId).Loop();
         }
 
         /// <summary>
@@ -171,6 +198,7 @@ namespace UnrealM
         #endregion
 
         #region Start Delayer Looper with handle
+
         /// <summary>
         /// 用Component作为ID开序列，并使用“控制句柄”
         /// </summary>
@@ -180,6 +208,20 @@ namespace UnrealM
         public static ActionSequence SequenceUnscaled(this Component id, ActionSequenceHandle handle)
         {
             return ActionSequenceSystem.SequenceUnscaled(id).SetHandle(handle);
+        }
+
+        /// <summary>
+        /// 延迟调用IAction接口
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="handle">控制句柄</param>
+        /// <param name="delay">延迟</param>
+        /// <param name="action">调用的函数</param>
+        /// <param name="actionId">用于区分多路回调</param>
+        /// <returns></returns>
+        public static ActionSequence DelayerUnscaled(this Component id, ActionSequenceHandle handle, float delay, IAction action, int actionId)
+        {
+            return DelayerUnscaled(id, delay, action, actionId).SetHandle(handle);
         }
 
         /// <summary>
@@ -193,6 +235,20 @@ namespace UnrealM
         public static ActionSequence DelayerUnscaled(this Component id, ActionSequenceHandle handle, float delay, Action action)
         {
             return DelayerUnscaled(id, delay, action).SetHandle(handle);
+        }
+
+        /// <summary>
+        /// 延迟调用IAction接口，循环次数作为参数
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="handle">控制句柄</param>
+        /// <param name="interval">延迟</param>
+        /// <param name="action">调用的函数</param>
+        /// <param name="actionId">用于区分多路回调</param>
+        /// <returns></returns>
+        public static ActionSequence LooperUnscaled(this Component id, ActionSequenceHandle handle, float interval, IAction action, int actionId)
+        {
+            return LooperUnscaled(id, interval, action, actionId).SetHandle(handle);
         }
 
         /// <summary>

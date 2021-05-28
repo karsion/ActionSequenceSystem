@@ -1,12 +1,4 @@
-﻿// ***************************************************************************
-// Copyright (c) 2018 ZhongShan KPP Technology Co
-// Copyright (c) 2018 Karsion
-//   
-// https://github.com/karsion
-// Date: 2018-03-02 9:34
-// ***************************************************************************
-
-using System;
+﻿using System;
 using UnityEngine;
 
 namespace UnrealM
@@ -128,6 +120,20 @@ namespace UnrealM
         #endregion
 
         #region Delayer Looper WaitFor
+
+        /// <summary>
+        /// 延迟调用IAction接口
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="delay">延迟</param>
+        /// <param name="action">调用的函数</param>
+        /// <param name="actionId">用于区分多路回调</param>
+        /// <returns></returns>
+        public static ActionSequence Delayer(this Component id, float delay, IAction action, int actionId)
+        {
+            return Sequence(id).Interval(delay).IAction(action, actionId);
+        }
+
         /// <summary>
         /// 延迟调用函数
         /// </summary>
@@ -138,6 +144,19 @@ namespace UnrealM
         public static ActionSequence Delayer(this Component id, float delay, Action action)
         {
             return Sequence(id).Interval(delay).Action(action);
+        }
+
+        /// <summary>
+        /// 延迟调用IAction接口，循环次数作为参数
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="delay">延迟</param>
+        /// <param name="action">调用的函数</param>
+        /// <param name="actionId">用于区分多路回调</param>
+        /// <returns></returns>
+        public static ActionSequence Looper(this Component id, float delay, IAction action, int actionId)
+        {
+            return Sequence(id).Interval(delay).IAction(action, actionId).Loop();
         }
 
         /// <summary>
@@ -248,6 +267,20 @@ namespace UnrealM
         }
 
         /// <summary>
+        /// 延迟调用IAction接口
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="handle">控制句柄</param>
+        /// <param name="delay">延迟</param>
+        /// <param name="action">调用的函数</param>
+        /// <param name="actionId">用于区分多路回调</param>
+        /// <returns></returns>
+        public static ActionSequence Delayer(this Component id, ActionSequenceHandle handle, float delay, IAction action, int actionId)
+        {
+            return Delayer(id, delay, action, actionId).SetHandle(handle);
+        }
+
+        /// <summary>
         /// 延迟调用函数
         /// </summary>
         /// <param name="id"></param>
@@ -258,6 +291,20 @@ namespace UnrealM
         public static ActionSequence Delayer(this Component id, ActionSequenceHandle handle, float delay, Action action)
         {
             return Delayer(id, delay, action).SetHandle(handle);
+        }
+
+        /// <summary>
+        /// 延迟调用IAction接口，循环次数作为参数
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="handle">控制句柄</param>
+        /// <param name="interval">延迟</param>
+        /// <param name="action">调用的函数</param>
+        /// <param name="actionId">用于区分多路回调</param>
+        /// <returns></returns>
+        public static ActionSequence Looper(this Component id, ActionSequenceHandle handle, float interval, IAction action, int actionId)
+        {
+            return Looper(id, interval, action, actionId).SetHandle(handle);
         }
 
         /// <summary>

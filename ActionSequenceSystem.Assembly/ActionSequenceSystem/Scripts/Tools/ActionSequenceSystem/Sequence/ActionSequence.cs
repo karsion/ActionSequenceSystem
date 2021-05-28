@@ -1,12 +1,4 @@
-﻿// ***************************************************************************
-// Copyright (c) 2018 ZhongShan KPP Technology Co
-// Copyright (c) 2018 Karsion
-//   
-// https://github.com/karsion
-// Date: 2018-03-20 11:39
-// ***************************************************************************
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -175,6 +167,18 @@ namespace UnrealM
         }
 
         /// <summary>
+        /// 增加一个行动接口节点
+        /// </summary>
+        /// <param name="action">调用的函数</param>
+        /// <param name="id">用于区分多路回调</param>
+        /// <returns></returns>
+        public ActionSequence IAction(IAction action, int id)
+        {
+            nodes.Add(ActionNodeIAction.Get(action, id));
+            return this;
+        }
+
+        /// <summary>
         /// 增加一个行动节点
         /// </summary>
         /// <param name="action">调用的函数</param>
@@ -330,6 +334,5 @@ namespace UnrealM
         {
             timeAxis += deltaTime;
         }
-
     }
 }
