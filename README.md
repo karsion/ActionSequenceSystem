@@ -24,8 +24,8 @@ A Unity3D C# multifunctional chaining timer system<br>
 
 ## 设计架构 
 ### ActionSequenceSystem 序列系统
-- 使用了内存池
-- 管理ActionSequence
+- Node都使用了内存池
+- 支持Time.unscaledDeltaTime
 
 ### ActionSequence 序列
 - 对Component做了扩展，在脚本中使用this作为入口 
@@ -37,20 +37,9 @@ A Unity3D C# multifunctional chaining timer system<br>
 - Interval：延迟一段时间
 - SetActive：激活物体/返激活物体
 - WaitFor：知道条件判断为true才跳下一个节点
-
-### 结构图
-```
-graph TD
-ActionSequenceSystem-->ActionSequence
-ActionSequence-->ActionNode
-Pooling1-->ActionSequence
-Pooling2-->ActionNode
-
-ActionNode-->Action
-ActionNode-->Interval
-ActionNode-->SetActive
-ActionNode-->WaitFor
-```
+- SetActive：激活GameObject，ID用的是gameObject.transform
+- Enable：激活Behaviour
+- IAction：调用IAction接口，使用ID区分多路事件。通常委托都会造成GC，需要此接口优化。
 
 ---
 
@@ -122,6 +111,33 @@ this.StopSequence();
 
 //Allso transform as ID
 transform.StopSequence();
+```
+
+### IAction
+``` csharp
+public class User : MonoBehaviour, IAction
+{
+	private int times;
+	public void OnEnable()
+	{
+		this.Delayer(1, this, 0);
+		this.Looper(1, this, 1);
+	}
+
+	public void Action(int id, int loopTime)
+	{
+		switch (id)
+		{
+			case 0:
+				//Do something when id is 0
+				break;
+			case 1:
+				times++;
+				Debug.Log(times);
+				break;
+		}
+	}
+}
 ```
 
 ### 可以不用ID直接开序列
