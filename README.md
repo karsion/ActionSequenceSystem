@@ -1,24 +1,24 @@
 [![license](http://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/karsion/ActionSequenceSystem/master/LICENSE.TXT)
 [![release](https://img.shields.io/badge/release-v1.0.2-blue.svg)](https://github.com/karsion/ActionSequenceSystem/master/releases)
 
-！！！Mac端的使用没问题，但是iOS打包之后无法使用，异常为MissingMethodexception：default constructor not found for type UnrealM.ActionNodeInterval
-！！！Mac use of the Mac side is no problem, but the iOS can not be used after packaging, return MissingMethodexception：default constructor not found for type UnrealM.ActionNodeInterval
-！！！未支持Editor模式
-！！！Editor model not supported
-
 # ActionSequenceSystem
 A Unity3D C# multifunctional chaining timer system<br>
 一个U3D C# 多功能链式计时器
-- 支持Unity Package Manager，在manifest.json中添加以下代码
-- "com.jpp.actionsequence": "https://github.com/karsion/ActionSequenceSystem.git#1.0.3",
 
 ## 简要说明 
 - 简单上手：在脚本中使用this作为入口，e.g. this.Delayer(1, DoSomething);
-- 自定义：e.g. this.Sequence().Loop(2).Interval(1).Action(DoSomething1).Interval(0.5f).Action(DoSomething2);
-- 无GC：使用了内存池存放序列和节点，在数组容量足够的情况下，运行时无GC（数组自动扩容会产生GC）
+- 自定义节点：e.g. this.Sequence().Loop(2).Interval(1).Action(DoSomething1).Interval(0.5f).Action(DoSomething2);
+- 内存池：使用了内存池存放序列和节点，在数组容量足够的情况下，运行时本系统不会产生GC
 - 自动回收：使用Component或其子类作为ID受控，一旦ID被销毁，计时器会随之自动回收
-- 精准受控：准确停止指定的计时器（请看使用方法的最后）
-- 支持时间缩放：支持deltaTime和unscaledDeltaTime
+- 时间缩放：支持deltaTime和unscaledDeltaTime
+
+## 注意事项 
+- 委托函数很多情况下会造成GC，可以使用IAction处理
+- 自定义链超过8，数组扩容会产生GC，而且运行一段时间后，会把池子里Sequence全都刷扩容
+
+## 已知问题 
+- ！！！Mac端的使用没问题，但是iOS打包之后无法使用，异常为MissingMethodexception：default constructor not found for type UnrealM.ActionNodeInterval，我这里没有IOS环境，请大佬帮忙修改，感谢！
+- 未支持Editor模式，后面可能会支持（鸽）
 
 ---
 
@@ -45,7 +45,7 @@ A Unity3D C# multifunctional chaining timer system<br>
 
 ## 使用方法
 说明：下面使用方法中的this的类型为Component或其子类（其实this is MonoBehaviour）
-### 延迟开关GameObject功能
+### 延迟开关GameObject
 既然用了Component来做ID，控制gameObject显示隐藏就是举手之劳，何乐而不为
 ``` csharp
 //Start a toggle gameObject active/deactive sequence
@@ -54,6 +54,14 @@ tfShowHideExample.Hider(1.5f);
 
 //Start a infinite loop toggle active gameObject
 tfShowHideExample.Sequence().Interval(0.5f).ToggleActive().Loop();
+```
+
+### 延迟开关Behaviour
+Component转Behaviour，实现控制它的Enable
+``` csharp
+//Set enable to a Behaviour
+this.Enabler(0.5f);
+animator.Enabler(0.5f);
 ```
 
 ### 开启单次计时器（延迟）
