@@ -48,6 +48,11 @@ namespace UnrealM
         private bool hasID;
 
         /// <summary>
+        /// TimeMode
+        /// </summary>
+        public TimeMode timeMode;
+
+        /// <summary>
         /// 目标组件，组件销毁的时候，本动作序列也相应销毁
         /// </summary>
         public Component id { get; private set; }
@@ -152,6 +157,23 @@ namespace UnrealM
         public ActionSequence ToggleActive()
         {
             nodes.Add(ActionNodeSetActive.Get(true, true));
+            return this;
+        }
+
+        /// <summary>
+        /// 设置信号
+        /// </summary>
+        /// <param name="signal"></param>
+        /// <param name="handle"></param>
+        /// <returns></returns>
+        public ActionSequence SetHandleSignal(bool signal, ActionSequenceHandle handle = null)
+        {
+            if (handle != null)
+            {
+                this.handle = handle;
+            }
+
+            nodes.Add(ActionNodeSetSignal.Get(signal));
             return this;
         }
 
@@ -287,7 +309,7 @@ namespace UnrealM
         }
 
         //序列更新
-        internal bool Update(float deltaTime)
+        internal bool Update()
         {
             //SetStop to kill || 没有id，Auto kill || 开了序列没有加任何节点
             if (bSetStop || hasID && id == null || nodes.Count == 0)
@@ -296,6 +318,7 @@ namespace UnrealM
                 return false;
             }
 
+            float deltaTime = timeMode == TimeMode.Scaled ? Time.deltaTime : Time.unscaledDeltaTime;
             //用索引更新节点
             if (nodes[curNodeIndex].Update(this, deltaTime))
             {

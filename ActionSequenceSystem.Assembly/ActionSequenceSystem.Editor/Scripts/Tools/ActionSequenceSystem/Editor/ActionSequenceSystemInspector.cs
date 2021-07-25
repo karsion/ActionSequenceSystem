@@ -34,13 +34,6 @@ namespace UnrealM
                 UpdateInfo(actionSequenceSystem.ListSequenceAlive);
             }
 
-            isShowSequenceUnscaledInfo = EditorGUILayout.Foldout(isShowSequenceUnscaledInfo,
-                $"SequenceUnscaled: {actionSequenceSystem.ListSequenceUnscaleAlive.Count}");
-            if (isShowSequenceUnscaledInfo)
-            {
-                UpdateInfo(actionSequenceSystem.ListSequenceUnscaleAlive);
-            }
-
             Repaint();
         }
 

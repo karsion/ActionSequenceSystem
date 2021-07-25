@@ -4,6 +4,14 @@ using UnityEngine;
 
 namespace UnrealM
 {
+#pragma warning disable 1591
+    public enum TimeMode
+    {
+        Scaled = 0,
+        Unscaled = 1,
+    }
+#pragma warning restore 1591
+
     /// <summary>
     /// ActionSequenceSystem is a multifunctional chaining timer system
     /// </summary>
@@ -40,14 +48,14 @@ namespace UnrealM
                 }
             }
 
-            internal void Update(float deltaTime)
+            internal void Update()
             {
                 //Update Sequence(Auto release)
                 bool isSomeSequenceStoped = false;
                 for (int i = 0; i < listSequenceAlive.Count; i++)
                 {
                     //It's stopped when Update return false and release self
-                    isSomeSequenceStoped |= !listSequenceAlive[i].Update(deltaTime);
+                    isSomeSequenceStoped |= !listSequenceAlive[i].Update();
                 }
 
                 //Remove Finshed Sequence(Finshed is Released)
@@ -72,18 +80,12 @@ namespace UnrealM
         internal static bool isDuplicate;
         internal static ActionSequenceSystem instance;
         private readonly SequenceUpdater updater = new SequenceUpdater();
-        private readonly SequenceUpdater updaterUnscale = new SequenceUpdater();
 
         #region UNITY_EDITOR
         /// <summary>
         /// Used by the editor. Display relevant information.
         /// </summary>
         public List<ActionSequence> ListSequenceAlive => updater.listSequenceAlive;
-
-        /// <summary>
-        /// Used by the editor. Display relevant information.
-        /// </summary>
-        public List<ActionSequence> ListSequenceUnscaleAlive => updaterUnscale.listSequenceAlive;
 
         /// <summary>
         /// Used by the editor. Display relevant information.
@@ -182,22 +184,9 @@ namespace UnrealM
             return seq;
         }
 
-        private static ActionSequence GetSequenceUnscaled(Component component = null)
-        {
-            CreateCheck();
-            ActionSequence seq = ActionSequence.GetInstance(component);
-            instance.updaterUnscale.Add(seq);
-            return seq;
-        }
-
         internal static ActionSequence Sequence(Component component)
         {
             return GetSequence(component);
-        }
-
-        internal static ActionSequence SequenceUnscaled(Component component)
-        {
-            return GetSequenceUnscaled(component);
         }
 
         internal static void StopSequence(Component id)
@@ -208,7 +197,6 @@ namespace UnrealM
             }
 
             instance.updater.Stop(id);
-            instance.updaterUnscale.Stop(id);
         }
 
         #region Unity Methods
@@ -223,8 +211,7 @@ namespace UnrealM
 
         private void Update()
         {
-            updater.Update(Time.deltaTime);
-            updaterUnscale.Update(Time.unscaledDeltaTime);
+            updater.Update();
         }
 
         private void OnDestroy()
@@ -251,7 +238,6 @@ namespace UnrealM
             }
 
             instance.updater.StopAll();
-            instance.updaterUnscale.StopAll();
         }
 
         //#region 无ID启动（注意要用返回的ActionSequence手动关闭无限循环的序列，不然机器就会爆炸……）
@@ -349,81 +335,6 @@ namespace UnrealM
             return isActionAtStart ? 
                 Sequence().Action(action).Interval(interval).Loop(loopTime) : 
                 Looper(interval, loopTime, action);
-        }
-        #endregion
-
-        #region unscaledDeltaTime
-        //#region 无ID启动（注意要用Handle手动关闭无限循环的序列，不然机器就会爆炸……）
-        /// <summary>
-        /// 无ID启动
-        /// </summary>
-        /// <returns></returns>
-        public static ActionSequence SequenceUnscaled()
-        {
-            return GetSequenceUnscaled();
-        }
-
-        /// <summary>
-        /// 延迟调用函数
-        /// </summary>
-        /// <param name="delay">延迟</param>
-        /// <param name="action">调用的函数</param>
-        /// <returns></returns>
-        public static ActionSequence DelayerUnscaled(float delay, Action action)
-        {
-            return SequenceUnscaled().Interval(delay).Action(action);
-        }
-
-        /// <summary>
-        /// 无限循环调用函数
-        /// </summary>
-        /// <param name="interval">延迟</param>
-        /// <param name="action">调用的函数</param>
-        /// <returns></returns>
-        public ActionSequence LooperUnscaled(float interval, Action action)
-        {
-            return SequenceUnscaled().Interval(interval).Action(action).Loop();
-        }
-
-        /// <summary>
-        /// 延迟调用函数，循环次数作为参数
-        /// </summary>
-        /// <param name="interval">延迟</param>
-        /// <param name="action">调用的函数，循环次数作为参数</param>
-        /// <returns></returns>
-        public ActionSequence LooperUnscaled(float interval, Action<int> action)
-        {
-            return SequenceUnscaled().Interval(interval).Action(action).Loop();
-        }
-
-        /// <summary>
-        /// 循环调用函数，并设置次数，是否立即开始
-        /// </summary>
-        /// <param name="interval">延迟</param>
-        /// <param name="loopTime">循环调用次数</param>
-        /// <param name="isActionAtStart">是否立即开始</param>
-        /// <param name="action">调用的函数</param>
-        /// <returns></returns>
-        public static ActionSequence LooperUnscaled(float interval, int loopTime, bool isActionAtStart, Action action)
-        {
-            return isActionAtStart ? 
-                SequenceUnscaled().Action(action).Interval(interval).Loop(loopTime) : 
-                SequenceUnscaled().Interval(interval).Action(action).Loop(loopTime);
-        }
-
-        /// <summary>
-        /// 循环调用函数，循环次数作为参数，并设置次数，是否立即开始
-        /// </summary>
-        /// <param name="interval">延迟</param>
-        /// <param name="loopTime">循环调用次数</param>
-        /// <param name="isActionAtStart">是否立即开始</param>
-        /// <param name="action">调用的函数，循环次数作为参数</param>
-        /// <returns></returns>
-        public static ActionSequence LooperUnscaled(float interval, int loopTime, bool isActionAtStart, Action<int> action)
-        {
-            return isActionAtStart ? 
-                SequenceUnscaled().Action(action).Interval(interval).Loop(loopTime) : 
-                SequenceUnscaled().Interval(interval).Action(action).Loop(loopTime);
         }
         #endregion
     }

@@ -11,10 +11,6 @@ namespace UnrealM
     public class ActionSequenceHandle : IDisposable
     {
         internal ActionSequence sequence;
-        /// <summary>
-        /// 
-        /// </summary>
-        public bool signal { get; internal set; }
 
         /// <summary>
         /// IDisposable
@@ -30,7 +26,6 @@ namespace UnrealM
         /// </localize>
         public void StopSequence()
         {
-            this.signal = signal;
             sequence?.Stop();
         }
 
@@ -64,17 +59,6 @@ namespace UnrealM
         public ActionSequence Delayer(float delay, Action action)
         {
             return Sequence().Interval(delay).Action(action);
-        }
-        
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="delay"></param>
-        /// <param name="signal"></param>
-        /// <returns></returns>
-        public ActionSequence DelaySignal(float delay, bool signal)
-        {
-            return Sequence().Interval(delay).SetHandleSignal(signal);
         }
 
         /// <summary>
@@ -163,6 +147,102 @@ namespace UnrealM
         public ActionSequence Looper(float interval, int loopTime, Action<int> action)
         {
             return Sequence().Interval(interval).Action(action).Loop(loopTime);
+        }
+
+        /// <summary>
+        /// 用Handle开序列
+        /// </summary>
+        /// <returns></returns>
+        public ActionSequence SequenceUnscaled()
+        {
+            return ActionSequenceSystem.SequenceUnscaled().SetHandle(this);
+        }
+
+        /// <summary>
+        /// 延迟调用IAction接口
+        /// </summary>
+        /// <param name="delay">延迟</param>
+        /// <param name="action">调用的函数</param>
+        /// <param name="actionId">用于区分多路回调</param>
+        /// <returns></returns>
+        public ActionSequence DelayerUnscaled(float delay, IAction action, int actionId)
+        {
+            return SequenceUnscaled().Interval(delay).IAction(action, actionId);
+        }
+
+        /// <summary>
+        /// 延迟调用函数
+        /// </summary>
+        /// <param name="delay">延迟</param>
+        /// <param name="action">调用的函数</param>
+        /// <returns></returns>
+        public ActionSequence DelayerUnscaled(float delay, Action action)
+        {
+            return SequenceUnscaled().Interval(delay).Action(action);
+        }
+
+        /// <summary>
+        /// 延迟调用IAction接口，循环次数作为参数
+        /// </summary>
+        /// <param name="delay">延迟</param>
+        /// <param name="action">调用的函数</param>
+        /// <param name="actionId">用于区分多路回调</param>
+        /// <returns></returns>
+        public ActionSequence LooperUnscaled(float delay, IAction action, int actionId)
+        {
+            return SequenceUnscaled().Interval(delay).IAction(action, actionId).Loop();
+        }
+
+        /// <summary>
+        /// 无限循环调用函数
+        /// </summary>
+        /// <param name="interval">延迟</param>
+        /// <param name="action">调用的函数</param>
+        /// <returns></returns>
+        public ActionSequence LooperUnscaled(float interval, Action action)
+        {
+            return SequenceUnscaled().Interval(interval).Action(action).Loop();
+        }
+
+        /// <summary>
+        /// 无限循环调用函数，循环次数作为参数
+        /// </summary>
+        /// <param name="interval">延迟</param>
+        /// <param name="action">调用的函数，循环次数作为参数</param>
+        /// <returns></returns>
+        public ActionSequence LooperUnscaled(float interval, Action<int> action)
+        {
+            return SequenceUnscaled().Interval(interval).Action(action).Loop();
+        }
+
+        /// <summary>
+        /// 循环调用函数，并设置次数，是否立即开始
+        /// </summary>
+        /// <param name="interval">延迟</param>
+        /// <param name="loopTime">循环调用次数</param>
+        /// <param name="isActionAtStart">是否立即开始</param>
+        /// <param name="action">调用的函数</param>
+        /// <returns></returns>
+        public ActionSequence LooperUnscaled(float interval, int loopTime, bool isActionAtStart, Action action)
+        {
+            return isActionAtStart ?
+                SequenceUnscaled().Action(action).Interval(interval).Loop(loopTime) :
+                SequenceUnscaled().Interval(interval).Action(action).Loop(loopTime);
+        }
+
+        /// <summary>
+        /// 循环调用函数，循环次数作为参数，并设置次数，是否立即开始
+        /// </summary>
+        /// <param name="interval">延迟</param>
+        /// <param name="loopTime">循环调用次数</param>
+        /// <param name="isActionAtStart">是否立即开始</param>
+        /// <param name="action">调用的函数，循环次数作为参数</param>
+        /// <returns></returns>
+        public ActionSequence LooperUnscaled(float interval, int loopTime, bool isActionAtStart, Action<int> action)
+        {
+            return isActionAtStart ?
+                SequenceUnscaled().Action(action).Interval(interval).Loop(loopTime) :
+                SequenceUnscaled().Interval(interval).Action(action).Loop(loopTime);
         }
     }
 }

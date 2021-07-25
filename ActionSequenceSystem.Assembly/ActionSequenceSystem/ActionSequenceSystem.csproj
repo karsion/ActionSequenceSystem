@@ -9,9 +9,10 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>UnrealM</RootNamespace>
     <AssemblyName>ActionSequenceSystem</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>false</DebugSymbols>
@@ -23,6 +24,7 @@
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>..\..\UnityExamples\Assets\Scripts\Tools\ActionSequenceSystem\ActionSequenceSystem.XML</DocumentationFile>
     <RegisterForComInterop>false</RegisterForComInterop>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
@@ -33,6 +35,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>..\bin\Release\ActionSequenceSystem\ActionSequenceSystem.XML</DocumentationFile>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -45,7 +48,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scripts\Tools\ActionSequenceSystem\ActionSequenceSystem.cs" />
     <Compile Include="Scripts\Tools\ActionSequenceSystem\ComponentExtension\ActionSequenceSystemEx.cs" />
-    <Compile Include="Scripts\Tools\ActionSequenceSystem\ComponentExtension\ActionSequenceSystemUnscaledEx.cs" />
     <Compile Include="Scripts\Tools\ActionSequenceSystem\Sequence\ActionSequence.cs" />
     <Compile Include="Scripts\Tools\ActionSequenceSystem\ActionSequenceHandle.cs" />
     <Compile Include="Scripts\Tools\ActionSequenceSystem\Sequence\Nodes\ActionNode.cs" />
@@ -54,6 +56,7 @@
     <Compile Include="Scripts\Tools\ActionSequenceSystem\Sequence\Nodes\ActionNodeIAction.cs" />
     <Compile Include="Scripts\Tools\ActionSequenceSystem\Sequence\Nodes\ActionNodeInterval.cs" />
     <Compile Include="Scripts\Tools\ActionSequenceSystem\Sequence\Nodes\ActionNodeSetActive.cs" />
+    <Compile Include="Scripts\Tools\ActionSequenceSystem\Sequence\Nodes\ActionNodeSetSignal.cs" />
     <Compile Include="Scripts\Tools\ActionSequenceSystem\Sequence\Nodes\ActionNodeWaitFor.cs" />
     <Compile Include="Scripts\Tools\Helper\ObjectPool.cs" />
   </ItemGroup>

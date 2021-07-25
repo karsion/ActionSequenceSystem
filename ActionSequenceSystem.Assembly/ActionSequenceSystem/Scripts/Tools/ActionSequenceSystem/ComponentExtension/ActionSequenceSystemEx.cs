@@ -8,6 +8,18 @@ namespace UnrealM
     /// </summary>
     public static class ActionSequenceSystemEx
     {
+        /// <summary>
+        /// 是否受时间缩放影响
+        /// </summary>
+        /// <param name="sequence"></param>
+        /// <param name="timeMode"></param>
+        /// <returns></returns>
+        public static ActionSequence SetTimeMode(this ActionSequence sequence, TimeMode timeMode)
+        {
+            sequence.timeMode = timeMode;
+            return sequence;
+        }
+
         #region Start Stop
         /// <summary>
         /// 用Component作为ID开序列
