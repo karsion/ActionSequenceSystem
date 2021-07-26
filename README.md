@@ -39,7 +39,8 @@ A Unity3D C# multifunctional chaining timer system<br>
 - WaitFor：知道条件判断为true才跳下一个节点
 - SetActive：激活GameObject，ID用的是gameObject.transform
 - Enable：激活Behaviour
-- IAction：调用IAction接口，使用ID区分多路事件。通常委托都会造成GC，需要此接口优化。
+- IAction：调用IAction接口，使用ID区分多路事件。通常委托都会造成GC，需要此接口优化
+- SetSignal：为Sequence内置一bool作信号标志，例如用于CD判断时无需从外部传入一个bool值
 
 ---
 
