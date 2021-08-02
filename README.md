@@ -10,7 +10,8 @@ A Unity3D C# multifunctional chaining timer system<br>
 - 自定义节点：e.g. this.Sequence().Loop(2).Interval(1).Action(DoSomething1).Interval(0.5f).Action(DoSomething2);
 - 内存池：使用了内存池存放序列和节点，在数组容量足够的情况下，运行时本系统不会产生GC
 - 自动回收：使用Component或其子类作为ID受控，一旦ID被销毁，计时器会随之自动回收
-- 时间缩放：支持deltaTime和unscaledDeltaTime
+- 时间缩放：支持unscaledDeltaTime
+- ToDo：编辑器驱动，整合常用节点共享内存池
 
 ## 注意事项 
 - 委托函数很多情况下会造成GC，可以使用IAction处理
@@ -25,7 +26,7 @@ A Unity3D C# multifunctional chaining timer system<br>
 ## 设计架构 
 ### ActionSequenceSystem 序列系统
 - Node都使用了内存池
-- 支持Time.unscaledDeltaTime
+- 支持unscaledTime
 
 ### ActionSequence 序列
 - 对Component做了扩展，在脚本中使用this作为入口 
@@ -122,7 +123,14 @@ this.StopSequence();
 transform.StopSequence();
 ```
 
+### UnscaledTime
+``` csharp
+//Start a once unscaled timer
+this.Delayer(1, () => Debug.Log(1)).Unscaled();
+```
+
 ### IAction
+用接口代替委托，因为委托通常都会闭包
 ``` csharp
 public class User : MonoBehaviour, IAction
 {
