@@ -1,0 +1,11 @@
+{
+  "name": "com.pixelcat.actionsequence",
+  "displayName": "ActionSequenceSystem",
+  "description": "A chain style timer",
+  "version": "1.0.1",
+  "license": "MIT",
+  "author": {
+    "name": "Pixelcat"
+  },
+  "type": "module"
+}
