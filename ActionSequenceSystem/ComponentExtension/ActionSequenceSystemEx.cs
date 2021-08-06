@@ -142,7 +142,7 @@ namespace UnrealM
         }
         #endregion
 
-        #region Delayer Looper WaitFor
+        #region Delayer Looper NextFramer WaitFor
 
         /// <summary>
         /// 延迟调用IAction接口
@@ -183,7 +183,7 @@ namespace UnrealM
         }
 
         /// <summary>
-        /// 延迟调用函数，循环次数作为参数
+        /// 无限循环调用函数，循环次数作为参数
         /// </summary>
         /// <param name="id"></param>
         /// <param name="interval">延迟</param>
@@ -262,6 +262,29 @@ namespace UnrealM
             return isActionAtStart ?
                 id.Sequence().Action(action).Interval(interval).Loop(loopTime) :
                 id.Looper(interval, loopTime, action);
+        }
+
+        /// <summary>
+        /// 延迟一帧调用函数
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="action"></param>
+        /// <returns></returns>
+        public static ActionSequence NextFramer(this Component id, Action action)
+        {
+            return Sequence(id).Action(action);
+        }
+
+        /// <summary>
+        /// 延迟一帧调用IAction
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="action"></param>
+        /// <param name="actionId"></param>
+        /// <returns></returns>
+        public static ActionSequence NextFramer(this Component id, IAction action, int actionId)
+        {
+            return Sequence(id).IAction(action, actionId);
         }
 
         /// <summary>
