@@ -23,8 +23,8 @@ namespace UnrealM
 			if (behaviour)
 			{
 				bool final = isToggle ? !behaviour.enabled : isEnable;
-				actionSequence.id.gameObject.SetActive(final);
-			}
+                behaviour.enabled = final;
+            }
 
 			return true;
 		}
