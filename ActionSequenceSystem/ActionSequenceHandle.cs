@@ -30,7 +30,6 @@ namespace UnrealM
         /// </localize>
         public void StopSequence()
         {
-            this.signal = signal;
             sequence?.Stop();
         }
 
@@ -75,6 +74,16 @@ namespace UnrealM
         public ActionSequence DelaySignal(float delay, bool signal)
         {
             return Sequence().Interval(delay).SetHandleSignal(signal);
+        }
+
+        public void SetSignal(bool signal)
+        {
+            this.signal = signal;
+        }
+
+        public void ResetSignal()
+        {
+            this.signal = false;
         }
 
         /// <summary>
