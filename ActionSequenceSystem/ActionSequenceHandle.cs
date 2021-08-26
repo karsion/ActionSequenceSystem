@@ -71,12 +71,12 @@ namespace UnrealM
         /// <param name="delay"></param>
         /// <param name="signal"></param>
         /// <returns></returns>
-        public ActionSequence DelaySignal(float delay, bool signal)
+        public ActionSequence DelaySignal(float delay, bool signal = true)
         {
             return Sequence().Interval(delay).SetHandleSignal(signal);
         }
 
-        public void SetSignal(bool signal)
+        public void SetSignal(bool signal = true)
         {
             this.signal = signal;
         }
