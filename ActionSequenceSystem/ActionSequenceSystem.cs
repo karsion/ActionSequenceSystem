@@ -75,9 +75,8 @@ namespace UnrealM
             }
         }
 
-        internal static bool isInited;
         internal static bool isQuitting;
-        internal static bool isDuplicate;
+        //internal static bool isDuplicate;
         internal static ActionSequenceSystem instance;
         private readonly SequenceUpdater updater = new SequenceUpdater();
 
@@ -161,16 +160,13 @@ namespace UnrealM
 
         private static void CreateCheck()
         {
-            if (isInited || !Application.isPlaying || isQuitting) return;
+            if (instance || !Application.isPlaying || isQuitting) return;
 
-            isInited = true;
             Create();
         }
 
         private static void Create()
         {
-            if (instance != null) return;
-
             GameObject go = new GameObject("[ActionSequenceSystem]");
             DontDestroyOnLoad(go);
             instance = go.AddComponent<ActionSequenceSystem>();
@@ -204,7 +200,6 @@ namespace UnrealM
         {
             if (instance != this)
             {
-                isDuplicate = true;
                 Destroy(gameObject);
             }
         }
@@ -216,8 +211,11 @@ namespace UnrealM
 
         private void OnDestroy()
         {
-            if (isDuplicate) return;
-            if (instance == this) instance = null;
+            if (instance == this)
+            {
+	            instance = null;
+				isQuitting = false;
+            }
         }
 
         private void OnApplicationQuit()
