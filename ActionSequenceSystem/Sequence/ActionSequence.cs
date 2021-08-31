@@ -263,6 +263,7 @@ namespace UnrealM
             loopTime = 0;
             bSetStop = false;
             handle = null;
+            timeMode = TimeMode.Scaled;
             return this;
         }
 
