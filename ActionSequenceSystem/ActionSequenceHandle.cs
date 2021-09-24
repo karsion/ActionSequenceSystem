@@ -76,9 +76,10 @@ namespace UnrealM
             return Sequence().Interval(delay).SetHandleSignal(signal);
         }
 
-        public void SetSignal(bool signal = true)
+        public ActionSequenceHandle SetSignal(bool signal = true)
         {
             this.signal = signal;
+            return this;
         }
 
         public void ResetSignal()
