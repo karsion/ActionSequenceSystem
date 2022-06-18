@@ -4,7 +4,7 @@ using UnityEngine;
 namespace UnrealM
 {
 	/// <summary>
-	/// 支持回调接口
+	///     支持回调接口
 	/// </summary>
 	public interface IAction
 	{
@@ -19,8 +19,8 @@ namespace UnrealM
 	{
 		//全局池
 		internal static readonly ObjectPool<ActionNodeIAction> opNodes = new ObjectPool<ActionNodeIAction>(64);
-		private int id;
 		private IAction action; //事件
+		private int id;
 
 		internal static ActionNodeIAction Get(IAction action, int id)
 		{
@@ -35,10 +35,7 @@ namespace UnrealM
 			actionSequence.UpdateTimeAxis(deltaTime);
 			if (null != action)
 			{
-				try
-				{
-					action.Action(id, actionSequence.cycles);
-				}
+				try { action.Action(id, actionSequence.cycles); }
 				catch (Exception e)
 				{
 					Debug.LogException(e);

@@ -32,10 +32,7 @@ namespace UnrealM
 			actionSequence.UpdateTimeAxis(deltaTime);
 			if (null != action)
 			{
-				try
-				{
-					action();
-				}
+				try { action(); }
 				catch (Exception e)
 				{
 					Debug.LogException(e);
@@ -44,10 +41,7 @@ namespace UnrealM
 			}
 			else if (null != actionLoop)
 			{
-				try
-				{
-					actionLoop(actionSequence.cycles);
-				}
+				try { actionLoop(actionSequence.cycles); }
 				catch (Exception e)
 				{
 					Debug.LogException(e);
